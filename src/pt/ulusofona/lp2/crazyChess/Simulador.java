@@ -117,12 +117,16 @@ public class Simulador{
 
                                     if (tabuleiro[xO][yO].getIdEquipa() == idEquipaPreta) {
                                         nrCapturasPretas++;
+                                        jogadasSemCaptura = 0;
                                     } else {
                                         nrCapturasBrancas++;
+                                        jogadasSemCaptura = 0;
                                     }
 
                                 }
 
+                            }else{
+                                jogadasSemCaptura++;
                             }
                             tabuleiro[xD][yD] = tabuleiro[xO][yO];
                             tabuleiro[xO][yO] = null;
@@ -221,7 +225,7 @@ public class Simulador{
         resultados.add("" + jogadasValidasPretas);
         resultados.add("" + jogadasInvalidasPretas);
 
-        resultados.add("Equida das brancas");
+        resultados.add("Equipa das Brancas");
         resultados.add("" + nrCapturasBrancas);
         resultados.add("" + jogadasValidasBrancas);
         resultados.add("" + jogadasInvalidasBrancas);
