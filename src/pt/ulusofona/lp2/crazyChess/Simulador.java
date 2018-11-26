@@ -96,7 +96,8 @@ public class Simulador{
                 if((0 <= xD && xD < boardSize) && (0 <= yD && yD < boardSize)){ //Valida posição final
 
                     if(sqrt(Math.pow((xD - xO), 2) + Math.pow((yD - yO), 2)) == 1) { //Verifica se a distância a ser percorrida é válida
-                        if (tabuleiro[xO][yO].getIdEquipa() != tabuleiro[xD][yD].getIdEquipa()) {
+
+
 
                             //Caso a jogada seja válida
                             //Incrementa o numero de jogadas válidas de cada equipa para utilizar nos resultados
@@ -112,10 +113,6 @@ public class Simulador{
 
                                 if (tabuleiro[xO][yO].getIdEquipa() != tabuleiro[xD][yD].getIdEquipa()) {
                                     //Remoção da peça eliminada
-                                /*
-                                tabuleiro[xO][yO] = tabuleiro[xD][yD];
-                                tabuleiro[xO][yO] = null;
-                                */
                                     pecasEmJogo.remove(tabuleiro[xD][yD].getId());
 
                                     if (tabuleiro[xO][yO].getIdEquipa() == idEquipaPreta) {
@@ -132,7 +129,6 @@ public class Simulador{
 
                             cntMoves++;
                             return true;
-                        }
                     }
                 }
             }
