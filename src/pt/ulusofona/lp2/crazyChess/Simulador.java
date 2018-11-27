@@ -72,14 +72,14 @@ public class Simulador{
 
 
             //Secçao 4
-            for (int cntline = 0; cntline < boardSize; cntline++) {
+            for (int x = 0; x < boardSize; x++) {
 
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
-                for (int cntPos = 0; cntPos < lineData.length; cntPos++) {
+                for (int y = 0; y < lineData.length; y++) {
 
-                    tabuleiro[cntline][cntPos] = (Integer.parseInt(lineData[cntPos]) != 0) ? crazyPieces.get(Integer.parseInt(lineData[cntPos])) : null;
+                    tabuleiro[x][y] = (Integer.parseInt(lineData[y]) != 0) ? crazyPieces.get(Integer.parseInt(lineData[y])) : null;
                 }
             }
 
