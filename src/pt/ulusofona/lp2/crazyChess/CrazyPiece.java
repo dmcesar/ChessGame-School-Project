@@ -17,6 +17,8 @@ public class CrazyPiece {
         this.alcunha = alcunha;
     }
 
+    public int getId(){return this.idPeca;}
+
     public int getIdEquipa(){return this.idEquipa;}
 
     public String getImagePNG(){
