@@ -79,7 +79,7 @@ public class Simulador{
 
                 for (int y = 0; y < lineData.length; y++) {
 
-                    tabuleiro[x][y] = (Integer.parseInt(lineData[x]) != 0) ? crazyPieces.get(Integer.parseInt(lineData[x])) : null;
+                    tabuleiro[x][y] = (Integer.parseInt(lineData[y]) != 0) ? crazyPieces.get(Integer.parseInt(lineData[y])) : null;
                 }
             }
 
