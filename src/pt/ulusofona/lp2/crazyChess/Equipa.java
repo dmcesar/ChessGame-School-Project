@@ -19,5 +19,5 @@ public class Equipa {
         inGameCrazyPiecesIds = new ArrayList<>();
     }
 
-    public int getId(){return this.id; }
+    public int getId(){return this.id;}
 }
