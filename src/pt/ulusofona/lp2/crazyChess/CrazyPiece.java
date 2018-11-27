@@ -1,50 +1,67 @@
 package pt.ulusofona.lp2.crazyChess;
 
-import java.util.HashMap;
-
 public class CrazyPiece {
 
     int idPeca;
     int idTipo;
     int idEquipa;
     String alcunha;
-    boolean isInGame;
-    int x;
-    int y;
 
-     CrazyPiece(){}
+    CrazyPiece(){}
 
-     CrazyPiece(int idPeca, int idTipo, int idEquipa, String alcunha){
+    CrazyPiece(int idPeca, int idTipo, int idEquipa, String alcunha){
+
         this.idPeca = idPeca;
         this.idTipo = idTipo;
         this.idEquipa = idEquipa;
         this.alcunha = alcunha;
     }
 
-    public void setX(int x){
-         this.x = x;
-    }
-
-    public void  setY(int y){
-        this.y = y;
-    }
-
-    public int getId(){return this.idPeca;}
-
-    public int getIdEquipa(){
-        return this.idEquipa;
-    }
+    public int getIdEquipa(){return this.idEquipa;}
 
     public String getImagePNG(){
-        short idEquipaPreta = 0;
-        if(this.idEquipa == idEquipaPreta) {
+
+        if(this.getIdEquipa() == 0) { //ID equipa preta
+
             return "crazy_emoji_black.png";
-        }else {
+
+        }else { //ID equipa branca
+
             return "crazy_emoji_white.png";
         }
     }
 
+    public Equipa getTeam(){
+
+        if(this.idEquipa == 0){
+
+            return Simulador.blackTeam;
+
+        } else {
+
+            return Simulador.whiteTeam;
+        }
+    }
+
     public String toString(){
-        return this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha;
+
+        String output = this.idEquipa + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ (n/a)";
+
+        if(this.getTeam().inGameCrazyPiecesIds.contains(this.idPeca)){
+
+            for(int x = 0; x < Simulador.boardSize; x++){
+
+                for(int y = 0; y < Simulador.boardSize; y++){
+
+                    if(Simulador.tabuleiro[x][y].equals(this)){
+
+                        output =  this.idEquipa + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ " + "(" + x + ", " + y + ")";
+                    }
+                }
+            }
+
+        }
+
+        return output;
     }
 }
