@@ -47,7 +47,7 @@ public class CrazyPiece {
 
     public String toString(){
 
-        String output = this.idEquipa + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ (n/a)";
+        String output = this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ (n/a)";
 
         if(this.getTeam().inGameCrazyPiecesIds.contains(this.idPeca)){
 
@@ -57,7 +57,7 @@ public class CrazyPiece {
 
                     if(Simulador.tabuleiro[x][y] != null && Simulador.tabuleiro[x][y].idPeca == this.idPeca){
 
-                        output =  this.idEquipa + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ " + "(" + x + ", " + y + ")";
+                        output =  this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ " + "(" + x + ", " + y + ")";
                     }
                 }
             }
