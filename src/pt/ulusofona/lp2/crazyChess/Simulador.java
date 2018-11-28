@@ -79,12 +79,10 @@ public class Simulador{
                 if(crazyPiece.idTeam == blackTeam.id){
 
                     blackTeam.crazyPieces.add(crazyPiece);
-                    blackTeam.inGameCrazyPieces.add(crazyPiece);
 
                 }else{
 
                     whiteTeam.crazyPieces.add(crazyPiece);
-                    whiteTeam.inGameCrazyPieces.add(crazyPiece);
                 }
 
                 //Adiciona a peça ao conjunto de peças do jogo
