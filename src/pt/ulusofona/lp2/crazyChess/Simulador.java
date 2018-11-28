@@ -12,23 +12,27 @@ public class Simulador{
 
     //Informações sobre o tabuleiro
     static CrazyPiece[][] tabuleiro;
-    static int boardSize;
+
 
     //Contém todas as peças em jogo
     static ArrayList<CrazyPiece> crazyPieces;
     static int numberOfPieces;
 
+
     //Tipos complexos que contêm a informação respetivamente a cada uma das equipas
     static Equipa blackTeam;
     static Equipa whiteTeam;
 
+
     //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
     static int cntPlays;
+
     //Contém o número de jogadas sem capturas
     static int cntPlaysNoCaptures;
 
     //Contém o resultado final do jogo
     static String result;
+
 
     public boolean iniciaJogo(File ficheiroInicial){
 
@@ -49,9 +53,7 @@ public class Simulador{
 
             String line = fileReader.nextLine();
 
-            boardSize = Integer.parseInt(line);
-
-            tabuleiro = new CrazyPiece[boardSize][boardSize];
+            tabuleiro = new CrazyPiece[Integer.parseInt(line)][Integer.parseInt(line)];
 
 
             //Secçao 2
@@ -68,9 +70,10 @@ public class Simulador{
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
+                //Cria a nova peça a ser adicionada
                 CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
 
-                //Adiciona o id da peça á sua equipa
+                //Adiciona a peça aos conjuntos de peças da sua equipa
                 if(crazyPiece.idTeam == blackTeam.id){
 
                     blackTeam.crazyPieces.add(crazyPiece);
@@ -88,27 +91,33 @@ public class Simulador{
 
 
             //Secçao 4
-            for (int y = 0; y < boardSize; y++) {
+            for (int y = 0; y < tabuleiro.length; y++) {
 
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
                 for (int x = 0; x < lineData.length; x++) {
 
+                    //Devolve o valor de id contido nessa posição da matriz
                     int positionID = Integer.parseInt(lineData[x]);
 
+                    //Se esse valor for diferente de 0 significa que se encontra lá uma peça
                     if (positionID != 0) {
 
+                        //Itera todas as peças do jogo
                         for (CrazyPiece crazyPiece : crazyPieces) {
 
+                            //Á procura de uma cujo id corresponda áquele lido do ficheiro
                             if(crazyPiece.idPiece == positionID){
 
                                 //Se já existir uma peça anteriormente nessa posição da equipa adversária
                                 if(tabuleiro[y][x] != null) {
 
+                                    //Remove imediatamente essa peça da lista de peças em jogo da equipa adversária
                                     tabuleiro[y][x].getTeam().inGameCrazyPieces.remove(tabuleiro[y][x]);
                                 }
 
+                                //Insere a nova peça no tabuleiro
                                 tabuleiro[y][x] = crazyPiece;
                             }
                         }
@@ -124,12 +133,12 @@ public class Simulador{
         return true;
     }
 
-    public int getTamanhoTabuleiro(){return boardSize;}
+    public int getTamanhoTabuleiro(){return tabuleiro.length;}
 
     public boolean processaJogada(int xO, int yO, int xD, int yD) {
 
         //Valida posição inicial
-        if ((0 <= xO && xO < boardSize) && (0 <= yO && yO < boardSize)) {
+        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
 
             //Verifica se existe uma peça na posição inicial
             if (tabuleiro[yO][xO] != null) {
@@ -141,7 +150,7 @@ public class Simulador{
                 if ((tabuleiro[yO][xO].getIdEquipa() == blackTeam.getId() && cntPlays % 2 == 0) || (tabuleiro[yO][xO].getIdEquipa() == whiteTeam.getId() && cntPlays % 2 != 0)) {
 
                     //Valida posição final
-                    if ((0 <= xD && xD < boardSize) && (0 <= yD && yD < boardSize)) {
+                    if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
 
                         //Verifica se a distância a ser percorrida é válida
                         if (sqrt(Math.pow((xD - xO), 2) + Math.pow((yD - yO), 2)) == 1) {
@@ -209,7 +218,7 @@ public class Simulador{
 
     public boolean jogoTerminado(){
 
-        //Vitória das brancas
+        //Vitória das brancas por falta de peças pretas em jogo
         if(blackTeam.inGameCrazyPieces.size() == 0){
 
             result = "VENCERAM AS BRANCAS";
@@ -217,7 +226,7 @@ public class Simulador{
             return true;
         }
 
-        //Vitória das Pretas
+        //Vitória das Pretas por falta de peças brancas em jogo
         if(whiteTeam.inGameCrazyPieces.size() == 0){
 
             result = "VENCERAM AS PRETAS";
@@ -225,7 +234,7 @@ public class Simulador{
             return true;
         }
 
-        //Empate por número igual de peças
+        //Empate por número igual de peças em jogo (1 peça por equipa é considerado empate)
         if(blackTeam.inGameCrazyPieces.size() == 1 && whiteTeam.inGameCrazyPieces.size() == 1){
 
             result = "EMPATE";
@@ -233,7 +242,7 @@ public class Simulador{
             return true;
         }
 
-        //Empate por falta de capturas;
+        //Empate por falta de capturas
         if (cntPlaysNoCaptures == 10){
 
             result = "EMPATE";
@@ -263,12 +272,12 @@ public class Simulador{
         resultados.add("---");
 
         resultados.add("Equipa das Pretas");
-        resultados.add(Integer.toString(whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size()));
+        resultados.add(Integer.toString((whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size())));
         resultados.add(Integer.toString(blackTeam.cntValidPlays));
         resultados.add(Integer.toString(blackTeam.cntInvalidPlays));
 
         resultados.add("Equipa das Brancas");
-        resultados.add(Integer.toString(blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size()));
+        resultados.add(Integer.toString((blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size())));
         resultados.add(Integer.toString(whiteTeam.cntValidPlays));
         resultados.add(Integer.toString(whiteTeam.cntInvalidPlays));
 
@@ -278,7 +287,7 @@ public class Simulador{
     public int getIDPeca(int x, int y){
 
         //Verifica se as coordenadas passadas são válidas
-        if ((0 <= x && x < boardSize) && (0 <= y && y < boardSize)) {
+        if ((0 <= x && x < tabuleiro.length) && (0 <= y && y < tabuleiro.length)) {
 
             //Verifica se existe uma peça na posição passada
             if (tabuleiro[y][x] != null) {
