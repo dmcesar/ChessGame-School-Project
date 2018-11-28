@@ -28,6 +28,13 @@ public class Simulador{
 
         try {
 
+            //Inicializa equipas e variáveis do jogo.
+            blackTeam = new Equipa(0);
+            whiteTeam = new Equipa(1);
+
+            cntPlays = 0;
+            cntPlaysNoCaptures = 0;
+
             //Secçao 1
             Scanner fileReader = new Scanner(ficheiroInicial);
 
@@ -47,12 +54,6 @@ public class Simulador{
 
 
             //Secçao 3
-            blackTeam = new Equipa(0);
-            whiteTeam = new Equipa(1);
-
-            cntPlays = 0;
-            cntPlaysNoCaptures = 0;
-
             for (int cntLine = 0; cntLine < numberOfPieces; cntLine++) {
 
                 line = fileReader.nextLine();
@@ -61,15 +62,15 @@ public class Simulador{
                 CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
 
                 //Adiciona o id da peça á sua equipa
-                if(crazyPiece.idTeam == whiteTeam.id){
+                if(crazyPiece.idTeam == blackTeam.id){
 
-                    whiteTeam.crazyPieces.add(crazyPiece);
-                    whiteTeam.inGameCrazyPieces.add(crazyPiece);
+                    blackTeam.crazyPieces.add(crazyPiece);
+                    blackTeam.inGameCrazyPieces.add(crazyPiece);
 
                 }else{
 
                     whiteTeam.crazyPieces.add(crazyPiece);
-                    blackTeam.inGameCrazyPieces.add(crazyPiece);
+                    whiteTeam.inGameCrazyPieces.add(crazyPiece);
                 }
 
                 //Adiciona a peça ao conjunto de peças do jogo
@@ -118,6 +119,7 @@ public class Simulador{
             //Verifica se existe uma peça na posição inicial
             if (tabuleiro[yO][xO] != null) {
 
+                //Retorna a peça que se pretende mover
                 CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
                 //Verifica se é a vez da equipa da peça em questão jogar
@@ -135,23 +137,31 @@ public class Simulador{
                                 //Caso as peças sejam de equipas diferentes ocorre uma captura
                                 if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
 
-                                    Equipa team = tabuleiro[yD][xD].getTeam();
+                                    //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
+                                    tabuleiro[yD][xD].getTeam().inGameCrazyPieces.remove(tabuleiro[yD][xD]);
 
-                                    team.inGameCrazyPieces.remove(tabuleiro[yD][xD]);
-
+                                    //Mexe a peça
                                     tabuleiro[yD][xD] = crazyPiece;
 
+                                    //Limpa a posição anterior
+                                    tabuleiro[yO][xO] = null;
+
+                                    //É incrementado o contador de jogadas válidas da equipa
                                     crazyPiece.getTeam().cntValidPlays++;
 
+                                    //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
                                     cntPlaysNoCaptures = 0;
 
+                                    //Jogada realizada com sucesso
                                     return true;
 
                                  //Caso contrário a jogada é inválida
                                 } else {
 
+                                    //É incrementado o contador de jogadas inválidas da equipa
                                     crazyPiece.getTeam().cntInvalidPlays++;
 
+                                    //Jogada falhada
                                     return false;
                                 }
 
@@ -160,10 +170,14 @@ public class Simulador{
 
                                 tabuleiro[yD][xD] = crazyPiece;
 
+                                tabuleiro[yO][xO] = null;
+
                                 crazyPiece.getTeam().cntValidPlays++;
 
+                                //Foi efuetuada uma jogada sem captura, logo o contador de jogadas sem captura é incrementado
                                 cntPlaysNoCaptures++;
 
+                                //Jogada realizada com sucesso
                                 return true;
                             }
                         }
@@ -172,6 +186,7 @@ public class Simulador{
             }
         }
 
+        //Jogada falhada, falhou algum dos parametros acima logo não foram efetuadas alterações
         return false;
     }
 
