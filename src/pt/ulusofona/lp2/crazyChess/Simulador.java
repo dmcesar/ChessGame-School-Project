@@ -174,9 +174,9 @@ public class Simulador{
 
                                     //Jogada realizada com sucesso
                                     return true;
-
-                                 //Caso contrário a jogada é inválida
-                                } else {
+                                }
+                                //Caso contrário a jogada é inválida
+                                else {
 
                                     //É incrementado o contador de jogadas inválidas da equipa
                                     crazyPiece.getTeam().cntInvalidPlays++;
@@ -184,9 +184,9 @@ public class Simulador{
                                     //Jogada falhada
                                     return false;
                                 }
-
-                                //Caso contrário não existe uma captura e a mudança de posição é direta.
-                            } else {
+                            }
+                            //Caso contrário não existe uma captura e a mudança de posição é direta.
+                            else {
 
                                 tabuleiro[yD][xD] = crazyPiece;
 
@@ -194,7 +194,7 @@ public class Simulador{
 
                                 crazyPiece.getTeam().cntValidPlays++;
 
-                                //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura
+                                //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura (número de capturas de uma equipa = diferença entre número de peças da outra e o seu número de peças em jogo)
                                 if((whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size()) + (blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size()) != 0) {
 
                                     //O contador de jogadas sem captura é incrementado
