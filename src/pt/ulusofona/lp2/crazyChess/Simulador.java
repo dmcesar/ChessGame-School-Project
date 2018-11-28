@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
 
 public class Simulador{
 
@@ -113,12 +112,17 @@ public class Simulador{
                             //Á procura de uma cujo id corresponda áquele lido do ficheiro
                             if(crazyPiece.idPiece == positionID){
 
+
+                                crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
+
+                               /*
                                 //Se já existir uma peça anteriormente nessa posição da equipa adversária
                                 if(tabuleiro[y][x] != null) {
 
                                     //Remove imediatamente essa peça da lista de peças em jogo da equipa adversária
                                     tabuleiro[y][x].getTeam().inGameCrazyPieces.remove(tabuleiro[y][x]);
                                 }
+                                */
 
                                 //Insere a nova peça no tabuleiro
                                 tabuleiro[y][x] = crazyPiece;
@@ -207,10 +211,10 @@ public class Simulador{
 
                                 crazyPiece.getTeam().cntValidPlays++;
 
-                                //Se já tiver ocorrido uma captura préviamente
+                                //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura
                                 if(firstCaptureHappened) {
 
-                                    //E for efuetuada uma jogada sem captura, o contador de jogadas sem captura é incrementado
+                                    //O contador de jogadas sem captura é incrementado
                                     cntPlaysNoCaptures++;
                                 }
 
