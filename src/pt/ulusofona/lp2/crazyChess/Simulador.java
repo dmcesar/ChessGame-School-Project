@@ -16,11 +16,11 @@ public class Simulador{
     static ArrayList<CrazyPiece> crazyPieces;
     static int numberOfPieces;
 
-    static Equipa blackTeam = new Equipa(0);
-    static Equipa whiteTeam = new Equipa(1);
+    static Equipa blackTeam;
+    static Equipa whiteTeam;
 
-    static int cntPlays = 0; //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
-    static int cntPlaysNoCaptures = 0;
+    static int cntPlays; //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
+    static int cntPlaysNoCaptures;
 
     static String result = "";
 
@@ -47,6 +47,12 @@ public class Simulador{
 
 
             //Secçao 3
+            blackTeam = new Equipa(0);
+            whiteTeam = new Equipa(1);
+
+            cntPlays = 0;
+            cntPlaysNoCaptures = 0;
+
             for (int cntLine = 0; cntLine < numberOfPieces; cntLine++) {
 
                 line = fileReader.nextLine();
