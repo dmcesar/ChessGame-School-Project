@@ -16,8 +16,8 @@ public class Simulador{
     static ArrayList<CrazyPiece> crazyPieces;
     static int numberOfPieces;
 
-    static Equipa blackTeam = new Equipa(0, 0, 0);
-    static Equipa whiteTeam = new Equipa(1, 0, 0);
+    static Equipa blackTeam = new Equipa(0);
+    static Equipa whiteTeam = new Equipa(1);
 
     static int cntPlays = 0; //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
     static int cntPlaysNoCaptures = 0;
@@ -37,6 +37,7 @@ public class Simulador{
 
             tabuleiro = new CrazyPiece[boardSize][boardSize];
 
+
             //Secçao 2
             line = fileReader.nextLine();
 
@@ -54,15 +55,15 @@ public class Simulador{
                 CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
 
                 //Adiciona o id da peça á sua equipa
-                if(crazyPiece.idEquipa == whiteTeam.id){
+                if(crazyPiece.idTeam == whiteTeam.id){
 
-                    whiteTeam.crazyPiecesIds.add(crazyPiece.idPeca);
-                    whiteTeam.inGameCrazyPiecesIds.add(crazyPiece.idPeca);
+                    whiteTeam.crazyPiecesIds.add(crazyPiece.idPiece);
+                    whiteTeam.inGameCrazyPiecesIds.add(crazyPiece.idPiece);
 
                 }else{
 
-                    whiteTeam.crazyPiecesIds.add(crazyPiece.idPeca);
-                    blackTeam.inGameCrazyPiecesIds.add(crazyPiece.idPeca);
+                    whiteTeam.crazyPiecesIds.add(crazyPiece.idPiece);
+                    blackTeam.inGameCrazyPiecesIds.add(crazyPiece.idPiece);
                 }
 
                 //Adiciona a peça ao conjunto de peças do jogo
@@ -84,7 +85,7 @@ public class Simulador{
 
                         for (CrazyPiece crazyPiece : crazyPieces) {
 
-                            if(crazyPiece.idPeca == positionID){
+                            if(crazyPiece.idPiece == positionID){
 
                                 tabuleiro[y][x] = crazyPiece;
                             }
@@ -130,7 +131,7 @@ public class Simulador{
 
                                     Equipa team = tabuleiro[yD][xD].getTeam();
 
-                                    team.inGameCrazyPiecesIds.remove(tabuleiro[yD][xD].idPeca);
+                                    team.inGameCrazyPiecesIds.remove(tabuleiro[yD][xD].idPiece);
 
                                     tabuleiro[yD][xD] = crazyPiece;
 
@@ -168,10 +169,7 @@ public class Simulador{
         return false;
     }
 
-    public List<CrazyPiece> getPecasMalucas(){
-
-        return crazyPieces;
-    }
+    public List<CrazyPiece> getPecasMalucas(){ return crazyPieces; }
 
     public boolean jogoTerminado(){
 
@@ -249,7 +247,7 @@ public class Simulador{
             //Verifica se existe uma peça na posição passada
             if (tabuleiro[y][x] != null) {
 
-                return tabuleiro[y][x].idPeca;
+                return tabuleiro[y][x].idPiece;
 
             }
         }

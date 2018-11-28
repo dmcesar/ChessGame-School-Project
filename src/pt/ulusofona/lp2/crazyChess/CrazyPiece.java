@@ -2,24 +2,24 @@ package pt.ulusofona.lp2.crazyChess;
 
 public class CrazyPiece {
 
-    int idPeca;
-    int idTipo;
-    int idEquipa;
-    String alcunha;
+    int idPiece;
+    int idType;
+    int idTeam;
+    String nickname;
 
     CrazyPiece(){}
 
-    CrazyPiece(int idPeca, int idTipo, int idEquipa, String alcunha){
+    CrazyPiece(int idPiece, int idType, int idTeam, String nickname){
 
-        this.idPeca = idPeca;
-        this.idTipo = idTipo;
-        this.idEquipa = idEquipa;
-        this.alcunha = alcunha;
+        this.idPiece = idPiece;
+        this.idType = idType;
+        this.idTeam = idTeam;
+        this.nickname = nickname;
     }
 
-    public int getId(){return this.idPeca;}
+    public int getId(){return this.idPiece;}
 
-    public int getIdEquipa(){return this.idEquipa;}
+    public int getIdEquipa(){return this.idTeam;}
 
     public String getImagePNG(){
 
@@ -35,7 +35,7 @@ public class CrazyPiece {
 
     public Equipa getTeam(){
 
-        if(this.idEquipa == 0){
+        if(this.idTeam == 0){
 
             return Simulador.blackTeam;
 
@@ -47,17 +47,17 @@ public class CrazyPiece {
 
     public String toString(){
 
-        String output = this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ (n/a)";
+        String output = this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
 
-        if(this.getTeam().inGameCrazyPiecesIds.contains(this.idPeca)){
+        if(this.getTeam().inGameCrazyPiecesIds.contains(this.idPiece)){
 
             for(int x = 0; x < Simulador.boardSize; x++){
 
                 for(int y = 0; y < Simulador.boardSize; y++){
 
-                    if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].idPeca == this.idPeca){
+                    if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].idPiece == this.idPiece){
 
-                        output =  this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ " + "(" + x + ", " + y + ")";
+                        output =  this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
                     }
                 }
             }

@@ -10,11 +10,11 @@ public class Equipa {
     int cntValidPlays;
     int cntInvalidPlays;
 
-    Equipa(int id, int cntValidPlays, int cntInvalidPlays){
+    Equipa(int id){
 
         this.id = id;
-        this.cntValidPlays = cntValidPlays;
-        this.cntInvalidPlays = cntInvalidPlays;
+        this.cntValidPlays = 0;
+        this.cntInvalidPlays = 0;
         crazyPiecesIds = new ArrayList<>();
         inGameCrazyPiecesIds = new ArrayList<>();
     }
