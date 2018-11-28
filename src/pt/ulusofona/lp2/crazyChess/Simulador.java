@@ -225,6 +225,16 @@ public class Simulador{
             }
         }
 
+        //Como a jogada falhou, incrementa o número de jogadas inválidas da equipa em questão
+        if(cntPlays % 2 == blackTeam.getId()){
+
+            blackTeam.cntInvalidPlays++;
+
+        } else {
+
+            whiteTeam.cntInvalidPlays++;
+        }
+
         //Jogada falhada, falhou algum dos parametros acima logo não foram efetuadas alterações
         return false;
     }
@@ -273,7 +283,7 @@ public class Simulador{
         ArrayList<String> authors = new ArrayList<>();
 
         authors.add("Diogo César : 21804304");
-        authors.add("Rafael Horta : <numero_aluno>");
+        authors.add("Rafael Horta : 21705375");
 
         return authors;
     }
