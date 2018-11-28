@@ -10,19 +10,25 @@ import static java.lang.Math.sqrt;
 
 public class Simulador{
 
+    //Informações sobre o tabuleiro
     static CrazyPiece[][] tabuleiro;
     static int boardSize;
 
+    //Contém todas as peças em jogo
     static ArrayList<CrazyPiece> crazyPieces;
     static int numberOfPieces;
 
+    //Tipos complexos que contêm a informação respetivamente a cada uma das equipas
     static Equipa blackTeam;
     static Equipa whiteTeam;
 
-    static int cntPlays; //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
+    //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
+    static int cntPlays;
+    //Conta o número de jogadas sem capturas
     static int cntPlaysNoCaptures;
 
-    static String result = "";
+    //Contém o resultado final do jogo
+    static String result;
 
     public boolean iniciaJogo(File ficheiroInicial){
 
@@ -34,6 +40,8 @@ public class Simulador{
 
             cntPlays = 0;
             cntPlaysNoCaptures = 0;
+
+            result = "";
 
             //Secçao 1
             Scanner fileReader = new Scanner(ficheiroInicial);
