@@ -24,7 +24,7 @@ public class Simulador{
 
     //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
     static int cntPlays;
-    //Conta o número de jogadas sem capturas
+    //Contém o número de jogadas sem capturas
     static int cntPlaysNoCaptures;
 
     //Contém o resultado final do jogo
@@ -42,6 +42,7 @@ public class Simulador{
             cntPlaysNoCaptures = 0;
 
             result = "";
+
 
             //Secçao 1
             Scanner fileReader = new Scanner(ficheiroInicial);
@@ -101,6 +102,12 @@ public class Simulador{
                         for (CrazyPiece crazyPiece : crazyPieces) {
 
                             if(crazyPiece.idPiece == positionID){
+
+                                //Se já existir uma peça anteriormente nessa posição da equipa adversária
+                                if(tabuleiro[y][x] != null) {
+
+                                    tabuleiro[y][x].getTeam().inGameCrazyPieces.remove(tabuleiro[y][x]);
+                                }
 
                                 tabuleiro[y][x] = crazyPiece;
                             }
