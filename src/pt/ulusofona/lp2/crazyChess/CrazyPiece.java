@@ -51,9 +51,9 @@ public class CrazyPiece {
 
         if(this.getTeam().inGameCrazyPieces.contains(this)){
 
-            for(int x = 0; x < Simulador.boardSize; x++){
+            for(int x = 0; x < Simulador.tabuleiro.length; x++){
 
-                for(int y = 0; y < Simulador.boardSize; y++){
+                for(int y = 0; y < Simulador.tabuleiro.length; y++){
 
                     if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].idPiece == this.idPiece){
 
