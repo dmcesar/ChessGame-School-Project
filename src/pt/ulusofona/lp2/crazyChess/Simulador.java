@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class Simulador{
@@ -155,7 +156,7 @@ public class Simulador{
                     if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
 
                         //Verifica se a distância a ser percorrida é válida
-                        if (sqrt(Math.pow((xD - xO), 2) + Math.pow((yD - yO), 2)) == 1) {
+                        if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
 
                             //Verifica se existe uma peça na posição final
                             if (tabuleiro[yD][xD] != null) {
