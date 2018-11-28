@@ -110,17 +110,8 @@ public class Simulador{
                             //Á procura de uma cujo id corresponda áquele lido do ficheiro
                             if(crazyPiece.idPiece == positionID){
 
-
+                                //Insere a peça no conjunto de peças em jogo da equipa
                                 crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
-
-                               /*
-                                //Se já existir uma peça anteriormente nessa posição da equipa adversária
-                                if(tabuleiro[y][x] != null) {
-
-                                    //Remove imediatamente essa peça da lista de peças em jogo da equipa adversária
-                                    tabuleiro[y][x].getTeam().inGameCrazyPieces.remove(tabuleiro[y][x]);
-                                }
-                                */
 
                                 //Insere a nova peça no tabuleiro
                                 tabuleiro[y][x] = crazyPiece;
@@ -271,7 +262,7 @@ public class Simulador{
         }
 
         //Empate por falta de capturas
-        if (cntPlaysNoCaptures == 10){
+        if (cntPlaysNoCaptures == 11){
 
             result = "EMPATE";
 
