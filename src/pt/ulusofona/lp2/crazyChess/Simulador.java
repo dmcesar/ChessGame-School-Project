@@ -211,7 +211,6 @@ public class Simulador{
 
                                     //E for efuetuada uma jogada sem captura, o contador de jogadas sem captura é incrementado
                                     cntPlaysNoCaptures++;
-
                                 }
 
                                 //No entanto o contador de jogadas é incrementado
