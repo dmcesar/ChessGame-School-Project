@@ -57,13 +57,13 @@ public class Simulador{
                 //Adiciona o id da peça á sua equipa
                 if(crazyPiece.idTeam == whiteTeam.id){
 
-                    whiteTeam.crazyPiecesIds.add(crazyPiece.idPiece);
-                    whiteTeam.inGameCrazyPiecesIds.add(crazyPiece.idPiece);
+                    whiteTeam.crazyPieces.add(crazyPiece);
+                    whiteTeam.inGameCrazyPieces.add(crazyPiece);
 
                 }else{
 
-                    whiteTeam.crazyPiecesIds.add(crazyPiece.idPiece);
-                    blackTeam.inGameCrazyPiecesIds.add(crazyPiece.idPiece);
+                    whiteTeam.crazyPieces.add(crazyPiece);
+                    blackTeam.inGameCrazyPieces.add(crazyPiece);
                 }
 
                 //Adiciona a peça ao conjunto de peças do jogo
@@ -131,7 +131,7 @@ public class Simulador{
 
                                     Equipa team = tabuleiro[yD][xD].getTeam();
 
-                                    team.inGameCrazyPiecesIds.remove(tabuleiro[yD][xD].idPiece);
+                                    team.inGameCrazyPieces.remove(tabuleiro[yD][xD]);
 
                                     tabuleiro[yD][xD] = crazyPiece;
 
@@ -174,7 +174,7 @@ public class Simulador{
     public boolean jogoTerminado(){
 
         //Vitória das brancas
-        if(blackTeam.inGameCrazyPiecesIds.size() == 0){
+        if(blackTeam.inGameCrazyPieces.size() == 0){
 
             result = "VENCERAM AS BRANCAS";
 
@@ -182,7 +182,7 @@ public class Simulador{
         }
 
         //Vitória das Pretas
-        if(whiteTeam.inGameCrazyPiecesIds.size() == 0){
+        if(whiteTeam.inGameCrazyPieces.size() == 0){
 
             result = "VENCERAM AS PRETAS";
 
@@ -190,7 +190,7 @@ public class Simulador{
         }
 
         //Empate por número igual de peças
-        if(blackTeam.inGameCrazyPiecesIds.size() == 1 && whiteTeam.inGameCrazyPiecesIds.size() == 1){
+        if(blackTeam.inGameCrazyPieces.size() == 1 && whiteTeam.inGameCrazyPieces.size() == 1){
 
             result = "EMPATE";
 
@@ -227,12 +227,12 @@ public class Simulador{
         resultados.add("---");
 
         resultados.add("Equipa das Pretas");
-        resultados.add(Integer.toString(whiteTeam.crazyPiecesIds.size() - whiteTeam.inGameCrazyPiecesIds.size()));
+        resultados.add(Integer.toString(whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size()));
         resultados.add(Integer.toString(blackTeam.cntValidPlays));
         resultados.add(Integer.toString(blackTeam.cntInvalidPlays));
 
         resultados.add("Equipa das Brancas");
-        resultados.add(Integer.toString(blackTeam.crazyPiecesIds.size() - blackTeam.inGameCrazyPiecesIds.size()));
+        resultados.add(Integer.toString(blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size()));
         resultados.add(Integer.toString(whiteTeam.cntValidPlays));
         resultados.add(Integer.toString(whiteTeam.cntInvalidPlays));
 

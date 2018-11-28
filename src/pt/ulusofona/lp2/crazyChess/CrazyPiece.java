@@ -49,7 +49,7 @@ public class CrazyPiece {
 
         String output = this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
 
-        if(this.getTeam().inGameCrazyPiecesIds.contains(this.idPiece)){
+        if(this.getTeam().inGameCrazyPieces.contains(this)){
 
             for(int x = 0; x < Simulador.boardSize; x++){
 

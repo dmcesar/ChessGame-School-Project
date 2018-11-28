@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Equipa {
 
     int id;
-    ArrayList<Integer> crazyPiecesIds;
-    ArrayList<Integer> inGameCrazyPiecesIds;
+    ArrayList<CrazyPiece> crazyPieces;
+    ArrayList<CrazyPiece> inGameCrazyPieces;
     int cntValidPlays;
     int cntInvalidPlays;
 
@@ -15,8 +15,8 @@ public class Equipa {
         this.id = id;
         this.cntValidPlays = 0;
         this.cntInvalidPlays = 0;
-        crazyPiecesIds = new ArrayList<>();
-        inGameCrazyPiecesIds = new ArrayList<>();
+        crazyPieces = new ArrayList<>();
+        inGameCrazyPieces = new ArrayList<>();
     }
 
     public int getId(){return this.id;}
