@@ -3,7 +3,6 @@ package pt.ulusofona.lp2.crazyChess;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,7 +13,7 @@ public class Simulador{
     static CrazyPiece[][] tabuleiro;
     static int boardSize;
 
-    static HashMap<Integer, CrazyPiece> crazyPieces;
+    static ArrayList<CrazyPiece> crazyPieces;
     static int numberOfPieces;
 
     static Equipa blackTeam = new Equipa(0, 0, 0);
@@ -43,7 +42,7 @@ public class Simulador{
 
             numberOfPieces = Integer.parseInt(line);
 
-            crazyPieces = new HashMap<>();
+            crazyPieces = new ArrayList<>();
 
 
             //Secçao 3
@@ -67,19 +66,30 @@ public class Simulador{
                 }
 
                 //Adiciona a peça ao conjunto de peças do jogo
-                crazyPieces.put(crazyPiece.idPeca, crazyPiece);
+                crazyPieces.add(crazyPiece);
             }
 
 
             //Secçao 4
-            for (int x = 0; x < boardSize; x++) {
+            for (int y = 0; y < boardSize; y++) {
 
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
-                for (int y = 0; y < lineData.length; y++) {
+                for (int x = 0; x < lineData.length; x++) {
 
-                    tabuleiro[x][y] = (Integer.parseInt(lineData[y]) != 0) ? crazyPieces.get(Integer.parseInt(lineData[y])) : null;
+                    int positionID = Integer.parseInt(lineData[x]);
+
+                    if (positionID != 0) {
+
+                        for (CrazyPiece crazyPiece : crazyPieces) {
+
+                            if(crazyPiece.idPeca == positionID){
+
+                                tabuleiro[y][x] = crazyPiece;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -99,12 +109,12 @@ public class Simulador{
         if ((0 <= xO && xO < boardSize) && (0 <= yO && yO < boardSize)) {
 
             //Verifica se existe uma peça na posição inicial
-            if (tabuleiro[xO][yO] != null) {
+            if (tabuleiro[yO][xO] != null) {
 
-                CrazyPiece crazyPiece = tabuleiro[xO][yO];
+                CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
                 //Verifica se é a vez da equipa da peça em questão jogar
-                if ((tabuleiro[xO][yO].getIdEquipa() == blackTeam.getId() && cntPlays % 2 == 0) || (tabuleiro[xO][yO].getIdEquipa() == whiteTeam.getId() && cntPlays % 2 != 0)) {
+                if ((tabuleiro[yO][xO].getIdEquipa() == blackTeam.getId() && cntPlays % 2 == 0) || (tabuleiro[yO][xO].getIdEquipa() == whiteTeam.getId() && cntPlays % 2 != 0)) {
 
                     //Valida posição final
                     if ((0 <= xD && xD < boardSize) && (0 <= yD && yD < boardSize)) {
@@ -113,16 +123,16 @@ public class Simulador{
                         if (sqrt(Math.pow((xD - xO), 2) + Math.pow((yD - yO), 2)) == 1) {
 
                             //Verifica se existe uma peça na posição final
-                            if (tabuleiro[xD][yD] != null) {
+                            if (tabuleiro[yD][xD] != null) {
 
                                 //Caso as peças sejam de equipas diferentes ocorre uma captura
-                                if (tabuleiro[xD][yD].getIdEquipa() != tabuleiro[xO][yO].getIdEquipa()) {
+                                if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
 
-                                    Equipa team = tabuleiro[xD][yD].getTeam();
+                                    Equipa team = tabuleiro[yD][xD].getTeam();
 
-                                    team.inGameCrazyPiecesIds.remove(tabuleiro[xD][yD].idPeca);
+                                    team.inGameCrazyPiecesIds.remove(tabuleiro[yD][xD].idPeca);
 
-                                    tabuleiro[xD][yD] = crazyPiece;
+                                    tabuleiro[yD][xD] = crazyPiece;
 
                                     crazyPiece.getTeam().cntValidPlays++;
 
@@ -141,7 +151,7 @@ public class Simulador{
                                 //Caso contrário não existe uma captura e a mudança de posição é direta.
                             } else {
 
-                                tabuleiro[xD][yD] = crazyPiece;
+                                tabuleiro[yD][xD] = crazyPiece;
 
                                 crazyPiece.getTeam().cntValidPlays++;
 
@@ -160,14 +170,7 @@ public class Simulador{
 
     public List<CrazyPiece> getPecasMalucas(){
 
-        List<CrazyPiece> crazyPiecesList = new ArrayList<>();
-
-        for(int idPiece : crazyPieces.keySet()){
-
-            crazyPiecesList.add(crazyPieces.get(idPiece));
-        }
-
-        return crazyPiecesList;
+        return crazyPieces;
     }
 
     public boolean jogoTerminado(){
@@ -244,9 +247,9 @@ public class Simulador{
         if ((0 <= x && x < boardSize) && (0 <= y && y < boardSize)) {
 
             //Verifica se existe uma peça na posição passada
-            if (tabuleiro[x][y] != null) {
+            if (tabuleiro[y][x] != null) {
 
-                return tabuleiro[x][y].idPeca;
+                return tabuleiro[y][x].idPeca;
 
             }
         }

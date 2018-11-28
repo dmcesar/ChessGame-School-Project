@@ -55,7 +55,7 @@ public class CrazyPiece {
 
                 for(int y = 0; y < Simulador.boardSize; y++){
 
-                    if(Simulador.tabuleiro[x][y] != null && Simulador.tabuleiro[x][y].idPeca == this.idPeca){
+                    if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].idPeca == this.idPeca){
 
                         output =  this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha + " @ " + "(" + x + ", " + y + ")";
                     }
