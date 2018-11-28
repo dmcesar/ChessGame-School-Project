@@ -201,7 +201,7 @@ public class Simulador{
                                     cntPlaysNoCaptures++;
                                 }
 
-                                //No entanto o contador de jogadas é incrementado
+                                //No entanto o contador de jogadas é sempre incrementado
                                 cntPlays++;
 
                                 //Jogada realizada com sucesso
@@ -223,7 +223,7 @@ public class Simulador{
             whiteTeam.cntInvalidPlays++;
         }
 
-        //Jogada falhada, falhou algum dos parametros acima logo não foram efetuadas alterações
+        //Jogada falhada, falhou algum dos parametros acima logo não foram efetuadas alterações ao tabuleiro
         return false;
     }
 
