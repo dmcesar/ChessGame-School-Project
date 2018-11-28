@@ -29,6 +29,7 @@ public class Simulador{
 
     //Contém o número de jogadas sem capturas
     static int cntPlaysNoCaptures;
+    boolean firstCaptureHappened;
 
     //Contém o resultado final do jogo
     static String result;
@@ -43,7 +44,8 @@ public class Simulador{
             whiteTeam = new Equipa(1);
 
             cntPlays = 0;
-            cntPlaysNoCaptures = 0;
+
+            firstCaptureHappened = false;
 
             result = "";
 
@@ -176,6 +178,12 @@ public class Simulador{
                                     //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
                                     cntPlaysNoCaptures = 0;
 
+                                    //Indica que foi realizada um captura (apenas utilizado para verificar a primeira captura)
+                                    firstCaptureHappened = true;
+
+                                    //É incrementado o contador de jogadas
+                                    cntPlays++;
+
                                     //Jogada realizada com sucesso
                                     return true;
 
@@ -198,8 +206,16 @@ public class Simulador{
 
                                 crazyPiece.getTeam().cntValidPlays++;
 
-                                //Foi efuetuada uma jogada sem captura, logo o contador de jogadas sem captura é incrementado
-                                cntPlaysNoCaptures++;
+                                //Se já tiver ocorrido uma captura préviamente
+                                if(firstCaptureHappened) {
+
+                                    //E for efuetuada uma jogada sem captura, o contador de jogadas sem captura é incrementado
+                                    cntPlaysNoCaptures++;
+
+                                }
+
+                                //No entanto o contador de jogadas é incrementado
+                                cntPlays++;
 
                                 //Jogada realizada com sucesso
                                 return true;
