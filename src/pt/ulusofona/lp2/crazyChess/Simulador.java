@@ -67,18 +67,6 @@ public class Simulador{
                 //Cria a nova peça a ser adicionada
                 CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
 
-                /*
-                //Adiciona a peça aos conjuntos de peças da sua equipa
-                if(crazyPiece.idTeam == blackTeam.id){
-
-                    blackTeam.crazyPieces.add(crazyPiece);
-
-                }else{
-
-                    whiteTeam.crazyPieces.add(crazyPiece);
-                }
-                */
-
                 //Adiciona a peça ao conjunto de peças do jogo
                 crazyPieces.add(crazyPiece);
             }
@@ -102,7 +90,7 @@ public class Simulador{
                         for (CrazyPiece crazyPiece : crazyPieces) {
 
                             //Á procura de uma cujo id corresponda áquele lido do ficheiro
-                            if(crazyPiece.idPiece == positionID){
+                            if(crazyPiece.getId() == positionID){
 
                                 //Insere a peça no conjunto de peças em jogo da equipa
                                 crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
@@ -308,11 +296,11 @@ public class Simulador{
 
         if((blackTeam.cntValidPlays + whiteTeam.cntValidPlays) % 2 == 0){
 
-            return blackTeam.id;
+            return blackTeam.getId();
 
         } else {
 
-            return whiteTeam.id;
+            return whiteTeam.getId();
         }
     }
 }
