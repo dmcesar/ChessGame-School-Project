@@ -24,9 +24,6 @@ public class Simulador{
     static Equipa whiteTeam;
 
 
-    //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
-    static int cntPlays;
-
     //Contém o número de jogadas sem capturas
     static int cntPlaysNoCaptures;
 
@@ -41,8 +38,6 @@ public class Simulador{
             //Inicializa equipas e variáveis do jogo.
             blackTeam = new Equipa(0);
             whiteTeam = new Equipa(1);
-
-            cntPlays = 0;
 
             result = "";
 
@@ -140,7 +135,7 @@ public class Simulador{
                 CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
                 //Verifica se é a vez da equipa da peça em questão jogar
-                if ((tabuleiro[yO][xO].getIdEquipa() == blackTeam.getId() && cntPlays % 2 == 0) || (tabuleiro[yO][xO].getIdEquipa() == whiteTeam.getId() && cntPlays % 2 != 0)) {
+                if ((tabuleiro[yO][xO].getIdEquipa() == blackTeam.getId() && getIDEquipaAJogar() == blackTeam.getId()) || (tabuleiro[yO][xO].getIdEquipa() == whiteTeam.getId() && getIDEquipaAJogar() == whiteTeam.getId())) {
 
                     //Valida posição final
                     if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
@@ -168,9 +163,6 @@ public class Simulador{
 
                                     //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
                                     cntPlaysNoCaptures = 0;
-
-                                    //É incrementado o contador de jogadas
-                                    cntPlays++;
 
                                     //Jogada realizada com sucesso
                                     return true;
@@ -201,9 +193,6 @@ public class Simulador{
                                     cntPlaysNoCaptures++;
                                 }
 
-                                //No entanto o contador de jogadas é sempre incrementado
-                                cntPlays++;
-
                                 //Jogada realizada com sucesso
                                 return true;
                             }
@@ -214,7 +203,7 @@ public class Simulador{
         }
 
         //Como a jogada falhou, incrementa o número de jogadas inválidas da equipa em questão
-        if(cntPlays % 2 == blackTeam.getId()){
+        if(getIDEquipaAJogar() == blackTeam.getId()){
 
             blackTeam.cntInvalidPlays++;
 
@@ -314,7 +303,7 @@ public class Simulador{
 
     public int getIDEquipaAJogar(){
 
-        if(cntPlays % 2 == 0){
+        if((blackTeam.cntValidPlays + whiteTeam.cntValidPlays) % 2 == 0){
 
             return blackTeam.id;
 
