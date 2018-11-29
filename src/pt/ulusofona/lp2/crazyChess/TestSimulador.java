@@ -1,8 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static junit.framework.TestCase.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 public class TestSimulador {
