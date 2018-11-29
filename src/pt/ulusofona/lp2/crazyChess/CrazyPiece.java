@@ -35,27 +35,31 @@ public class CrazyPiece {
 
     public Equipa getTeam(){
 
+        Simulador simulador = new Simulador();
+
         if(this.idTeam == 0){
 
-            return Simulador.blackTeam;
+            return simulador.blackTeam;
 
         } else {
 
-            return Simulador.whiteTeam;
+            return simulador.whiteTeam;
         }
     }
 
     public String toString(){
 
+        Simulador simulador = new Simulador();
+
         String output = this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
 
         if(this.getTeam().inGameCrazyPieces.contains(this)){
 
-            for(int x = 0; x < Simulador.tabuleiro.length; x++){
+            for(int x = 0; x < simulador.tabuleiro.length; x++){
 
-                for(int y = 0; y < Simulador.tabuleiro.length; y++){
+                for(int y = 0; y < simulador.tabuleiro.length; y++){
 
-                    if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].idPiece == this.idPiece){
+                    if(simulador.tabuleiro[y][x] != null && simulador.tabuleiro[y][x].idPiece == this.idPiece){
 
                         output =  this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
                     }
