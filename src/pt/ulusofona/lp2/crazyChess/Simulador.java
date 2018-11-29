@@ -128,7 +128,7 @@ public class Simulador{
                 CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
                 //Verifica se é a vez da equipa da peça em questão jogar
-                if ((tabuleiro[yO][xO].getIdEquipa() == blackTeam.getId() && getIDEquipaAJogar() == blackTeam.getId()) || (tabuleiro[yO][xO].getIdEquipa() == whiteTeam.getId() && getIDEquipaAJogar() == whiteTeam.getId())) {
+                if ((tabuleiro[yO][xO].getIdEquipa() == getIDEquipaAJogar())) {
 
                     //Valida posição final
                     if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
