@@ -209,7 +209,7 @@ public class Simulador{
         return false;
     }
 
-    public List<CrazyPiece> getPecasMalucas(){ return crazyPieces; }
+    public List<CrazyPiece> getPecasMalucas(){ return crazyPieces;}
 
     public boolean jogoTerminado(){
 
