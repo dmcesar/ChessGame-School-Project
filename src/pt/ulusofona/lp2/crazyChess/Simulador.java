@@ -39,6 +39,8 @@ public class Simulador{
             blackTeam = new Equipa(0);
             whiteTeam = new Equipa(1);
 
+            cntPlaysNoCaptures = 0;
+
             result = "";
 
 
