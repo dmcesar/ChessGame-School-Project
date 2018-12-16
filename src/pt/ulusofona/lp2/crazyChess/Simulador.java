@@ -2,53 +2,64 @@ package pt.ulusofona.lp2.crazyChess;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.Math.sqrt;
+import static java.lang.Math.abs;
 
 public class Simulador{
 
+    //Informações sobre o tabuleiro
     static CrazyPiece[][] tabuleiro;
-    static int boardSize;
 
-    static HashMap<Integer, CrazyPiece> crazyPieces;
-    HashMap<Integer, CrazyPiece> pecasEmJogo;
+
+    //Contém todas as peças em jogo
+    static ArrayList<CrazyPiece> crazyPieces;
     static int numberOfPieces;
 
-    static int cntMoves = 0; //Conta o número de jogadas efetuadas ao longo do jogo. Usada também para verificar qual a equipa a jogar.
-    int jogadasInvalidasPretas = 0;
-    int jogadasInvalidasBrancas = 0;
-    int jogadasValidasPretas = 0;
-    int jogadasValidasBrancas = 0;
-    int nrCapturasPretas = 0;
-    int nrCapturasBrancas = 0;
-    int jogadasSemCaptura = 0;
 
-    String resultado;
+    //Tipos complexos que contêm a informação respetivamente a cada uma das equipas
+    static Equipa blackTeam;
+    static Equipa whiteTeam;
+
+
+    //Contém o número de jogadas sem capturas
+    private static int cntPlaysNoCaptures;
+
+    //Contém o resultado final do jogo
+    private String result;
+
 
     public boolean iniciaJogo(File ficheiroInicial){
 
         try {
+
+            //Inicializa equipas e variáveis do jogo.
+            blackTeam = new Equipa(10);
+            whiteTeam = new Equipa(20);
+
+            cntPlaysNoCaptures = 0;
+
+            result = "";
+
 
             //Secçao 1
             Scanner fileReader = new Scanner(ficheiroInicial);
 
             String line = fileReader.nextLine();
 
-            boardSize = Integer.parseInt(line);
+            tabuleiro = new CrazyPiece[Integer.parseInt(line)][Integer.parseInt(line)];
 
-            tabuleiro = new CrazyPiece[boardSize][boardSize];
 
             //Secçao 2
-             line = fileReader.nextLine();
+            line = fileReader.nextLine();
 
             numberOfPieces = Integer.parseInt(line);
 
-            crazyPieces = new HashMap<>();
-            pecasEmJogo = new HashMap<>();
+            crazyPieces = new ArrayList<>();
 
 
             //Secçao 3
@@ -57,22 +68,43 @@ public class Simulador{
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
-                CrazyPiece peca = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
+                //Cria a nova peça a ser adicionada
+                CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
 
-                crazyPieces.put(peca.getId(), peca);
-                pecasEmJogo.put(peca.getId(), peca);
+                //Adiciona a peça ao conjunto de peças do jogo
+                crazyPieces.add(crazyPiece);
             }
 
 
             //Secçao 4
-            for (int cntline = 0; cntline < boardSize; cntline++) {
+            for (int y = 0; y < tabuleiro.length; y++) {
 
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
-                for (int cntPos = 0; cntPos < lineData.length; cntPos++) {
+                for (int x = 0; x < lineData.length; x++) {
 
-                    tabuleiro[cntPos][cntline] = (Integer.parseInt(lineData[cntPos]) != 0) ? crazyPieces.get(Integer.parseInt                           (lineData[cntPos])) : null;
+                    //Devolve o valor de id contido nessa posição da matriz
+                    int positionID = Integer.parseInt(lineData[x]);
+
+                    //Se esse valor for diferente de 0 significa que se encontra lá uma peça
+                    if (positionID != 0) {
+
+                        //Itera todas as peças do jogo
+                        for (CrazyPiece crazyPiece : crazyPieces) {
+
+                            //Á procura de uma cujo id corresponda áquele lido do ficheiro
+                            if(crazyPiece.getId() == positionID){
+
+                                //Insere a peça no conjunto de peças em jogo da equipa
+                                crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
+                                crazyPiece.getTeam().crazyPieces.add(crazyPiece);
+
+                                //Insere a nova peça no tabuleiro
+                                tabuleiro[y][x] = crazyPiece;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -84,126 +116,139 @@ public class Simulador{
         return true;
     }
 
-    public int getTamanhoTabuleiro(){return boardSize;}
+    public int getTamanhoTabuleiro(){return tabuleiro.length;}
 
-    public boolean processaJogada(int xO, int yO, int xD, int yD){
-        short idEquipaPreta = 0;
+    public boolean processaJogada(int xO, int yO, int xD, int yD) {
 
-        if((0 <= xO && xO < boardSize) && (0 <= yO && yO < boardSize)){ //Valida posição inicial
+        //Valida posição inicial
+        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
 
-            if(tabuleiro[xO][yO] != null){ //Verifica se existe uma peça na posição inicial
+            //Verifica se existe uma peça na posição inicial
+            if (tabuleiro[yO][xO] != null) {
 
-                if((0 <= xD && xD < boardSize) && (0 <= yD && yD < boardSize)){ //Valida posição final
+                //Retorna a peça que se pretende mover
+                CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
-                    if(sqrt(Math.pow((xD - xO), 2) + Math.pow((yD - yO), 2)) == 1) {
+                //Verifica se é a vez da equipa da peça em questão jogar
+                if ((tabuleiro[yO][xO].getIdEquipa() == getIDEquipaAJogar())) {
+
+                    //Valida posição final
+                    if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
 
                         //Verifica se a distância a ser percorrida é válida
+                        if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
 
+                            //Verifica se existe uma peça na posição final
+                            if (tabuleiro[yD][xD] != null) {
 
+                                //Caso as peças sejam de equipas diferentes ocorre uma captura
+                                if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
 
-                            //Caso a jogada seja válida
-                            //Incrementa o numero de jogadas válidas de cada equipa para utilizar nos resultados
-                            if (tabuleiro[xO][yO].getIdEquipa() == idEquipaPreta) {
-                                jogadasValidasPretas++;
-                            } else {
-                                jogadasValidasBrancas++;
+                                    //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
+                                    tabuleiro[yD][xD].getTeam().inGameCrazyPieces.remove(tabuleiro[yD][xD]);
+
+                                    //Mexe a peça
+                                    tabuleiro[yD][xD] = crazyPiece;
+
+                                    //Limpa a posição anterior
+                                    tabuleiro[yO][xO] = null;
+
+                                    //É incrementado o contador de jogadas válidas da equipa
+                                    crazyPiece.getTeam().cntValidPlays++;
+
+                                    //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
+                                    cntPlaysNoCaptures = 0;
+
+                                    //Jogada realizada com sucesso
+                                    return true;
+                                }
+                                //Caso contrário a jogada é inválida
+                                else {
+
+                                    //É incrementado o contador de jogadas inválidas da equipa
+                                    crazyPiece.getTeam().cntInvalidPlays++;
+
+                                    //Jogada falhada
+                                    return false;
+                                }
                             }
+                            //Caso contrário não existe uma captura e a mudança de posição é direta.
+                            else {
 
-                            //Caso a peça vá para uma parte do tabuleiro já ocupada
-                            if (tabuleiro[xD][yD] != null) {
-                                //Verifica se as peças são de equipas diferentes
+                                tabuleiro[yD][xD] = crazyPiece;
 
-                                if (tabuleiro[xO][yO].getIdEquipa() != tabuleiro[xD][yD].getIdEquipa()) {
-                                    //Remoção da peça eliminada
-                                    pecasEmJogo.remove(tabuleiro[xD][yD].getId());
+                                tabuleiro[yO][xO] = null;
 
-                                    if (tabuleiro[xO][yO].getIdEquipa() == idEquipaPreta) {
-                                        nrCapturasPretas++;
-                                        jogadasSemCaptura = 0;
-                                    } else {
-                                        nrCapturasBrancas++;
-                                        jogadasSemCaptura = 0;
-                                    }
+                                crazyPiece.getTeam().cntValidPlays++;
 
+                                //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura (número de capturas de uma equipa = diferença entre número de peças da outra e o seu número de peças em jogo)
+                                if((whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size()) + (blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size()) != 0) {
+
+                                    //O contador de jogadas sem captura é incrementado
+                                    cntPlaysNoCaptures++;
                                 }
 
-                            }else{
-                                jogadasSemCaptura++;
+                                //Jogada realizada com sucesso
+                                return true;
                             }
-                            tabuleiro[xD][yD] = tabuleiro[xO][yO];
-                            tabuleiro[xO][yO] = null;
-
-                            cntMoves++;
-                            return true;
+                        }
                     }
                 }
             }
         }
 
-        //Caso a jogada seja inválida
-        //Incrementa o numero de jogadas inválidas de cada equipa para utilizar nos resultados
-        if(tabuleiro[xO][yO].getIdEquipa() == idEquipaPreta){
-            jogadasInvalidasPretas++;
+        //Como a jogada falhou, incrementa o número de jogadas inválidas da equipa em questão
+        if(getIDEquipaAJogar() == blackTeam.getId()){
+
+            blackTeam.cntInvalidPlays++;
+
         } else {
-            jogadasInvalidasBrancas++;
+
+            whiteTeam.cntInvalidPlays++;
         }
+
+        //Jogada falhada, falhou algum dos parametros acima logo não foram efetuadas alterações ao tabuleiro
         return false;
     }
 
-    public List<CrazyPiece> getPecasMalucas(){
-
-        List<CrazyPiece> crazyPiecesList = new ArrayList<>();
-
-        for(int idPiece : crazyPieces.keySet()){
-
-            crazyPiecesList.add(crazyPieces.get(idPiece));
-        }
-
-        return crazyPiecesList;
-    }
-
+    public List<CrazyPiece> getPecasMalucas(){ return crazyPieces;}
 
     public boolean jogoTerminado(){
-        short idEquipaPreta = 0;
-        short cntPecasPretas = 0;
-        short cntPecasBrancas = 0;
-        int nrCapturas = nrCapturasBrancas + nrCapturasPretas;
 
-        for ( int idPiece : pecasEmJogo.keySet() ){
-            if(pecasEmJogo.get(idPiece).getIdEquipa() == idEquipaPreta ){
-                cntPecasPretas++;
-            } else {
-                cntPecasBrancas++;
-            }
-        }
+        //Vitória das brancas por falta de peças pretas em jogo
+        if(blackTeam.inGameCrazyPieces.size() == 0){
 
-        if ( cntPecasBrancas == 1 && cntPecasPretas == 1){
-            resultado = "EMPATE";
+            result = "VENCERAM AS BRANCAS";
+
             return true;
         }
 
-        if ( cntPecasBrancas == 0 && cntPecasPretas > 0 ){
-            resultado = "VENCERAM AS PRETAS";
+        //Vitória das Pretas por falta de peças brancas em jogo
+        if(whiteTeam.inGameCrazyPieces.size() == 0){
+
+            result = "VENCERAM AS PRETAS";
+
             return true;
         }
 
+        //Empate por número igual de peças em jogo (1 peça por equipa é considerado empate)
+        if(blackTeam.inGameCrazyPieces.size() == 1 && whiteTeam.inGameCrazyPieces.size() == 1){
 
-        if ( cntPecasBrancas > 0 && cntPecasPretas == 0 ) {
-            resultado = "VENCERAM AS BRANCAS";
+            result = "EMPATE";
+
             return true;
         }
 
+        //Empate por falta de capturas
+        if (cntPlaysNoCaptures == 10){
 
+            result = "EMPATE";
 
-        if(nrCapturas > 0 && jogadasSemCaptura >= 10){
-            resultado = "EMPATE";
             return true;
         }
 
         return false;
     }
-
-
 
     public List<String> getAutores(){
 
@@ -216,45 +261,124 @@ public class Simulador{
     }
 
     public List<String> getResultados(){
+
         ArrayList<String> resultados = new ArrayList<>();
 
         resultados.add("JOGO DE CRAZY CHESS");
-        resultados.add("Resultado: " + resultado);
+        resultados.add("Resultado: " + result);
         resultados.add("---");
 
         resultados.add("Equipa das Pretas");
-        resultados.add("" + nrCapturasPretas);
-        resultados.add("" + jogadasValidasPretas);
-        resultados.add("" + jogadasInvalidasPretas);
+        resultados.add(Integer.toString((whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size())));
+        resultados.add(Integer.toString(blackTeam.cntValidPlays));
+        resultados.add(Integer.toString(blackTeam.cntInvalidPlays));
 
         resultados.add("Equipa das Brancas");
-        resultados.add("" + nrCapturasBrancas);
-        resultados.add("" + jogadasValidasBrancas);
-        resultados.add("" + jogadasInvalidasBrancas);
+        resultados.add(Integer.toString((blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size())));
+        resultados.add(Integer.toString(whiteTeam.cntValidPlays));
+        resultados.add(Integer.toString(whiteTeam.cntInvalidPlays));
 
         return resultados;
     }
 
     public int getIDPeca(int x, int y){
 
-        if(tabuleiro[x][y] != null){
+        //Verifica se as coordenadas passadas são válidas
+        if ((0 <= x && x < tabuleiro.length) && (0 <= y && y < tabuleiro.length)) {
 
-            return tabuleiro[x][y].idPeca;
+            //Verifica se existe uma peça na posição passada
+            if (tabuleiro[y][x] != null) {
 
-        }else{
+                return tabuleiro[y][x].idPiece;
 
-            return 0;
+            }
         }
+        return 0;
     }
 
     public int getIDEquipaAJogar(){
-        int idEquipaPreta = 0;
-        int idEquipaBranca = 1;
 
-        if(cntMoves % 2 == 0) {
-            return idEquipaPreta;
+        if((blackTeam.cntValidPlays + whiteTeam.cntValidPlays) % 2 == 0){
+
+            return blackTeam.getId();
+
         } else {
-            return idEquipaBranca;
+
+            return whiteTeam.getId();
+        }
+    }
+
+    public boolean gravarJogo(File ficheiroDestino){
+        try{
+            FileWriter writer = new FileWriter(ficheiroDestino);
+            //Escrita da primeira linha do ficheiro, que é o tamanho do tabuleiro
+            writer.write(getTamanhoTabuleiro() + "\n");
+
+            //Escrita do número de peças existentes no jogo
+            writer.write(numberOfPieces + "\n");
+
+            //Percorre-se a lista onde estão todas as CrazyPieces
+            for (CrazyPiece piece : crazyPieces){
+                //Escrita do id da peça no ficheiro
+                writer.write(piece.getId() + ":");
+                //Escrita do tipo da peça no ficheiro
+                writer.write(piece.getIdType() + ":");
+                //Escrita do id da equipa da peça no ficheiro
+                writer.write(piece.getIdEquipa() + ":");
+                //Escrita da alcunha da peça no ficheiro
+                writer.write(piece.getNickname());
+                writer.write("\n");
+            }
+
+            //Percorre-se o tabuleiro
+            for (int y = 0; y < tabuleiro.length; y++) {
+                for (int x = 0; x < tabuleiro.length; x++){
+                    //Verifica-se se numa determinada posição do tabuleiro existe uma peça
+                    if(tabuleiro[y][x] != null){
+                        //Esta condição é necessária para o escritor não escrever um ":" a mais em cada linha
+                        if(x == tabuleiro.length - 1){
+                            writer.write(tabuleiro[y][x].getId() + "");
+                        }else {
+                            writer.write(tabuleiro[y][x].getId() + ":");
+                        }
+
+                    } else {
+                        //Se não houver nenhuma peça na posição atual do tabuleiro escreve-se 0, em vez do id da peça
+                        //Esta condição é necessária para o escritor não escrever um ":" a mais em cada linha
+                        if (x == tabuleiro.length-1) {
+                            writer.write("0");
+                        } else {
+                            writer.write("0:");
+                        }
+                    }
+                }
+                writer.write("\n");
+            }
+
+            //Escrita do id da equipa a jogar
+            writer.write(getIDEquipaAJogar()+":");
+
+            //Escrita do nº de jogadas válidas da equipa preta
+            writer.write(blackTeam.getCntValidPlays()+":");
+            //Escrita do nr capturas da equipa preta
+            writer.write(Integer.toString(whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size()) + ":");
+            //Escrita do nº de jogadas inválidas da equipa preta
+            writer.write(blackTeam.getCntInvalidPlays() + ":");
+
+            //Escrita do nº de jogadas válidas da equipa branca
+            writer.write(whiteTeam.getCntValidPlays() + ":");
+            //Escrita do nr capturas da equipa branca
+            writer.write(Integer.toString(blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size())+":");
+            //Escrita do nº de jogadas inválidas da equipa preta
+            writer.write(whiteTeam.getCntInvalidPlays() + "");
+
+            //Fecho do escritor
+            writer.close();
+
+            return true;
+
+        } catch (IOException e) {
+            return false;
         }
     }
 }

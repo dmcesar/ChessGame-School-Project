@@ -1,50 +1,80 @@
 package pt.ulusofona.lp2.crazyChess;
 
-import java.util.HashMap;
-
 public class CrazyPiece {
 
-    int idPeca;
-    int idTipo;
-    int idEquipa;
-    String alcunha;
-    boolean isInGame;
-    int x;
-    int y;
+    int idPiece;
+    int idType;
+    int idTeam;
+    String nickname;
 
-     CrazyPiece(){}
+    CrazyPiece(){}
 
-     CrazyPiece(int idPeca, int idTipo, int idEquipa, String alcunha){
-        this.idPeca = idPeca;
-        this.idTipo = idTipo;
-        this.idEquipa = idEquipa;
-        this.alcunha = alcunha;
+    CrazyPiece(int idPiece, int idType, int idTeam, String nickname){
+
+        this.idPiece = idPiece;
+        this.idType = idType;
+        this.idTeam = idTeam;
+        this.nickname = nickname;
     }
 
-    public void setX(int x){
-         this.x = x;
+    public int getId(){return this.idPiece;}
+
+    public int getIdType(){
+        return this.idType;
     }
 
-    public void  setY(int y){
-        this.y = y;
-    }
+    public int getIdEquipa(){return this.idTeam;}
 
-    public int getId(){return this.idPeca;}
-
-    public int getIdEquipa(){
-        return this.idEquipa;
+    public String getNickname(){
+        return this.nickname;
     }
 
     public String getImagePNG(){
-        short idEquipaPreta = 0;
-        if(this.idEquipa == idEquipaPreta) {
+
+        if(this.getIdEquipa() == 10) { //ID equipa preta
+
             return "crazy_emoji_black.png";
-        }else {
+
+        }else { //ID equipa branca
+
             return "crazy_emoji_white.png";
         }
     }
 
+    public Equipa getTeam(){
+
+        Simulador simulador = new Simulador();
+
+        if(this.idTeam == 10){
+
+            return simulador.blackTeam;
+
+        } else {
+
+            return simulador.whiteTeam;
+        }
+    }
+
     public String toString(){
-        return this.idPeca + " | " + this.idTipo + " | " + this.idEquipa + " | " + this.alcunha;
+
+        Simulador simulador = new Simulador();
+
+        String output = this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
+
+        if(this.getTeam().inGameCrazyPieces.contains(this)){
+
+            for(int x = 0; x < simulador.tabuleiro.length; x++){
+
+                for(int y = 0; y < simulador.tabuleiro.length; y++){
+
+                    if(simulador.tabuleiro[y][x] != null && simulador.tabuleiro[y][x].idPiece == this.idPiece){
+
+                        output =  this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
+                    }
+                }
+            }
+        }
+
+        return output;
     }
 }
