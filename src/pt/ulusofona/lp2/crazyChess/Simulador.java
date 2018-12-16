@@ -118,7 +118,7 @@ public class Simulador{
 
     public int getTamanhoTabuleiro(){return tabuleiro.length;}
 
-    public boolean processaJogada(int xO, int yO, int xD, int yD) {
+    public static boolean processaJogada(int xO, int yO, int xD, int yD) {
 
         //Valida posição inicial
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
@@ -296,7 +296,7 @@ public class Simulador{
         return 0;
     }
 
-    public int getIDEquipaAJogar(){
+    public static int getIDEquipaAJogar(){
 
         if((blackTeam.cntValidPlays + whiteTeam.cntValidPlays) % 2 == 0){
 
