@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
-public class CrazyPiece {
+public abstract class CrazyPiece {
 
     int idPiece;
     int idType;
@@ -9,6 +9,7 @@ public class CrazyPiece {
 
     CrazyPiece(){}
 
+/*
     CrazyPiece(int idPiece, int idType, int idTeam, String nickname){
 
         this.idPiece = idPiece;
@@ -16,6 +17,8 @@ public class CrazyPiece {
         this.idTeam = idTeam;
         this.nickname = nickname;
     }
+
+*/
 
     public int getId(){return this.idPiece;}
 
@@ -29,17 +32,11 @@ public class CrazyPiece {
         return this.nickname;
     }
 
-    public String getImagePNG(){
+    abstract public String getDesignacao();
 
-        if(this.getIdEquipa() == 10) { //ID equipa preta
+    abstract public String getValorRelativo();
 
-            return "crazy_emoji_black.png";
-
-        }else { //ID equipa branca
-
-            return "crazy_emoji_white.png";
-        }
-    }
+    abstract public  String getImagePNG();
 
     public Equipa getTeam(){
 
@@ -69,7 +66,7 @@ public class CrazyPiece {
 
                     if(simulador.tabuleiro[y][x] != null && simulador.tabuleiro[y][x].idPiece == this.idPiece){
 
-                        output =  this.idPiece + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
+                        output =  this.idPiece + " | " + getDesignacao() + " | " + getValorRelativo() + " | " + this.idType + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
                     }
                 }
             }

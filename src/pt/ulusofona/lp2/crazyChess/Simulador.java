@@ -68,11 +68,59 @@ public class Simulador{
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
+                //Vê-se o tipo da peça, e consoante o id do tipo de peça instancia-se os objetos referaente a cada tipo de peça
+                switch (lineData[1]){
+                    case "0":
+                        Rei rei = new Rei(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(rei);
+                        break;
+
+                    case "1":
+                        Rainha rainha = new Rainha(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(rainha);
+                        break;
+
+                    case "2":
+                        PoneiMagico ponei = new PoneiMagico(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(ponei);
+                        break;
+
+                    case "3":
+                        PadreDaVila padre = new PadreDaVila(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(padre);
+                        break;
+
+                    case "4":
+                        TorreH torreH = new TorreH(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(torreH);
+                        break;
+
+                    case "5":
+                        TorreV torreV = new TorreV(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(torreV);
+                        break;
+
+                    case "6":
+                        Lebre lebre = new Lebre(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(lebre);
+                        break;
+
+                    case "7":
+                        Joker joker = new Joker(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]),lineData[3]);
+                        crazyPieces.add(joker);
+                        break;
+
+                    default:
+                        //Id inválido
+                        break;
+
+                }
+
                 //Cria a nova peça a ser adicionada
-                CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);
+                /*CrazyPiece crazyPiece = new CrazyPiece(Integer.parseInt(lineData[0]), Integer.parseInt(lineData[1]), Integer.parseInt(lineData[2]), lineData[3]);*/
 
                 //Adiciona a peça ao conjunto de peças do jogo
-                crazyPieces.add(crazyPiece);
+                /*crazyPieces.add(crazyPiece);*/
             }
 
 
@@ -113,12 +161,13 @@ public class Simulador{
             return false;
         }
 
+
         return true;
     }
 
     public int getTamanhoTabuleiro(){return tabuleiro.length;}
 
-    public static boolean processaJogada(int xO, int yO, int xD, int yD) {
+    public  boolean processaJogada(int xO, int yO, int xD, int yD) {
 
         //Valida posição inicial
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
@@ -172,8 +221,8 @@ public class Simulador{
                                     return false;
                                 }
                             }
-                            //Caso contrário não existe uma captura e a mudança de posição é direta.
-                            else {
+                            //Caso contrário não existe uma captura e a mudança de posição é direta
+                             else {
 
                                 tabuleiro[yD][xD] = crazyPiece;
 
@@ -296,7 +345,7 @@ public class Simulador{
         return 0;
     }
 
-    public static int getIDEquipaAJogar(){
+    public  int getIDEquipaAJogar(){
 
         if((blackTeam.cntValidPlays + whiteTeam.cntValidPlays) % 2 == 0){
 
@@ -338,7 +387,7 @@ public class Simulador{
                         //Esta condição é necessária para o escritor não escrever um ":" a mais em cada linha
                         if(x == tabuleiro.length - 1){
                             writer.write(tabuleiro[y][x].getId() + "");
-                        }else {
+                        } else {
                             writer.write(tabuleiro[y][x].getId() + ":");
                         }
 
