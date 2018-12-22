@@ -29,4 +29,12 @@ public class Equipa {
         return this.cntInvalidPlays;
     }
 
+    public void setCntValidPlays(int validPlays){
+        this.cntValidPlays = validPlays;
+    }
+
+    public void setCntInvalidPlays(int invalidPlays){
+        this.cntInvalidPlays = invalidPlays;
+    }
+
 }

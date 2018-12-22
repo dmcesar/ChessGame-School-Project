@@ -156,6 +156,20 @@ public class Simulador{
                 }
             }
 
+            //Secção 5 (Depende do ficheiro)
+            if(fileReader.hasNextLine()){
+                String[] lineData = line.split(":");
+                //Atualiza as jogadas válidas da equipa preta de acordo com o ficheiro
+                blackTeam.setCntValidPlays(Integer.parseInt(lineData[1]));
+                //Atualiza as jogadas inválidas da equipa preta de acordo com o ficheiro
+                blackTeam.setCntInvalidPlays(Integer.parseInt(lineData[3]));
+
+                //Atualiza as jogadas válidas da equipa branca de acordo com o ficheiro
+                whiteTeam.setCntValidPlays(Integer.parseInt(lineData[4]));
+                //Atualiza as jogadas inválidas da equipa branca de acordo com o ficheiro
+                whiteTeam.setCntInvalidPlays(Integer.parseInt(lineData[6]));
+            }
+
         } catch (FileNotFoundException e) {
 
             return false;
@@ -184,8 +198,9 @@ public class Simulador{
                     //Valida posição final
                     if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
 
-                        //Verifica se a distância a ser percorrida é válida
-                        if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
+                        //Verifica se a peça pode se movmentar
+                       // if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
+                        if(crazyPiece.validaMovimento(xO,yO,xD,yD)){
 
                             //Verifica se existe uma peça na posição final
                             if (tabuleiro[yD][xD] != null) {

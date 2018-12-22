@@ -38,6 +38,9 @@ public abstract class CrazyPiece {
 
     abstract public  String getImagePNG();
 
+    //Este método verifica se o movimento da peça tem o comportamento desejado para cada um dos seus tipos
+    abstract public boolean validaMovimento(int xO, int yO, int xD, int yD);
+
     public Equipa getTeam(){
 
         Simulador simulador = new Simulador();

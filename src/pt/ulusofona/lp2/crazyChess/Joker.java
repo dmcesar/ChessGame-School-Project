@@ -33,4 +33,9 @@ public class Joker extends CrazyPiece {
     public String getValorRelativo() {
         return "4";
     }
+
+    @Override
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+        return false;
+    }
 }

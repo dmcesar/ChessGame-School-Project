@@ -27,4 +27,8 @@ public class Rainha extends CrazyPiece {
         return "8";
     }
 
+    @Override
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+        return false;
+    }
 }

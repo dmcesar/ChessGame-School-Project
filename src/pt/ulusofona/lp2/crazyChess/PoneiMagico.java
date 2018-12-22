@@ -33,4 +33,8 @@ public class PoneiMagico extends CrazyPiece {
         return "5";
     }
 
+    @Override
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+        return false;
+    }
 }

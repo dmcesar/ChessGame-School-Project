@@ -33,4 +33,40 @@ public class TorreH extends CrazyPiece {
     public String getValorRelativo() {
         return "3";
     }
+
+    @Override
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+        //Caso seja indicado que a peça se mova na vertical
+        if (yO != yD) {
+            return false;
+        }
+
+        if (xO < xD){
+            int x=xO;
+            while (x != xD){
+                x++;
+                if(Simulador.tabuleiro[yO][x] != null){
+                    return false;
+
+                }else {
+                    System.out.println("Nao tem ca nada");
+                }
+                System.out.println(x);
+            }
+
+        } else {
+            int x=xO;
+            while (x != xD){
+                x--;
+                if(Simulador.tabuleiro[yO][x] != null){
+                    return false;
+                }
+                System.out.println(x);
+            }
+        }
+        return true;
+    }
+
 }
+
+
