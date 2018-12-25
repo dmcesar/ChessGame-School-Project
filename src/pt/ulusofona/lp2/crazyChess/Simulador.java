@@ -158,6 +158,7 @@ public class Simulador{
 
             //Secção 5 (Depende do ficheiro)
             if(fileReader.hasNextLine()){
+                line = fileReader.nextLine();
                 String[] lineData = line.split(":");
                 //Atualiza as jogadas válidas da equipa preta de acordo com o ficheiro
                 blackTeam.setCntValidPlays(Integer.parseInt(lineData[1]));

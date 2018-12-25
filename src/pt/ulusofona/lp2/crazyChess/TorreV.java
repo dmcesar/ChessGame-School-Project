@@ -35,6 +35,43 @@ public class TorreV extends CrazyPiece {
 
     @Override
     public boolean validaMovimento(int xO, int yO, int xD, int yD) {
-        return false;
+        //Caso seja indicado que a peça se mova na horizontal
+        if (xO != xD) {
+            return false;
+        }
+
+        //Se for indicado que a peça se mova para baixo
+        if (yO < yD){
+            int y=yO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (y != yD){
+                y++;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(y == yD){
+                    break;
+                }
+                if(Simulador.tabuleiro[y][xO] != null) {
+                    return false;
+                }
+            }
+
+        } else {
+            //Se for indicado que a peça se mova para cima
+            int y=yO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (y != yD){
+                y--;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(y == yD){
+                    break;
+                }
+                //Vê se existe alguma peça no seu caminho
+                if(Simulador.tabuleiro[y][xO] != null){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
+
 }

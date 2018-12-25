@@ -41,27 +41,37 @@ public class TorreH extends CrazyPiece {
             return false;
         }
 
+        //Se for indicado que a peça se mova para a direita
         if (xO < xD){
             int x=xO;
+            //Enquanto a peça nao chegar ao seu destino
             while (x != xD){
                 x++;
-                if(Simulador.tabuleiro[yO][x] != null){
-                    return false;
-
-                }else {
-                    System.out.println("Nao tem ca nada");
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(x == xD){
+                    break;
                 }
-                System.out.println(x);
+                if(Simulador.tabuleiro[yO][x] != null) {
+                    return false;
+                }
+                //System.out.println(x);
             }
 
         } else {
+            //Se for indicado que a peça se mova para a direita
             int x=xO;
+            //Enquanto a peça nao chegar ao seu destino
             while (x != xD){
                 x--;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(x == xD){
+                    break;
+                }
+                //Vê se existe alguma peça no seu caminho
                 if(Simulador.tabuleiro[yO][x] != null){
                     return false;
                 }
-                System.out.println(x);
+                //System.out.println(x);
             }
         }
         return true;
