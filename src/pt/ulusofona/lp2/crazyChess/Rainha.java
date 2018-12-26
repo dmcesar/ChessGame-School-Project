@@ -30,6 +30,7 @@ public class Rainha extends CrazyPiece {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
         //Verifica se o movimento é horizontal/vertical/obliquo
@@ -43,6 +44,9 @@ public class Rainha extends CrazyPiece {
             }
         }
 
+=======
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+>>>>>>> origin/master
         return false;
     }
 }

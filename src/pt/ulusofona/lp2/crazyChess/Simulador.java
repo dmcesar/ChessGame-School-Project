@@ -109,6 +109,7 @@ public class Simulador{
                 }
             }
 
+<<<<<<< HEAD
 
             //Secçao 5
             if(fileReader.hasNextLine()){
@@ -125,6 +126,21 @@ public class Simulador{
                 whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
                 whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
                 whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
+=======
+            //Secção 5 (Depende do ficheiro)
+            if(fileReader.hasNextLine()){
+                line = fileReader.nextLine();
+                String[] lineData = line.split(":");
+                //Atualiza as jogadas válidas da equipa preta de acordo com o ficheiro
+                blackTeam.setCntValidPlays(Integer.parseInt(lineData[1]));
+                //Atualiza as jogadas inválidas da equipa preta de acordo com o ficheiro
+                blackTeam.setCntInvalidPlays(Integer.parseInt(lineData[3]));
+
+                //Atualiza as jogadas válidas da equipa branca de acordo com o ficheiro
+                whiteTeam.setCntValidPlays(Integer.parseInt(lineData[4]));
+                //Atualiza as jogadas inválidas da equipa branca de acordo com o ficheiro
+                whiteTeam.setCntInvalidPlays(Integer.parseInt(lineData[6]));
+>>>>>>> origin/master
             }
 
         } catch (FileNotFoundException e) {
@@ -154,8 +170,14 @@ public class Simulador{
                     //Verifica se é a vez da equipa da peça em questão jogar
                     if ((tabuleiro[yO][xO].getIdEquipa() == getIDEquipaAJogar())) {
 
+<<<<<<< HEAD
                         //Valida posição final
                         if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
+=======
+                        //Verifica se a peça pode se movmentar
+                       // if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
+                        if(crazyPiece.validaMovimento(xO,yO,xD,yD)){
+>>>>>>> origin/master
 
                             if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 

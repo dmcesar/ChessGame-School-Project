@@ -31,11 +31,16 @@ public class PoneiMagico extends CrazyPiece {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
         if(abs(xD - xO) == 2 && abs(yD - yO) == 2){
 
             
         }
+=======
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+        return false;
+>>>>>>> origin/master
     }
 }

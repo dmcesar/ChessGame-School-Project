@@ -27,4 +27,9 @@ public class PadreDaVila extends CrazyPiece {
     public String getRelativeValue() {
         return "3";
     }
+
+    @Override
+    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+        return false;
+    }
 }

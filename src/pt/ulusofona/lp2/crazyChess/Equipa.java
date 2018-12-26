@@ -22,4 +22,25 @@ public class Equipa {
     }
 
     public int getId(){return this.id;}
+<<<<<<< HEAD
 }
+=======
+
+    public int getCntValidPlays(){
+        return this.cntValidPlays;
+    }
+
+    public int getCntInvalidPlays(){
+        return this.cntInvalidPlays;
+    }
+
+    public void setCntValidPlays(int validPlays){
+        this.cntValidPlays = validPlays;
+    }
+
+    public void setCntInvalidPlays(int invalidPlays){
+        this.cntInvalidPlays = invalidPlays;
+    }
+
+}
+>>>>>>> origin/master
