@@ -95,7 +95,7 @@ public class Simulador{
                         for (CrazyPiece crazyPiece : crazyPieces) {
 
                             //Á procura de uma cujo id corresponda áquele lido do ficheiro
-                            if(crazyPiece.getId() == positionID){
+                            if (crazyPiece.getId() == positionID) {
 
                                 //Insere a peça no conjunto de peças em jogo da equipa
                                 crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
@@ -109,10 +109,8 @@ public class Simulador{
                 }
             }
 
-<<<<<<< HEAD
-
             //Secçao 5
-            if(fileReader.hasNextLine()){
+            if (fileReader.hasNextLine()) {
 
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
@@ -126,21 +124,6 @@ public class Simulador{
                 whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
                 whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
                 whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
-=======
-            //Secção 5 (Depende do ficheiro)
-            if(fileReader.hasNextLine()){
-                line = fileReader.nextLine();
-                String[] lineData = line.split(":");
-                //Atualiza as jogadas válidas da equipa preta de acordo com o ficheiro
-                blackTeam.setCntValidPlays(Integer.parseInt(lineData[1]));
-                //Atualiza as jogadas inválidas da equipa preta de acordo com o ficheiro
-                blackTeam.setCntInvalidPlays(Integer.parseInt(lineData[3]));
-
-                //Atualiza as jogadas válidas da equipa branca de acordo com o ficheiro
-                whiteTeam.setCntValidPlays(Integer.parseInt(lineData[4]));
-                //Atualiza as jogadas inválidas da equipa branca de acordo com o ficheiro
-                whiteTeam.setCntInvalidPlays(Integer.parseInt(lineData[6]));
->>>>>>> origin/master
             }
 
         } catch (FileNotFoundException e) {
@@ -156,7 +139,7 @@ public class Simulador{
     public static boolean processaJogada(int xO, int yO, int xD, int yD) {
 
         //Verifica se a posição inicial é diferente da posição final
-        if(xO != xD && yO != yD) {
+        if (xO != xD && yO != yD) {
 
             //Valida posição inicial
             if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
@@ -170,39 +153,68 @@ public class Simulador{
                     //Verifica se é a vez da equipa da peça em questão jogar
                     if ((tabuleiro[yO][xO].getIdEquipa() == getIDEquipaAJogar())) {
 
-<<<<<<< HEAD
                         //Valida posição final
                         if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
-=======
-                        //Verifica se a peça pode se movmentar
-                       // if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
-                        if(crazyPiece.validaMovimento(xO,yO,xD,yD)){
->>>>>>> origin/master
+                            //Verifica se a peça pode se movmentar
 
                             if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
-                                //Verifica se existe uma peça na posição final
-                                if (tabuleiro[yD][xD] != null) {
+                                if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
-                                    //Caso as peças sejam de equipas diferentes ocorre uma captura
-                                    if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
+                                    //Verifica se existe uma peça na posição final
+                                    if (tabuleiro[yD][xD] != null) {
 
-                                        //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
-                                        tabuleiro[yD][xD].getTeam().inGameCrazyPieces.remove(tabuleiro[yD][xD]);
+                                        //Caso as peças sejam de equipas diferentes ocorre uma captura
+                                        if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
 
-                                        //Mexe a peça
+                                            //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
+                                            tabuleiro[yD][xD].getTeam().inGameCrazyPieces.remove(tabuleiro[yD][xD]);
+
+                                            //Mexe a peça
+                                            tabuleiro[yD][xD] = crazyPiece;
+
+                                            //Limpa a posição anterior
+                                            tabuleiro[yO][xO] = null;
+
+                                            //É incrementado o contador de jogadas válidas da equipa
+                                            crazyPiece.getTeam().cntValidPlays++;
+
+                                            //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
+                                            cntPlaysNoCaptures = 0;
+
+                                            crazyPiece.getTeam().cntCaptures++;
+
+                                            //Troca o id da equipa atual a jogar
+                                            setIdEquipaAJogar();
+
+                                            //Jogada realizada com sucesso
+                                            return true;
+                                        }
+                                        //Caso contrário a jogada é inválida
+                                        else {
+
+                                            //É incrementado o contador de jogadas inválidas da equipa
+                                            crazyPiece.getTeam().cntInvalidPlays++;
+
+                                            //Jogada falhada
+                                            return false;
+                                        }
+                                    }
+                                    //Caso contrário não existe uma captura e a mudança de posição é direta.
+                                    else {
+
                                         tabuleiro[yD][xD] = crazyPiece;
 
-                                        //Limpa a posição anterior
                                         tabuleiro[yO][xO] = null;
 
-                                        //É incrementado o contador de jogadas válidas da equipa
                                         crazyPiece.getTeam().cntValidPlays++;
 
-                                        //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
-                                        cntPlaysNoCaptures = 0;
+                                        //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura (número de capturas de uma equipa = diferença entre número de peças da outra e o seu número de peças em jogo)
+                                        if (blackTeam.cntCaptures != 0 && whiteTeam.cntCaptures != 0) {
 
-                                        crazyPiece.getTeam().cntCaptures++;
+                                            //O contador de jogadas sem captura é incrementado
+                                            cntPlaysNoCaptures++;
+                                        }
 
                                         //Troca o id da equipa atual a jogar
                                         setIdEquipaAJogar();
@@ -210,37 +222,6 @@ public class Simulador{
                                         //Jogada realizada com sucesso
                                         return true;
                                     }
-                                    //Caso contrário a jogada é inválida
-                                    else {
-
-                                        //É incrementado o contador de jogadas inválidas da equipa
-                                        crazyPiece.getTeam().cntInvalidPlays++;
-
-                                        //Jogada falhada
-                                        return false;
-                                    }
-                                }
-                                //Caso contrário não existe uma captura e a mudança de posição é direta.
-                                else {
-
-                                    tabuleiro[yD][xD] = crazyPiece;
-
-                                    tabuleiro[yO][xO] = null;
-
-                                    crazyPiece.getTeam().cntValidPlays++;
-
-                                    //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura (número de capturas de uma equipa = diferença entre número de peças da outra e o seu número de peças em jogo)
-                                    if (blackTeam.cntCaptures != 0 && whiteTeam.cntCaptures != 0){
-
-                                        //O contador de jogadas sem captura é incrementado
-                                        cntPlaysNoCaptures++;
-                                    }
-
-                                    //Troca o id da equipa atual a jogar
-                                    setIdEquipaAJogar();
-
-                                    //Jogada realizada com sucesso
-                                    return true;
                                 }
                             }
                         }
@@ -250,7 +231,7 @@ public class Simulador{
         }
 
         //Como a jogada falhou, incrementa o número de jogadas inválidas da equipa em questão
-        if(getIDEquipaAJogar() == blackTeam.getId()){
+        if (getIDEquipaAJogar() == blackTeam.getId()) {
 
             blackTeam.cntInvalidPlays++;
 

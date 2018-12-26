@@ -24,23 +24,21 @@ public class PoneiMagico extends CrazyPiece {
         return "Ponei Mágico";
     }
 
-
     @Override
     public String getRelativeValue() {
         return "5";
     }
 
     @Override
-<<<<<<< HEAD
-    public boolean checkValidMovement(int xO, int yO, int xD, int yD){
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
-        if(abs(xD - xO) == 2 && abs(yD - yO) == 2){
+        //Verifica se as coordenadas de destino são válidas
+        if (abs(xD - xO) == 2 && abs(yD - yO) == 2) {
 
-            
+            //Se não existir um Rei no caminho do Pónei Mágico a jogada é válida
+            return !Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei");
         }
-=======
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+
         return false;
->>>>>>> origin/master
     }
 }

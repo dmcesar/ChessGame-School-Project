@@ -1,11 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
 import static java.lang.Math.abs;
-<<<<<<< HEAD
-=======
-
-public class Rei extends CrazyPiece {
->>>>>>> origin/master
 
 public class Rei extends CrazyPiece {
 
@@ -35,15 +30,6 @@ public class Rei extends CrazyPiece {
     }
 
     @Override
-<<<<<<< HEAD
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){ return (abs(xD - xO) <= 1 && abs(yD - yO) <= 1); }
-=======
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
-        if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
->>>>>>> origin/master
+
 }
