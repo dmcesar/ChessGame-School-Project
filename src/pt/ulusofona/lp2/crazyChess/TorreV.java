@@ -1,13 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
 public class TorreV extends CrazyPiece {
-    TorreV(int idPiece, int idType, int idTeam, String nickname){
-        this.idPiece = idPiece;
-        this.idType = idType;
-        this.idTeam = idTeam;
-        this.nickname = nickname;
-    }
 
+    TorreV(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
 
     @Override
     public String getImagePNG() {
@@ -23,13 +18,13 @@ public class TorreV extends CrazyPiece {
     }
 
     @Override
-    public String getDesignacao() {
+    public String getType() {
         return "TorreV";
     }
 
 
     @Override
-    public String getValorRelativo() {
+    public String getRelativeValue() {
         return "3";
     }
 }

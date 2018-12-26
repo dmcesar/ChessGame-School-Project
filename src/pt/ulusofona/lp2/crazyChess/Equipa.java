@@ -9,24 +9,17 @@ public class Equipa {
     ArrayList<CrazyPiece> inGameCrazyPieces;
     int cntValidPlays;
     int cntInvalidPlays;
+    int cntCaptures;
 
     Equipa(int id){
 
         this.id = id;
         this.cntValidPlays = 0;
         this.cntInvalidPlays = 0;
+        this.cntCaptures = 0;
         crazyPieces = new ArrayList<>();
         inGameCrazyPieces = new ArrayList<>();
     }
 
     public int getId(){return this.id;}
-
-    public int getCntValidPlays(){
-        return this.cntValidPlays;
-    }
-
-    public int getCntInvalidPlays(){
-        return this.cntInvalidPlays;
-    }
-
 }

@@ -1,13 +1,10 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import static java.lang.Math.abs;
+
 public class PoneiMagico extends CrazyPiece {
 
-    PoneiMagico(int idPiece, int idType, int idTeam, String nickname){
-        this.idPiece = idPiece;
-        this.idType = idType;
-        this.idTeam = idTeam;
-        this.nickname = nickname;
-    }
+    PoneiMagico(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
 
     @Override
     public String getImagePNG() {
@@ -23,14 +20,22 @@ public class PoneiMagico extends CrazyPiece {
     }
 
     @Override
-    public String getDesignacao() {
+    public String getType() {
         return "Ponei Mágico";
     }
 
 
     @Override
-    public String getValorRelativo() {
+    public String getRelativeValue() {
         return "5";
     }
 
+    @Override
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD){
+
+        if(abs(xD - xO) == 2 && abs(yD - yO) == 2){
+
+            
+        }
+    }
 }

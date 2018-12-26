@@ -2,13 +2,7 @@ package pt.ulusofona.lp2.crazyChess;
 
 public class Lebre extends CrazyPiece {
 
-    Lebre(int idPiece, int idType, int idTeam, String nickname){
-        this.idPiece = idPiece;
-        this.idType = idType;
-        this.idTeam = idTeam;
-        this.nickname = nickname;
-    }
-
+    Lebre(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
 
     @Override
     public String getImagePNG() {
@@ -24,13 +18,13 @@ public class Lebre extends CrazyPiece {
     }
 
     @Override
-    public String getDesignacao() {
+    public String getType() {
         return "Lebre";
     }
 
 
     @Override
-    public String getValorRelativo() {
+    public String getRelativeValue() {
         return "2";
     }
 }

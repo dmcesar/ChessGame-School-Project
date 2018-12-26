@@ -1,14 +1,10 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import static java.lang.Math.abs;
+
 public class Rei extends CrazyPiece {
 
-    Rei(int idPiece, int idType, int idTeam, String nickname){
-        this.idPiece = idPiece;
-        this.idType = idType;
-        this.idTeam = idTeam;
-        this.nickname = nickname;
-    }
-
+    Rei(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
 
     @Override
     public String getImagePNG() {
@@ -24,13 +20,15 @@ public class Rei extends CrazyPiece {
     }
 
     @Override
-    public String getDesignacao() {
+    public String getType() {
         return "Rei";
     }
 
-
     @Override
-    public String getValorRelativo() {
+    public String getRelativeValue() {
         return "(infinito)";
     }
+
+    @Override
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD){ return (abs(xD - xO) <= 1 && abs(yD - yO) <= 1); }
 }

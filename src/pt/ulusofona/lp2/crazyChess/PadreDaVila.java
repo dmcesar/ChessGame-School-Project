@@ -2,13 +2,7 @@ package pt.ulusofona.lp2.crazyChess;
 
 public class PadreDaVila extends CrazyPiece {
 
-    PadreDaVila(int idPiece, int idType, int idTeam, String nickname){
-        this.idPiece = idPiece;
-        this.idType = idType;
-        this.idTeam = idTeam;
-        this.nickname = nickname;
-    }
-
+    PadreDaVila(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
 
     @Override
     public String getImagePNG() {
@@ -24,13 +18,13 @@ public class PadreDaVila extends CrazyPiece {
     }
 
     @Override
-    public String getDesignacao() {
+    public String getType() {
         return "Padre da Vila";
     }
 
 
     @Override
-    public String getValorRelativo() {
+    public String getRelativeValue() {
         return "3";
     }
 }
