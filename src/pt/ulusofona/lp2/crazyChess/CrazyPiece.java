@@ -4,10 +4,10 @@ import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 abstract public class CrazyPiece {
 
-    private int idPiece;
-    private int idType;
-    private int idTeam;
-    private String nickname;
+    protected int idPiece;
+    protected int idType;
+    protected int idTeam;
+    protected String nickname;
 
     CrazyPiece(){}
 

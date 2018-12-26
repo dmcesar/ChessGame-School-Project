@@ -10,6 +10,7 @@ public class Equipa {
     int cntValidPlays;
     int cntInvalidPlays;
     int cntCaptures;
+    ArrayList<Joker> jokers;
 
     Equipa(int id){
 
@@ -17,8 +18,9 @@ public class Equipa {
         this.cntValidPlays = 0;
         this.cntInvalidPlays = 0;
         this.cntCaptures = 0;
-        crazyPieces = new ArrayList<>();
-        inGameCrazyPieces = new ArrayList<>();
+        this.crazyPieces = new ArrayList<>();
+        this.inGameCrazyPieces = new ArrayList<>();
+        this.jokers = new ArrayList<>();
     }
 
     public int getId(){return this.id;}
