@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
 
 public class PadreDaVila extends CrazyPiece {
@@ -55,5 +57,21 @@ public class PadreDaVila extends CrazyPiece {
         }
 
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        for(int x = 1; x <= 3; x++) {
+
+            validPlays.add((xO + x) + "," + (yO + x));
+            validPlays.add((xO + x) + "," + (yO - x));
+            validPlays.add((xO - x) + "," + (yO + x));
+            validPlays.add((xO - x) + "," + (yO - x));
+        }
+
+        return validPlays;
     }
 }

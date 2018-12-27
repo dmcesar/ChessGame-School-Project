@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
 
 public class Rei extends CrazyPiece {
@@ -32,4 +34,20 @@ public class Rei extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){ return (abs(xD - xO) <= 1 && abs(yD - yO) <= 1); }
 
+    @Override
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        validPlays.add((xO + 1) + "," + yO);
+        validPlays.add((xO - 1) + "," + yO);
+        validPlays.add(xO + "," + (yO + 1));
+        validPlays.add(xO + "," + (yO - 1));
+        validPlays.add((xO + 1) + "," + (yO + 1));
+        validPlays.add((xO + 1) + "," + (yO - 1));
+        validPlays.add((xO - 1) + "," + (yO + 1));
+        validPlays.add((xO - 1) + "," + (yO - 1));
+
+        return validPlays;
+    }
 }

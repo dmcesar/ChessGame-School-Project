@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 abstract public class CrazyPiece {
@@ -71,6 +74,8 @@ abstract public class CrazyPiece {
     abstract public String getRelativeValue();
 
     abstract public boolean checkValidMovement(int xO, int yO, int xD, int yD);
+
+    abstract public ArrayList<String> getValidPlays(int xO, int yO);
 
     public boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
 

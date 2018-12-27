@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
 
 public class Lebre extends CrazyPiece {
@@ -44,5 +46,18 @@ public class Lebre extends CrazyPiece {
         }
 
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        validPlays.add((xO + 1) + "," + (yO + 1));
+        validPlays.add((xO + 1) + "," + (yO - 1));
+        validPlays.add((xO - 1) + "," + (yO + 1));
+        validPlays.add((xO - 1) + "," + (yO - 1));
+
+        return validPlays;
     }
 }

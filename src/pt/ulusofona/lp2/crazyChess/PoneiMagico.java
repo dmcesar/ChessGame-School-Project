@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
 
 public class PoneiMagico extends CrazyPiece {
@@ -40,5 +42,18 @@ public class PoneiMagico extends CrazyPiece {
         }
 
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        validPlays.add((xO + 2) + "," + (yO + 2));
+        validPlays.add((xO + 2) + "," + (yO - 2));
+        validPlays.add((xO - 2) + "," + (yO + 2));
+        validPlays.add((xO - 2) + "," + (yO - 2));
+
+        return validPlays;
     }
 }

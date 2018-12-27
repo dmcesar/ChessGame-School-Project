@@ -1,6 +1,10 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+
 public class Joker extends CrazyPiece {
+
+    CrazyPiece mask;
 
     Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname);}
 
@@ -43,21 +47,16 @@ public class Joker extends CrazyPiece {
         return false;
     }
 
+    @Override
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        return this.mask.getValidPlays(xO, yO);
+    }
+
     public void switchJokerType(){
 
-        for(int y = 0; y < Simulador.tabuleiro.length; y++){
+        String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};
 
-            for(int x = 0; x < Simulador.tabuleiro.length; x++){
-
-                if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getId() == this.idPiece){
-
-                    String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};
-
-                    CrazyPiece mask = Simulador.getPeca(pieceData);
-
-                    Simulador.tabuleiro[y][x] = mask;
-                }
-            }
-        }
+       this.mask = Simulador.getPeca(pieceData);
     }
 }

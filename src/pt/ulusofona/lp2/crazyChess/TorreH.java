@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
 
 public class TorreH extends CrazyPiece {
@@ -38,6 +40,20 @@ public class TorreH extends CrazyPiece {
         }
 
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        for(int x = 1; x < Simulador.tabuleiro.length; x++) {
+
+            validPlays.add((xO + x) + "," + yO);
+            validPlays.add((xO - x) + "," + yO);
+        }
+
+        return validPlays;
     }
 }
 
