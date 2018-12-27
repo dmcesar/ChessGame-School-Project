@@ -22,9 +22,8 @@ public class Equipa {
     }
 
     public int getId(){return this.id;}
-<<<<<<< HEAD
-}
-=======
+
+
 
     public int getCntValidPlays(){
         return this.cntValidPlays;
@@ -38,9 +37,12 @@ public class Equipa {
         this.cntValidPlays = validPlays;
     }
 
+    public void setCntCaptures(int captures){
+        this.cntCaptures = captures;
+    }
+
     public void setCntInvalidPlays(int invalidPlays){
         this.cntInvalidPlays = invalidPlays;
     }
 
 }
->>>>>>> origin/master

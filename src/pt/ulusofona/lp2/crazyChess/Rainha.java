@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.abs;
 
 public class Rainha extends CrazyPiece {
@@ -30,23 +33,23 @@ public class Rainha extends CrazyPiece {
     }
 
     @Override
-<<<<<<< HEAD
-    public boolean checkValidMovement(int xO, int yO, int xD, int yD){
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
         //Verifica se o movimento é horizontal/vertical/obliquo
-        if((abs(xD - xO) <= 5 && abs(yD - yO) == 0 || abs(xD - xO) == 0 && abs(yD - yO) <= 5) || abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 5){
+        if ((abs(xD - xO) <= 5 && abs(yD - yO) == 0 || abs(xD - xO) == 0 && abs(yD - yO) <= 5) || abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 5) {
 
             //Verifica se na posição destino não existe uma rainha (rainhas não capturam rainhas) e se não existe uma peça da mesma equipa na posição destino
-            if(Simulador.tabuleiro[xD][yD] == null || (Simulador.tabuleiro[xD][yD] != null && (!Simulador.tabuleiro[xD][yD].getType().equals("Rainha") && Simulador.tabuleiro[xD][yD].getIdEquipa() != this.getIdEquipa()))){
+            if (Simulador.tabuleiro[xD][yD] == null || (Simulador.tabuleiro[xD][yD] != null && (!Simulador.tabuleiro[xD][yD].getType().equals("Rainha") && Simulador.tabuleiro[xD][yD].getIdEquipa() != this.getIdEquipa()))) {
 
                 //Verifica se não existem outras peças a bloquear o movimento
                 return !checkPieceBlockingMove(xO, yO, xD, yD);
             }
         }
+        return checkPieceBlockingMove(xO, yO, xD, yD);
+    }
 
-=======
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
->>>>>>> origin/master
-        return false;
+    @Override
+    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
+        return jogadas;
     }
 }

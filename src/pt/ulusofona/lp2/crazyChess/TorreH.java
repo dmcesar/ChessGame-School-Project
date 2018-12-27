@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TorreH extends CrazyPiece {
 
     TorreH(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
@@ -29,7 +32,7 @@ public class TorreH extends CrazyPiece {
     }
 
     @Override
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
         //Caso seja indicado que a peça se mova na vertical
         if (yO != yD) {
             return false;
@@ -70,6 +73,56 @@ public class TorreH extends CrazyPiece {
         }
         return true;
     }
+
+    @Override
+    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
+
+        /*
+       if (xO == 0){
+           int x=xO;
+           while (x < (Simulador.tabuleiro.length)){
+               x++;
+               if (Simulador.tabuleiro[yO][x].getIdEquipa() != Simulador.tabuleiro[yO][xO].getIdEquipa()){
+                   jogadas.add(x +", " + yO);
+                   break;
+               }else if (Simulador.tabuleiro[yO][x].getIdEquipa() == Simulador.tabuleiro[yO][xO].getIdEquipa()){
+                   break;
+               } else {
+                   jogadas.add(x +", " + yO);
+               }
+           }
+       } else if (xO == (Simulador.tabuleiro.length-1)){
+           int x = xO;
+           while (x > 0){
+               x--;
+               if (Simulador.tabuleiro[yO][x].getIdEquipa() != Simulador.tabuleiro[yO][xO].getIdEquipa()){
+                   jogadas.add(x +", " + yO);
+                   break;
+               }else if (Simulador.tabuleiro[yO][x].getIdEquipa() == Simulador.tabuleiro[yO][xO].getIdEquipa()){
+                   break;
+               } else {
+                   jogadas.add(x +", " + yO);
+               }
+           }
+       } else {
+           int x=xO;
+           while (x < Simulador.tabuleiro.length){
+               x++;
+               if (Simulador.tabuleiro[yO][x].getIdEquipa() != Simulador.tabuleiro[yO][xO].getIdEquipa()){
+                   jogadas.add(x +", " + yO);
+                   break;
+               }else if (Simulador.tabuleiro[yO][x].getIdEquipa() == Simulador.tabuleiro[yO][xO].getIdEquipa()){
+                   break;
+               } else {
+                   jogadas.add(x +", " + yO);
+               }
+           }
+       }
+       */
+
+        return jogadas;
+    }
+
 
 }
 

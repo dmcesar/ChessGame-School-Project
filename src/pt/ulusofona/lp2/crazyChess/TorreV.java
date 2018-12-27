@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TorreV extends CrazyPiece {
 
     TorreV(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
@@ -29,7 +32,7 @@ public class TorreV extends CrazyPiece {
     }
 
     @Override
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
         //Caso seja indicado que a peça se mova na horizontal
         if (xO != xD) {
             return false;
@@ -67,6 +70,11 @@ public class TorreV extends CrazyPiece {
             }
         }
         return true;
+    }
+
+    @Override
+    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
+        return jogadas;
     }
 
 }

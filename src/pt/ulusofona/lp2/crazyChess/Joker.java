@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Joker extends CrazyPiece {
 
     Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
@@ -29,7 +32,12 @@ public class Joker extends CrazyPiece {
     }
 
     @Override
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
+        return jogadas;
     }
 }

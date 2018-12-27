@@ -2,6 +2,8 @@ package pt.ulusofona.lp2.crazyChess;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -109,10 +111,11 @@ public class Simulador{
                 }
             }
 
-<<<<<<< HEAD
+
 
             //Secçao 5
-            if(fileReader.hasNextLine()){
+            /*
+            if(fileReader.hasNextLine()) {
 
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
@@ -126,21 +129,29 @@ public class Simulador{
                 whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
                 whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
                 whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
-=======
+            }
+            */
+
             //Secção 5 (Depende do ficheiro)
             if(fileReader.hasNextLine()){
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
+
+                idEquipaAJogar = Integer.parseInt(lineData[0]);
                 //Atualiza as jogadas válidas da equipa preta de acordo com o ficheiro
                 blackTeam.setCntValidPlays(Integer.parseInt(lineData[1]));
+
+                blackTeam.setCntCaptures(Integer.parseInt(lineData[2]));
                 //Atualiza as jogadas inválidas da equipa preta de acordo com o ficheiro
                 blackTeam.setCntInvalidPlays(Integer.parseInt(lineData[3]));
 
                 //Atualiza as jogadas válidas da equipa branca de acordo com o ficheiro
                 whiteTeam.setCntValidPlays(Integer.parseInt(lineData[4]));
+
+                whiteTeam.setCntCaptures(Integer.parseInt(lineData[5]));
                 //Atualiza as jogadas inválidas da equipa branca de acordo com o ficheiro
                 whiteTeam.setCntInvalidPlays(Integer.parseInt(lineData[6]));
->>>>>>> origin/master
+
             }
 
         } catch (FileNotFoundException e) {
@@ -153,10 +164,10 @@ public class Simulador{
 
     public int getTamanhoTabuleiro(){return tabuleiro.length;}
 
-    public static boolean processaJogada(int xO, int yO, int xD, int yD) {
+    public boolean processaJogada(int xO, int yO, int xD, int yD) {
 
         //Verifica se a posição inicial é diferente da posição final
-        if(xO != xD && yO != yD) {
+        if(xO != xD || yO != yD) {
 
             //Valida posição inicial
             if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
@@ -170,14 +181,13 @@ public class Simulador{
                     //Verifica se é a vez da equipa da peça em questão jogar
                     if ((tabuleiro[yO][xO].getIdEquipa() == getIDEquipaAJogar())) {
 
-<<<<<<< HEAD
+
                         //Valida posição final
                         if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
-=======
+
                         //Verifica se a peça pode se movmentar
                        // if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
-                        if(crazyPiece.validaMovimento(xO,yO,xD,yD)){
->>>>>>> origin/master
+
 
                             if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
@@ -348,9 +358,9 @@ public class Simulador{
         return 0;
     }
 
-    public static int getIDEquipaAJogar(){ return idEquipaAJogar; }
+    public int getIDEquipaAJogar(){ return idEquipaAJogar; }
 
-    public static void setIdEquipaAJogar(){
+    public  void setIdEquipaAJogar(){
 
         if(getIDEquipaAJogar() == blackTeam.getId()){
 
@@ -362,14 +372,14 @@ public class Simulador{
         }
     }
 
-    public static CrazyPiece getPeca(String[] lineData){
+    public  CrazyPiece getPeca(String[] lineData){
 
         int idPiece = Integer.parseInt(lineData[0]);
         int idType = Integer.parseInt(lineData[1]);
         int idTeam = Integer.parseInt(lineData[2]);
         String nickname = lineData[3];
 
-        switch (idTeam){
+        switch (idType){
 
             case 0: return new Rei(idPiece, idType, idTeam, nickname);
 
@@ -387,5 +397,102 @@ public class Simulador{
 
             default: return new Joker(idPiece, idType, idTeam, nickname);
         }
+    }
+
+    public boolean gravarJogo(File ficheiroDestino){
+        try{
+            FileWriter writer = new FileWriter(ficheiroDestino);
+            //Escrita da primeira linha do ficheiro, que é o tamanho do tabuleiro
+            writer.write(getTamanhoTabuleiro() + "\n");
+
+            //Escrita do número de peças existentes no jogo
+            writer.write((blackTeam.crazyPieces.size() + whiteTeam.crazyPieces.size()) + "\n");
+
+            //Percorre-se a lista onde estão todas as CrazyPieces
+            for (CrazyPiece piece : crazyPieces){
+                //Escrita do id da peça no ficheiro
+                writer.write(piece.getId() + ":");
+                //Escrita do tipo da peça no ficheiro
+                writer.write(piece.getIdType() + ":");
+                //Escrita do id da equipa da peça no ficheiro
+                writer.write(piece.getIdEquipa() + ":");
+                //Escrita da alcunha da peça no ficheiro
+                writer.write(piece.getNickname());
+                writer.write("\n");
+            }
+
+            //Percorre-se o tabuleiro
+            for (int y = 0; y < tabuleiro.length; y++) {
+                for (int x = 0; x < tabuleiro.length; x++){
+                    //Verifica-se se numa determinada posição do tabuleiro existe uma peça
+                    if(tabuleiro[y][x] != null){
+                        //Esta condição é necessária para o escritor não escrever um ":" a mais em cada linha
+                        if(x == tabuleiro.length - 1){
+                            writer.write(tabuleiro[y][x].getId() + "");
+                        } else {
+                            writer.write(tabuleiro[y][x].getId() + ":");
+                        }
+
+                    } else {
+                        //Se não houver nenhuma peça na posição atual do tabuleiro escreve-se 0, em vez do id da peça
+                        //Esta condição é necessária para o escritor não escrever um ":" a mais em cada linha
+                        if (x == tabuleiro.length-1) {
+                            writer.write("0");
+                        } else {
+                            writer.write("0:");
+                        }
+                    }
+                }
+                writer.write("\n");
+            }
+
+            //Escrita do id da equipa a jogar
+            writer.write(getIDEquipaAJogar()+":");
+
+            //Escrita do nº de jogadas válidas da equipa preta
+            writer.write(blackTeam.getCntValidPlays()+":");
+            //Escrita do nr capturas da equipa preta
+            writer.write(Integer.toString(whiteTeam.crazyPieces.size() - whiteTeam.inGameCrazyPieces.size()) + ":");
+            //Escrita do nº de jogadas inválidas da equipa preta
+            writer.write(blackTeam.getCntInvalidPlays() + ":");
+
+            //Escrita do nº de jogadas válidas da equipa branca
+            writer.write(whiteTeam.getCntValidPlays() + ":");
+            //Escrita do nr capturas da equipa branca
+            writer.write(Integer.toString(blackTeam.crazyPieces.size() - blackTeam.inGameCrazyPieces.size())+":");
+            //Escrita do nº de jogadas inválidas da equipa preta
+            writer.write(whiteTeam.getCntInvalidPlays() + "");
+
+            //Fecho do escritor
+            writer.close();
+
+            return true;
+
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public void anularJogadaAnterior(){
+
+    }
+
+    public List<String> obterSugestoesJogada(int xO, int yO){
+        ArrayList<String> jogadasPossiveis;
+        jogadasPossiveis = new ArrayList<>();
+
+        if (tabuleiro[yO][xO] != null){
+            if (getIDEquipaAJogar() != tabuleiro[yO][xO].getIdEquipa()){
+                jogadasPossiveis.add("Pedido inválido");
+            }else{
+                CrazyPiece peca = tabuleiro[yO][xO];
+                jogadasPossiveis = peca.getJogadasPossiveis(yO, xO, jogadasPossiveis);
+            }
+
+        }else{
+          jogadasPossiveis.add("Pedido inválido");
+        }
+
+        return jogadasPossiveis;
     }
 }

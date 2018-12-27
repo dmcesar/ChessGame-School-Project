@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 abstract public class CrazyPiece {
@@ -21,7 +24,15 @@ abstract public class CrazyPiece {
 
     public int getId(){return this.idPiece;}
 
+    public int getIdType(){
+        return this.idType;
+    }
+
     public int getIdEquipa(){return this.idTeam;}
+
+    public String getNickname() {
+        return this.nickname;
+    }
 
     public Equipa getTeam(){
 
@@ -64,6 +75,8 @@ abstract public class CrazyPiece {
 
     abstract public boolean checkValidMovement(int xO, int yO, int xD, int yD);
 
+    abstract public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas);
+
     public boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
 
         while(xO != xD && yO != yD){
@@ -94,4 +107,5 @@ abstract public class CrazyPiece {
 
         return false;
     }
+
 }

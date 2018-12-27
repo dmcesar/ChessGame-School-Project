@@ -1,5 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.abs;
 
 public class PoneiMagico extends CrazyPiece {
@@ -31,16 +34,19 @@ public class PoneiMagico extends CrazyPiece {
     }
 
     @Override
-<<<<<<< HEAD
-    public boolean checkValidMovement(int xO, int yO, int xD, int yD){
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
-        if(abs(xD - xO) == 2 && abs(yD - yO) == 2){
+        if (abs(xD - xO) == 2 && abs(yD - yO) == 2) {
 
-            
+
         }
-=======
-    public boolean validaMovimento(int xO, int yO, int xD, int yD) {
+
         return false;
->>>>>>> origin/master
     }
+
+    @Override
+    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
+        return jogadas;
+    }
+
 }
