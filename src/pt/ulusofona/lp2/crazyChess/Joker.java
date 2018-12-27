@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.crazyChess;
 
 public class Joker extends CrazyPiece {
 
-    Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname); }
+    Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname);}
 
     @Override
     public String getImagePNG() {
@@ -29,6 +29,17 @@ public class Joker extends CrazyPiece {
 
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
+
+        for(int y = 0; y < Simulador.tabuleiro.length; y++) {
+
+            for (int x = 0; x < Simulador.tabuleiro.length; x++) {
+
+                if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getId() == this.idPiece){
+
+                    return Simulador.tabuleiro[y][x].checkValidMovement(xO, yO, xD, yD);
+                }
+            }
+        }
         return false;
     }
 
@@ -36,13 +47,15 @@ public class Joker extends CrazyPiece {
 
         for(int y = 0; y < Simulador.tabuleiro.length; y++){
 
-            for(int x = 0; y < Simulador.tabuleiro.length; x++){
+            for(int x = 0; x < Simulador.tabuleiro.length; x++){
 
                 if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getId() == this.idPiece){
 
                     String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};
 
-                    Simulador.getPeca(pieceData);
+                    CrazyPiece mask = Simulador.getPeca(pieceData);
+
+                    Simulador.tabuleiro[y][x] = mask;
                 }
             }
         }

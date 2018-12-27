@@ -24,4 +24,10 @@ public class Equipa {
     }
 
     public int getId(){return this.id;}
+
+    public int getCntValidPlays(){return this.cntValidPlays; }
+
+    public int getCntInvalidPlays(){return this.cntInvalidPlays; }
+
+    public int getCntCaptures(){return this.cntCaptures; }
 }
