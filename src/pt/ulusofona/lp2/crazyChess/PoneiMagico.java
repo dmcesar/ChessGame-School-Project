@@ -38,7 +38,7 @@ public class PoneiMagico extends CrazyPiece {
         if (abs(xD - xO) == 2 && abs(yD - yO) == 2) {
 
             //Se não existir um Rei no caminho do Pónei Mágico a jogada é válida
-            return !Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei");
+            return (Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2] != null || !Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei"));
         }
 
         return false;

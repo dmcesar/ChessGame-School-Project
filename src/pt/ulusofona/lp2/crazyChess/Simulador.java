@@ -108,7 +108,7 @@ public class Simulador {
                                 crazyPiece.getTeam().crazyPieces.add(crazyPiece);
 
                                 //Se a peça for um joker troca o seu tipo
-                                if(crazyPiece.getType().equals("Joker")){
+                                if(crazyPiece.getType().contains("Joker")){
 
                                     crazyPiece = ((Joker)crazyPiece).mask;
                                 }

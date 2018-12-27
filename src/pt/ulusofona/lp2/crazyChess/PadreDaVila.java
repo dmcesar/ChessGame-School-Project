@@ -44,7 +44,7 @@ public class PadreDaVila extends CrazyPiece {
 
                         if(x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length){
 
-                            if(Simulador.tabuleiro[y][x].getType().equals("Rainha")){
+                            if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getType().equals("Rainha")){
 
                                 return false;
                             }

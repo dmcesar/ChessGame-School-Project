@@ -48,7 +48,7 @@ abstract public class CrazyPiece {
 
     public String toString(){
 
-        String output = this.idPiece + " | " + this.getType() + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
+        String output = this.idPiece + " | " + this.getType() + " | " + this.getRelativeValue() + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
 
         if(this.getTeam().inGameCrazyPieces.contains(this)){
 
@@ -58,7 +58,7 @@ abstract public class CrazyPiece {
 
                     if(tabuleiro[y][x] != null && tabuleiro[y][x].idPiece == this.idPiece){
 
-                        output =  this.idPiece + " | " + this.getType() + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
+                        output =  this.idPiece + " | " + this.getType() + " | " + this.getRelativeValue() + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
                     }
                 }
             }
