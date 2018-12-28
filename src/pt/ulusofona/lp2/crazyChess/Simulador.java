@@ -297,24 +297,38 @@ public class Simulador {
 
     public boolean jogoTerminado() {
 
-        //Vitória das brancas por falta de peças pretas em jogo
-        if (blackTeam.inGameCrazyPieces.size() == 0) {
+        int nrReisBlack = 0;
+        int nrReisWhite = 0;
+
+        for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
+            if (piece.getType().equals("Rei")){
+                nrReisBlack++;
+            }
+        }
+
+        for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
+            if (piece.getType().equals("Rei")){
+                nrReisWhite++;
+            }
+        }
+        //Vitória das brancas por falta de reis da equipa preta em jogo
+        if (nrReisBlack == 0) {
 
             result = "VENCERAM AS BRANCAS";
 
             return true;
         }
 
-        //Vitória das Pretas por falta de peças brancas em jogo
-        if (whiteTeam.inGameCrazyPieces.size() == 0) {
+        //Vitória das Pretas por falta de reis da equipa branca em jogo
+        if (nrReisWhite == 0) {
 
             result = "VENCERAM AS PRETAS";
 
             return true;
         }
 
-        //Empate por número igual de peças em jogo (1 peça por equipa é considerado empate)
-        if (blackTeam.inGameCrazyPieces.size() == 1 && whiteTeam.inGameCrazyPieces.size() == 1) {
+        //Empate por número igual de reis em jogo (1 peça por equipa é considerado empate)
+        if (nrReisBlack == 1 && nrReisWhite == 1) {
 
             result = "EMPATE";
 
@@ -675,7 +689,6 @@ public class Simulador {
         }
 
         if(crazyPiece.getTeam().getId() != getIDEquipaAJogar()){
-            System.out.println("Não e esta equipa a jogar");
             jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
@@ -683,9 +696,9 @@ public class Simulador {
 
         for(String jogada : crazyPiece.getValidPlays(xO, yO)){
 
-            int xD = Integer.parseInt(jogada.split(",")[0]);
+            int xD = Integer.parseInt(jogada.split(", ")[0]);
 
-            int yD = Integer.parseInt(jogada.split(",")[1]);
+            int yD = Integer.parseInt(jogada.split(", ")[1]);
 
             if(possibilidadesJogadasValidas(xO, yO, xD, yD)){
 

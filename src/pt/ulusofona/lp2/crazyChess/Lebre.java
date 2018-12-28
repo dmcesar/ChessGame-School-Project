@@ -53,10 +53,10 @@ public class Lebre extends CrazyPiece {
 
         ArrayList<String> validPlays = new ArrayList<>();
 
-        validPlays.add((xO + 1) + "," + (yO + 1));
-        validPlays.add((xO + 1) + "," + (yO - 1));
-        validPlays.add((xO - 1) + "," + (yO + 1));
-        validPlays.add((xO - 1) + "," + (yO - 1));
+        validPlays.add((xO + 1) + ", " + (yO + 1));
+        validPlays.add((xO + 1) + ", " + (yO - 1));
+        validPlays.add((xO - 1) + ", " + (yO + 1));
+        validPlays.add((xO - 1) + ", " + (yO - 1));
 
         return validPlays;
     }

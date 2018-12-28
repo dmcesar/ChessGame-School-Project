@@ -54,14 +54,14 @@ public class Rainha extends CrazyPiece {
 
         for(int x = 1; x <= 5; x++) {
 
-            validPlays.add((xO + x) + "," + yO);
-            validPlays.add((xO - x) + "," + yO);
-            validPlays.add(xO + "," + (yO + x));
-            validPlays.add(xO + "," + (yO - x));
-            validPlays.add((xO + x) + "," + (yO + x));
-            validPlays.add((xO + x) + "," + (yO - x));
-            validPlays.add((xO - x) + "," + (yO + x));
-            validPlays.add((xO - x) + "," + (yO - x));
+            validPlays.add((xO + x) + ", " + yO);
+            validPlays.add((xO - x) + ", " + yO);
+            validPlays.add(xO + ", " + (yO + x));
+            validPlays.add(xO + ", " + (yO - x));
+            validPlays.add((xO + x) + ", " + (yO + x));
+            validPlays.add((xO + x) + ", " + (yO - x));
+            validPlays.add((xO - x) + ", " + (yO + x));
+            validPlays.add((xO - x) + ", " + (yO - x));
         }
 
         return validPlays;

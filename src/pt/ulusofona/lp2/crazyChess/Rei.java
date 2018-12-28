@@ -44,14 +44,14 @@ public class Rei extends CrazyPiece {
 
         ArrayList<String> validPlays = new ArrayList<>();
 
-        validPlays.add((xO + 1) + "," + yO);
-        validPlays.add((xO - 1) + "," + yO);
-        validPlays.add(xO + "," + (yO + 1));
-        validPlays.add(xO + "," + (yO - 1));
-        validPlays.add((xO + 1) + "," + (yO + 1));
-        validPlays.add((xO + 1) + "," + (yO - 1));
-        validPlays.add((xO - 1) + "," + (yO + 1));
-        validPlays.add((xO - 1) + "," + (yO - 1));
+        validPlays.add((xO + 1) + ", " + yO);
+        validPlays.add((xO - 1) + ", " + yO);
+        validPlays.add(xO + ", " + (yO + 1));
+        validPlays.add(xO + ", " + (yO - 1));
+        validPlays.add((xO + 1) + ", " + (yO + 1));
+        validPlays.add((xO + 1) + ", " + (yO - 1));
+        validPlays.add((xO - 1) + ", " + (yO + 1));
+        validPlays.add((xO - 1) + ", " + (yO - 1));
 
         return validPlays;
     }

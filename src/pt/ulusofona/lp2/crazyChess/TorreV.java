@@ -53,8 +53,8 @@ public class TorreV extends CrazyPiece {
 
         for(int x = 1; x < Simulador.tabuleiro.length; x++) {
 
-            validPlays.add(xO + "," + (yO + x));
-            validPlays.add(xO + "," + (yO - x));
+            validPlays.add(xO + ", " + (yO + x));
+            validPlays.add(xO + ", " + (yO - x));
         }
 
         return validPlays;
