@@ -38,10 +38,10 @@ public class Rainha extends CrazyPiece {
         if((abs(xD - xO) <= 5 && abs(yD - yO) == 0 || abs(xD - xO) == 0 && abs(yD - yO) <= 5) || (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 5)){
 
             //Verifica se na posição destino não existe uma rainha (rainhas não capturam rainhas) e se não existe uma peça da mesma equipa na posição destino
-            if(Simulador.tabuleiro[xD][yD] == null || (Simulador.tabuleiro[xD][yD] != null && (!Simulador.tabuleiro[xD][yD].getType().equals("Rainha") && Simulador.tabuleiro[xD][yD].getIdEquipa() != this.getIdEquipa()))){
+            if(Simulador.tabuleiro[yD][xD] == null || (Simulador.tabuleiro[yD][xD] != null && (!Simulador.tabuleiro[yD][xD].getType().equals("Rainha") && Simulador.tabuleiro[yD][xD].getIdEquipa() != this.getIdEquipa()))){
 
                 //Verifica se não existem outras peças a bloquear o movimento
-                return !checkPieceBlockingMove(xO, yO, xD, yD);
+                return checkPieceBlockingMove(xO, yO, xD, yD);
             }
         }
         return false;

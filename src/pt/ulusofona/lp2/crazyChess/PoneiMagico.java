@@ -35,11 +35,48 @@ public class PoneiMagico extends CrazyPiece {
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
         //Verifica se as coordenadas de destino são válidas
+        /*
+        if (abs(xD - xO) == 2 && abs(yD - yO) == 2) {
+
+            int x = xO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (x != xD) {
+                x++;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+
+                if (x == xD) {
+                    break;
+                }
+
+                if (Simulador.tabuleiro[yO][x] != null && Simulador.tabuleiro[yO][x].getType().equals("Rei")) {
+                    return false;
+                }
+
+            }
+
+            int y=yO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (y != yD){
+                y++;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(y == yD){
+                    break;
+                }
+
+                if(Simulador.tabuleiro[y][xO] != null && Simulador.tabuleiro[y][xO].getType().equals("Rei")) {
+                    return false;
+                }
+
+            }
+            */
+
+            //Se não existir um Rei no caminho do Pónei Mágico a jogada é válida
         if (abs(xD - xO) == 2 && abs(yD - yO) == 2) {
 
             //Se não existir um Rei no caminho do Pónei Mágico a jogada é válida
-            return (Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2] != null || !Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei"));
+            return (Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2] != null && !Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei"));
         }
+
 
         return false;
     }

@@ -32,7 +32,12 @@ public class Rei extends CrazyPiece {
     }
 
     @Override
-    public boolean checkValidMovement(int xO, int yO, int xD, int yD){ return (abs(xD - xO) <= 1 && abs(yD - yO) <= 1); }
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD){
+        if (abs(xD-xO) <= 1 && abs(yD-yO) <= 1) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public ArrayList<String> getValidPlays(int xO, int yO){

@@ -155,8 +155,6 @@ public class Simulador {
     }
 
     public boolean processaJogada(int xO, int yO, int xD, int yD) {
-
-
         //Verifica se a posição inicial é diferente da posição final
         if (xO != xD || yO != yD) {
 
@@ -214,12 +212,13 @@ public class Simulador {
                                         crazyPiece.getTeam().cntCaptures++;
 
                                         //Troca o id da equipa atual a jogar
-                                        setIdEquipaAJogar();
+                                       // setIdEquipaAJogar();
 
                                         for (Joker joker : crazyPiece.getTeam().jokers) {
 
                                             joker.switchJokerType();
                                         }
+                                        setIdEquipaAJogar();
 
                                         //Jogada realizada com sucesso
                                         return true;
@@ -260,12 +259,13 @@ public class Simulador {
                                     }
 
                                     //Troca o id da equipa atual a jogar
-                                    setIdEquipaAJogar();
 
                                     for (Joker joker : crazyPiece.getTeam().jokers) {
 
                                         joker.switchJokerType();
                                     }
+
+                                    setIdEquipaAJogar();
 
                                     //Jogada realizada com sucesso
                                     return true;
@@ -622,6 +622,42 @@ public class Simulador {
         }
     }
 
+    public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD){
+        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
+
+            //Verifica se existe uma peça na posição inicial
+            if (tabuleiro[yO][xO] != null) {
+
+                //Retorna a peça que se pretende mover
+                CrazyPiece crazyPiece = tabuleiro[yO][xO];
+                    //Valida posição final
+                    if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
+                        //Verifica se a peça pode se movmentar
+
+                        if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
+
+
+                            if (tabuleiro[yD][xD] != null) {
+
+                                //Caso as peças sejam de equipas diferentes ocorre uma captura
+                                if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
+                                    return true;
+                                }
+
+                            } else {
+                                return true;
+                            }
+
+                        }
+
+                    }
+
+             }
+
+        }
+        return false;
+    }
+
     public List<String> obterSugestoesJogada(int xO, int yO){
 
         ArrayList<String> jogadasValidas = new ArrayList<>();
@@ -639,6 +675,7 @@ public class Simulador {
         }
 
         if(crazyPiece.getTeam().getId() != getIDEquipaAJogar()){
+            System.out.println("Não e esta equipa a jogar");
             jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
@@ -650,10 +687,10 @@ public class Simulador {
 
             int yD = Integer.parseInt(jogada.split(",")[1]);
 
-            if(processaJogada(xO, yO, xD, yD)){
+            if(possibilidadesJogadasValidas(xO, yO, xD, yD)){
 
                 jogadasValidas.add(jogada);
-            }
+           }
         }
 
         return jogadasValidas;
