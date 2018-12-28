@@ -6,6 +6,8 @@ public class Joker extends CrazyPiece {
 
     CrazyPiece mask;
 
+    int turno = 0;
+
     Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname);}
 
     @Override
@@ -42,17 +44,8 @@ public class Joker extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
-        for(int y = 0; y < Simulador.tabuleiro.length; y++) {
+        return this.mask.checkValidMovement(xO, yO, xD, yD);
 
-            for (int x = 0; x < Simulador.tabuleiro.length; x++) {
-
-                if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getId() == this.idPiece){
-
-                    return Simulador.tabuleiro[y][x].checkValidMovement(xO, yO, xD, yD);
-                }
-            }
-        }
-        return false;
     }
 
     @Override
@@ -63,8 +56,34 @@ public class Joker extends CrazyPiece {
 
     public void switchJokerType(){
 
-        String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};
+        /*String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};*/
+        int playNumber = this.getTeam().getCntValidPlays() + 6;
 
-       this.mask = Simulador.getPeca(pieceData);
+       switch (playNumber % 6){
+           case 0:
+               this.mask = new Rainha(idPiece, idType, idTeam, nickname);
+               break;
+
+           case 1:
+               this.mask = new PoneiMagico(idPiece, idType, idTeam, nickname);
+               break;
+
+           case 2:
+               this.mask = new PadreDaVila(idPiece, idType, idTeam, nickname);
+               break;
+
+           case 3:
+               this.mask = new TorreH(idPiece, idType, idTeam, nickname);
+               break;
+
+           case 4:
+               this.mask = new TorreV(idPiece, idType, idTeam, nickname);
+               break;
+
+           default:
+               this.mask = new Lebre(idPiece, idType, idTeam, nickname);
+               break;
+
+       }
     }
 }

@@ -36,7 +36,6 @@ public class Simulador {
     //Contém o resultado final do jogo
     private String result;
 
-
     public boolean iniciaJogo(File ficheiroInicial) {
 
         try {
@@ -108,17 +107,19 @@ public class Simulador {
                                 crazyPiece.getTeam().crazyPieces.add(crazyPiece);
 
                                 //Se a peça for um joker troca o seu tipo
-                                if(crazyPiece.getType().equals("Joker")){
+                                if (crazyPiece.getType().equals("Joker")) {
 
                                     //Adiciona o joker á lista de jokers da sua equipa
                                     crazyPiece.getTeam().jokers.add((Joker) crazyPiece);
+                                    tabuleiro[y][x] = crazyPiece;
 
                                     //"transforma" a peça (o joker) na sua mascara
-                                    crazyPiece = ((Joker)crazyPiece).mask;
-                                }
+                                     //crazyPiece = ((Joker) crazyPiece).mask;
+                                } else {
 
-                                //Insere a nova peça no tabuleiro
-                                tabuleiro[y][x] = crazyPiece;
+                                    //Insere a nova peça no tabuleiro
+                                    tabuleiro[y][x] = crazyPiece;
+                                }
                             }
                         }
                     }
@@ -156,6 +157,19 @@ public class Simulador {
 
     public boolean processaJogada(int xO, int yO, int xD, int yD) {
         //Verifica se a posição inicial é diferente da posição final
+        if (getIDEquipaAJogar() == 10) {
+
+            for (Joker joker : blackTeam.jokers) {
+
+                joker.switchJokerType();
+            }
+        } else {
+            for (Joker joker : whiteTeam.jokers) {
+
+                joker.switchJokerType();
+            }
+
+        }
         if (xO != xD || yO != yD) {
 
             //Valida posição inicial
@@ -213,11 +227,11 @@ public class Simulador {
 
                                         //Troca o id da equipa atual a jogar
                                        // setIdEquipaAJogar();
-
+                                        /*
                                         for (Joker joker : crazyPiece.getTeam().jokers) {
 
                                             joker.switchJokerType();
-                                        }
+                                        }*/
                                         setIdEquipaAJogar();
 
                                         //Jogada realizada com sucesso
@@ -260,10 +274,11 @@ public class Simulador {
 
                                     //Troca o id da equipa atual a jogar
 
+                                    /*
                                     for (Joker joker : crazyPiece.getTeam().jokers) {
 
                                         joker.switchJokerType();
-                                    }
+                                    }*/
 
                                     setIdEquipaAJogar();
 
@@ -673,6 +688,19 @@ public class Simulador {
     }
 
     public List<String> obterSugestoesJogada(int xO, int yO){
+        if (getIDEquipaAJogar() == 10) {
+
+            for (Joker joker : blackTeam.jokers) {
+
+                joker.switchJokerType();
+            }
+        } else {
+            for (Joker joker : whiteTeam.jokers) {
+
+                joker.switchJokerType();
+            }
+
+        }
 
         ArrayList<String> jogadasValidas = new ArrayList<>();
 
