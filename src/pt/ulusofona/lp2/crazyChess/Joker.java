@@ -23,7 +23,15 @@ public class Joker extends CrazyPiece {
 
     @Override
     public String getType() {
-        return "Joker | " + this.mask.getType();
+
+        if(this.mask != null) {
+
+            return "Joker | " + this.mask.getType();
+
+        } else {
+
+            return "Joker";
+        }
     }
 
     @Override

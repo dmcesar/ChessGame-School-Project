@@ -35,7 +35,7 @@ public class Rainha extends CrazyPiece {
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
         //Verifica se o movimento é horizontal/vertical/obliquo
-        if((abs(xD - xO) <= 5 && abs(yD - yO) == 0 || abs(xD - xO) == 0 && abs(yD - yO) <= 5) || abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 5){
+        if((abs(xD - xO) <= 5 && abs(yD - yO) == 0 || abs(xD - xO) == 0 && abs(yD - yO) <= 5) || (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 5)){
 
             //Verifica se na posição destino não existe uma rainha (rainhas não capturam rainhas) e se não existe uma peça da mesma equipa na posição destino
             if(Simulador.tabuleiro[xD][yD] == null || (Simulador.tabuleiro[xD][yD] != null && (!Simulador.tabuleiro[xD][yD].getType().equals("Rainha") && Simulador.tabuleiro[xD][yD].getIdEquipa() != this.getIdEquipa()))){
@@ -62,7 +62,6 @@ public class Rainha extends CrazyPiece {
             validPlays.add((xO + x) + "," + (yO - x));
             validPlays.add((xO - x) + "," + (yO + x));
             validPlays.add((xO - x) + "," + (yO - x));
-
         }
 
         return validPlays;
