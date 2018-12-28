@@ -10,6 +10,7 @@ public class Equipa {
     int cntValidPlays;
     int cntInvalidPlays;
     int cntCaptures;
+    ArrayList<Joker> jokers;
 
     Equipa(int id){
 
@@ -17,32 +18,16 @@ public class Equipa {
         this.cntValidPlays = 0;
         this.cntInvalidPlays = 0;
         this.cntCaptures = 0;
-        crazyPieces = new ArrayList<>();
-        inGameCrazyPieces = new ArrayList<>();
+        this.crazyPieces = new ArrayList<>();
+        this.inGameCrazyPieces = new ArrayList<>();
+        this.jokers = new ArrayList<>();
     }
 
     public int getId(){return this.id;}
 
+    public int getCntValidPlays(){return this.cntValidPlays; }
 
+    public int getCntInvalidPlays(){return this.cntInvalidPlays; }
 
-    public int getCntValidPlays(){
-        return this.cntValidPlays;
-    }
-
-    public int getCntInvalidPlays(){
-        return this.cntInvalidPlays;
-    }
-
-    public void setCntValidPlays(int validPlays){
-        this.cntValidPlays = validPlays;
-    }
-
-    public void setCntCaptures(int captures){
-        this.cntCaptures = captures;
-    }
-
-    public void setCntInvalidPlays(int invalidPlays){
-        this.cntInvalidPlays = invalidPlays;
-    }
-
+    public int getCntCaptures(){return this.cntCaptures; }
 }

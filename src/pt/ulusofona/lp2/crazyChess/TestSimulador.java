@@ -1,4 +1,4 @@
-/*package pt.ulusofona.lp2.crazyChess;
+package pt.ulusofona.lp2.crazyChess;
 
 import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
@@ -7,12 +7,11 @@ import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 public class TestSimulador {
 
-    Simulador simulador = new Simulador();
+    /*
     @Test
     public void test01ProcessaJogada(){
 
         int size = 4;
-
 
         Simulador.tabuleiro = new CrazyPiece[size][size];
 
@@ -41,7 +40,7 @@ public class TestSimulador {
         boolean resultadoEsperado = true;
 
         //Deve retornar 'true', pois existem peças em ambas as posições de equipas opostas e dentro do tabuleiro e a distância entre as duas é 1
-        boolean resultadoReal = simulador.processaJogada(xO, yO, xD, yD);
+        boolean resultadoReal = processaJogada(xO, yO, xD, yD);
 
         assertEquals(resultadoEsperado, resultadoReal);
     }
@@ -78,9 +77,9 @@ public class TestSimulador {
         boolean resultadoEsperado = true;
 
         //Deve retornar 'true', pois existem peças em ambas as posições de equipas opostas e dentro do tabuleiro e a distância entre as duas é 1
-        boolean resultadoReal = simulador.processaJogada(xO, yO, xD, yD);
+        boolean resultadoReal = processaJogada(xO, yO, xD, yD);
 
         assertEquals(resultadoEsperado, resultadoReal);
     }
+    */
 }
-*/

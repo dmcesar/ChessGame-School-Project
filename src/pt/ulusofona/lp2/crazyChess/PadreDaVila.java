@@ -1,7 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import static java.lang.Math.abs;
 
 public class PadreDaVila extends CrazyPiece {
 
@@ -25,7 +26,6 @@ public class PadreDaVila extends CrazyPiece {
         return "Padre da Vila";
     }
 
-
     @Override
     public String getRelativeValue() {
         return "3";
@@ -33,11 +33,45 @@ public class PadreDaVila extends CrazyPiece {
 
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
+
+        if (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 3) {
+
+            if (!checkPieceBlockingMove(xO, yO, xD, yD)) {
+
+                for(int y = yD - 2; y <= yD + 2; y++){
+
+                    for(int x = xD - 2; x <= xD + 2; x++){
+
+                        if(x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length){
+
+                            if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getType().equals("Rainha")){
+
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+        }
+
         return false;
     }
 
     @Override
-    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
-        return jogadas;
+    public ArrayList<String> getValidPlays(int xO, int yO){
+
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        for(int x = 1; x <= 3; x++) {
+
+            validPlays.add((xO + x) + "," + (yO + x));
+            validPlays.add((xO + x) + "," + (yO - x));
+            validPlays.add((xO - x) + "," + (yO + x));
+            validPlays.add((xO - x) + "," + (yO - x));
+        }
+
+        return validPlays;
     }
 }

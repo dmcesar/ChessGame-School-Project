@@ -7,10 +7,12 @@ import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 abstract public class CrazyPiece {
 
-    private int idPiece;
-    private int idType;
-    private int idTeam;
-    private String nickname;
+    protected int idPiece;
+    protected int idType;
+    protected int idTeam;
+    protected String nickname;
+    protected String previousCoords;
+    boolean captured;
 
     CrazyPiece(){}
 
@@ -20,19 +22,17 @@ abstract public class CrazyPiece {
         this.idType = idType;
         this.idTeam = idTeam;
         this.nickname = nickname;
+        this.previousCoords = "";
+        this.captured = false;
     }
 
     public int getId(){return this.idPiece;}
 
-    public int getIdType(){
-        return this.idType;
-    }
+    public int getIdType(){return this.idType;}
 
     public int getIdEquipa(){return this.idTeam;}
 
-    public String getNickname() {
-        return this.nickname;
-    }
+    public String getNickname(){return this.nickname;}
 
     public Equipa getTeam(){
 
@@ -48,7 +48,7 @@ abstract public class CrazyPiece {
 
     public String toString(){
 
-        String output = this.idPiece + " | " + this.getType() + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
+        String output = this.idPiece + " | " + this.getType() + " | " + this.getRelativeValue() + " | " + this.idTeam + " | " + this.nickname + " @ (n/a)";
 
         if(this.getTeam().inGameCrazyPieces.contains(this)){
 
@@ -58,7 +58,7 @@ abstract public class CrazyPiece {
 
                     if(tabuleiro[y][x] != null && tabuleiro[y][x].idPiece == this.idPiece){
 
-                        output =  this.idPiece + " | " + this.getType() + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
+                        output =  this.idPiece + " | " + this.getType() + " | " + this.getRelativeValue() + " | " + this.idTeam + " | " + this.nickname + " @ " + "(" + x + ", " + y + ")";
                     }
                 }
             }
@@ -75,7 +75,7 @@ abstract public class CrazyPiece {
 
     abstract public boolean checkValidMovement(int xO, int yO, int xD, int yD);
 
-    abstract public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas);
+    abstract public ArrayList<String> getValidPlays(int xO, int yO);
 
     public boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
 
@@ -107,5 +107,4 @@ abstract public class CrazyPiece {
 
         return false;
     }
-
 }

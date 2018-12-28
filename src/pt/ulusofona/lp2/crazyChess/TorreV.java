@@ -1,7 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import static java.lang.Math.abs;
 
 public class TorreV extends CrazyPiece {
 
@@ -25,56 +26,33 @@ public class TorreV extends CrazyPiece {
         return "TorreV";
     }
 
-
     @Override
     public String getRelativeValue() {
         return "3";
     }
 
     @Override
-    public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
-        //Caso seja indicado que a peça se mova na horizontal
-        if (xO != xD) {
-            return false;
+    public boolean checkValidMovement(int xO, int yO, int xD, int yD){
+
+        if(abs(xD - xO) == 0){
+
+            return checkPieceBlockingMove(xO, yO, xD, yD);
         }
 
-        //Se for indicado que a peça se mova para baixo
-        if (yO < yD){
-            int y=yO;
-            //Enquanto a peça nao chegar ao seu destino
-            while (y != yD){
-                y++;
-                //Caso a peça chegue ao seu destino interrompe-se o ciclo
-                if(y == yD){
-                    break;
-                }
-                if(Simulador.tabuleiro[y][xO] != null) {
-                    return false;
-                }
-            }
-
-        } else {
-            //Se for indicado que a peça se mova para cima
-            int y=yO;
-            //Enquanto a peça nao chegar ao seu destino
-            while (y != yD){
-                y--;
-                //Caso a peça chegue ao seu destino interrompe-se o ciclo
-                if(y == yD){
-                    break;
-                }
-                //Vê se existe alguma peça no seu caminho
-                if(Simulador.tabuleiro[y][xO] != null){
-                    return false;
-                }
-            }
-        }
-        return true;
+        return false;
     }
 
     @Override
-    public ArrayList<String> getJogadasPossiveis (int xO, int yO, ArrayList<String> jogadas){
-        return jogadas;
-    }
+    public ArrayList<String> getValidPlays(int xO, int yO){
 
+        ArrayList<String> validPlays = new ArrayList<>();
+
+        for(int x = 1; x < Simulador.tabuleiro.length; x++) {
+
+            validPlays.add(xO + "," + (yO + x));
+            validPlays.add(xO + "," + (yO - x));
+        }
+
+        return validPlays;
+    }
 }
