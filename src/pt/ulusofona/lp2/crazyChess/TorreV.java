@@ -36,7 +36,11 @@ public class TorreV extends CrazyPiece {
 
         if(abs(xD - xO) == 0){
 
-            return checkPieceBlockingMove(xO, yO, xD, yD);
+            boolean naoHouveBloqueio = this.checkPieceBlockingMove(xO, yO, xD, yD);
+            if (naoHouveBloqueio){
+                return true;
+            }
+
         }
 
         return false;

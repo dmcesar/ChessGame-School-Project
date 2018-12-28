@@ -79,32 +79,149 @@ abstract public class CrazyPiece {
 
     public boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
 
-        while(xO != xD && yO != yD){
-
-            if(xO < xD){
-
-                xO++;
-
-            } else {
-
-                xO--;
-            }
-
-            if(yO < yD){
-
-                yO++;
-
-            } else {
-
-                yO--;
-            }
-
-            if ((xO != xD && yO != yD) && Simulador.tabuleiro[xO][yO] != null) {
-
-                return true;
+        //Caso a peça se tente mover na horizontal (direita)
+        if (xO < xD && yO == yD) {
+            int x = xO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (x != xD) {
+                x++;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if (x == xD) {
+                    break;
+                }
+                if (Simulador.tabuleiro[yO][x] != null) {
+                    return false;
+                }
+                //System.out.println(x);
             }
         }
 
-        return false;
+        //Caso a peça se tente mover na horizontal (esquerda)
+        else if(xO > xD && yO == yD) {
+            int x=xO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (x != xD){
+                x--;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(x == xD){
+                    break;
+                }
+                //Vê se existe alguma peça no seu caminho
+                if(Simulador.tabuleiro[yO][x] != null){
+                    return false;
+                }
+            }
+        }
+
+        //Movimento vertical (para baixo)
+        else if (yO < yD && xO == xD){
+            int y=yO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (y != yD){
+                y++;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(y == yD){
+                    break;
+                }
+                if(Simulador.tabuleiro[y][xO] != null) {
+                    return false;
+                }
+            }
+        }
+
+        //Movimento vertical (para cima)
+        else if (yO > yD && xO == xD){
+            //Se for indicado que a peça se mova para cima
+            int y=yO;
+            //Enquanto a peça nao chegar ao seu destino
+            while (y != yD){
+                y--;
+                //Caso a peça chegue ao seu destino interrompe-se o ciclo
+                if(y == yD){
+                    break;
+                }
+                //Vê se existe alguma peça no seu caminho
+                if(Simulador.tabuleiro[y][xO] != null){
+                    return false;
+                }
+            }
+        }
+
+        else if(xO != xD && yO != yD) {
+            //Movimento diagonal para baixo direita
+            if (xO < xD && yO < yD){
+                int x = xO;
+                int y = yO;
+                while (x != xD && y != yD){
+                    x++;
+                    y++;
+
+                    if (x == xD && y == yD){
+                        break;
+                    }
+
+                    if (Simulador.tabuleiro[y][x] != null){
+                        return false;
+                    }
+                }
+            }
+
+            //Movimento diagonal para cima esquerda
+            else if (xO > xD && yO > yD){
+                int x = xO;
+                int y = yO;
+                while (x != xD && y != yD){
+                    x--;
+                    y--;
+
+                    if (x == xD && y == yD){
+                        break;
+                    }
+
+                    if (Simulador.tabuleiro[y][x] != null){
+                        return false;
+                    }
+                }
+            }
+
+            else if (xO > xD && yO < yD){
+                int x = xO;
+                int y = yO;
+                while (x != xD && y != yD){
+                    x--;
+                    y++;
+
+                    if (x == xD && y == yD){
+                        break;
+                    }
+
+                    if (Simulador.tabuleiro[y][x] != null){
+                        return false;
+                    }
+                }
+            }
+
+            else if (xO < xD && yO > yD){
+                int x = xO;
+                int y = yO;
+                while (x != xD && y != yD){
+                    x++;
+                    y--;
+
+                    if (x == xD && y == yD){
+                        break;
+                    }
+
+                    if (Simulador.tabuleiro[y][x] != null){
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }
+
+
+
