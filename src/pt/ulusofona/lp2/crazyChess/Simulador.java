@@ -517,6 +517,8 @@ public class Simulador {
     }
 
     public void anularJogadaAnterior() {
+        //Troca o id da equipa a jogar (repete a jogada anterior)
+        setIdEquipaAJogar();
 
         //Apenas se moveu uma peça
         if (lastPlayOutcome.size() == 1) {
@@ -536,19 +538,18 @@ public class Simulador {
                             tabuleiro[y][x] = null;
 
                             String[] pieceCoords = crazyPiece.previousCoords.split(";");
+                            //crazyPiece.getTeam().cntValidPlays--;
 
                             for (Joker joker : crazyPiece.getTeam().jokers) {
+                                joker.switchJokerType();
 
                                 //Verifica se a peça em questão é um joker
-                                if (crazyPiece.getId() == joker.getId()) {
+                                /*if (crazyPiece.getId() == joker.getId()) {
 
                                     //Retorna o joker ao seu tipo anterior
-                                    crazyPiece = ((Joker) crazyPiece).mask;
-                                }
+                                    joker.switchJokerType();
+                                }*/
                             }
-
-                            //Decrementa o número de jogadas válidas da equipa
-                            crazyPiece.getTeam().cntValidPlays--;
 
                             //Mete a peça na posição antiga
                             tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
@@ -556,10 +557,18 @@ public class Simulador {
                     }
                 }
             }
+
+            //Decrementa o número de jogadas válidas da equipa
+            if (getIDEquipaAJogar() == 10) {
+                blackTeam.cntValidPlays--;
+            } else {
+                whiteTeam.cntValidPlays--;
+            }
         }
         //Ocorreu uma captura
         else {
 
+            int idEquipaCapturada = 0;
             for (CrazyPiece crazyPiece : lastPlayOutcome) {
 
                 if (!crazyPiece.captured) {
@@ -576,17 +585,16 @@ public class Simulador {
                                     String[] pieceCoords = crazyPiece.previousCoords.split(";");
 
                                     //Decrementa o número de jogadas válidas e de capturas da equipa
-                                    crazyPiece.getTeam().cntValidPlays--;
-                                    crazyPiece.getTeam().cntCaptures--;
+                                    idEquipaCapturada = crazyPiece.getIdEquipa();
 
                                     for (Joker joker : crazyPiece.getTeam().jokers) {
 
                                         //Verifica se a peça em questão é um joker
-                                        if (crazyPiece.getId() == joker.getId()) {
+                                        //if (crazyPiece.getId() == joker.getId()) {
 
                                             //Retorna o joker ao seu tipo anterior
-                                            crazyPiece = ((Joker) crazyPiece).mask;
-                                        }
+                                         joker.switchJokerType();
+                                        //}
                                     }
 
                                     //Insere-a na posição antiga
@@ -610,10 +618,16 @@ public class Simulador {
                     }
                 }
             }
+
+            if (idEquipaCapturada == 10){
+                whiteTeam.cntValidPlays--;
+                whiteTeam.cntCaptures--;
+            } else {
+                blackTeam.cntValidPlays--;
+                blackTeam.cntCaptures--;
+            }
         }
 
-        //Troca o id da equipa a jogar (repete a jogada anterior)
-        setIdEquipaAJogar();
     }
 
     public static CrazyPiece getPeca(String[] lineData) {

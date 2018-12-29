@@ -36,7 +36,7 @@ public class Lebre extends CrazyPiece {
 
         if(abs(xD - xO) == 1 && abs(yD - yO) == 1){
 
-            if(this.getTeam().cntValidPlays % 2 == 0){
+            if((Simulador.blackTeam.getCntValidPlays() + Simulador.whiteTeam.cntValidPlays) % 2 == 0){
 
                 if(Simulador.tabuleiro[yD][xD] == null || (Simulador.tabuleiro[yD][xD] != null && Simulador.tabuleiro[yD][xD].getIdEquipa() != this.getIdEquipa())){
 
