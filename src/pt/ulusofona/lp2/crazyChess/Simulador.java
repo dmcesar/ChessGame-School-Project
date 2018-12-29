@@ -148,7 +148,10 @@ public class Simulador {
             return false;
         }
 
+
+
         return true;
+
     }
 
     public int getTamanhoTabuleiro() {
@@ -316,13 +319,14 @@ public class Simulador {
         int nrReisWhite = 0;
 
         for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
-            if (piece.getType().equals("Rei")){
+            if (piece.getIdType() == 0){
                 nrReisBlack++;
             }
         }
 
+
         for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
-            if (piece.getType().equals("Rei")){
+            if (piece.getIdType() == 0){
                 nrReisWhite++;
             }
         }
@@ -630,7 +634,7 @@ public class Simulador {
 
     }
 
-    public static CrazyPiece getPeca(String[] lineData) {
+    public CrazyPiece getPeca(String[] lineData) {
 
         int idPiece = Integer.parseInt(lineData[0]);
         int idType = Integer.parseInt(lineData[1]);

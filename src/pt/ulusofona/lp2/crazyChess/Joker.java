@@ -6,8 +6,6 @@ public class Joker extends CrazyPiece {
 
     CrazyPiece mask;
 
-    int turno = 0;
-
     Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname);}
 
     @Override
