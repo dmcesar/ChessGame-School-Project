@@ -34,12 +34,13 @@ public class PoneiMagico extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
         //Verifica se as coordenadas de destino são válidas
-        if (abs(xD - xO) == 2 && abs(yD - yO) == 2) {
+        if (abs(xD - xO) != 2 || abs(yD - yO) != 2) {
+            return false;
+        }
 
             //Se não existir um Rei no caminho do Pónei Mágico a jogada é válida
-            if (Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2] != null && Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei")){
+        if (Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2] != null && Simulador.tabuleiro[abs(xD - xO) / 2][abs(yD - yO) / 2].getType().equals("Rei")){
                 return false;
-            }
         }
 
         return true;
