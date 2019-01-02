@@ -386,12 +386,12 @@ public class Simulador {
         resultados.add("Equipa das Pretas");
         resultados.add(" Capturas: " + Integer.toString(blackTeam.cntCaptures));
         resultados.add(" Jogadas válidas: " + Integer.toString(blackTeam.cntValidPlays));
-        resultados.add(" Tentativas inválidas: " + Integer.toString(blackTeam.cntInvalidPlays));
+        resultados.add(" Tentativas inválidas:" + Integer.toString(blackTeam.cntInvalidPlays));
 
         resultados.add("Equipa das Brancas");
         resultados.add(" Capturas: " + Integer.toString(whiteTeam.cntCaptures));
         resultados.add(" Jogadas válidas: " + Integer.toString(whiteTeam.cntValidPlays));
-        resultados.add(" Tentativas inválidas: " + Integer.toString(whiteTeam.cntInvalidPlays));
+        resultados.add(" Tentativas inválidas:" + Integer.toString(whiteTeam.cntInvalidPlays));
 
         return resultados;
     }
