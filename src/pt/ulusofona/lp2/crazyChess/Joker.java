@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Joker extends CrazyPiece {
 
     CrazyPiece mask;
+    String designacao = "";
 
     Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname);}
 
@@ -24,14 +25,7 @@ public class Joker extends CrazyPiece {
     @Override
     public String getType() {
 
-        if(this.mask != null) {
-
-            return "Joker/" + this.mask.getType();
-
-        } else {
-
-            return "Joker";
-        }
+        return "Joker/"+ this.designacao;
     }
 
     @Override
@@ -60,26 +54,32 @@ public class Joker extends CrazyPiece {
        switch (playNumber % 6){
            case 0:
                this.mask = new Rainha(idPiece, idType, idTeam, nickname);
+               designacao = "Rainha";
                break;
 
            case 1:
                this.mask = new PoneiMagico(idPiece, idType, idTeam, nickname);
+               designacao = "Ponei Mágico";
                break;
 
            case 2:
                this.mask = new PadreDaVila(idPiece, idType, idTeam, nickname);
+               designacao = "Padre da Vila";
                break;
 
            case 3:
                this.mask = new TorreH(idPiece, idType, idTeam, nickname);
+               designacao = "TorreH";
                break;
 
            case 4:
                this.mask = new TorreV(idPiece, idType, idTeam, nickname);
+               designacao = "TorreV";
                break;
 
            default:
                this.mask = new Lebre(idPiece, idType, idTeam, nickname);
+               designacao = "Lebre";
                break;
 
        }

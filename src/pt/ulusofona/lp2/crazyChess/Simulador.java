@@ -148,7 +148,7 @@ public class Simulador {
             return false;
         }
 
-
+        jogoTerminado();
 
         return true;
 
