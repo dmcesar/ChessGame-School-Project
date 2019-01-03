@@ -1,6 +1,5 @@
 package pt.ulusofona.lp2.crazyChess;
 
-
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
