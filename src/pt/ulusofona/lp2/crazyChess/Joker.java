@@ -61,10 +61,51 @@ public class Joker extends CrazyPiece {
         return this.mask.getValidPlays(xO, yO);
     }
 
-    public void switchJokerType(){
+    void switchJokerType(){
 
-        String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};
+        switch ((Simulador.blackTeam.getCntValidPlays() + Simulador.whiteTeam.getCntValidPlays()) % 6){
 
-       this.mask = Simulador.getPeca(pieceData);
+            case 0: {
+
+                this.mask = new Rainha(idPiece, 1, idTeam, nickname);
+
+                break;
+            }
+
+            case 1: {
+
+                this.mask = new PoneiMagico(idPiece, 2, idTeam, nickname);
+
+                break;
+            }
+
+            case 2: {
+
+                this.mask = new PadreDaVila(idPiece, 3, idTeam, nickname);
+
+                break;
+            }
+
+            case 3: {
+
+                this.mask = new TorreH(idPiece, 4, idTeam, nickname);
+
+                break;
+            }
+
+            case 4: {
+
+                this.mask = new TorreV(idPiece, 5, idTeam, nickname);
+
+                break;
+            }
+
+            default: {
+
+                this.mask = new Lebre(idPiece, 6, idTeam, nickname);
+
+                break;
+            }
+        }
     }
 }

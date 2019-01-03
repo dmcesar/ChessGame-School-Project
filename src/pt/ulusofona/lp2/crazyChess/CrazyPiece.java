@@ -79,13 +79,13 @@ abstract public class CrazyPiece {
 
     public boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
 
-        while(xO != xD && yO != yD){
+        while(xO != xD || yO != yD){
 
             if(xO < xD){
 
                 xO++;
 
-            } else {
+            } else if(xO > xD){
 
                 xO--;
             }
@@ -94,12 +94,12 @@ abstract public class CrazyPiece {
 
                 yO++;
 
-            } else {
+            } else if(yO > yD){
 
                 yO--;
             }
 
-            if ((xO != xD && yO != yD) && Simulador.tabuleiro[xO][yO] != null) {
+            if (Simulador.tabuleiro[xO][yO] != null) {
 
                 return true;
             }
