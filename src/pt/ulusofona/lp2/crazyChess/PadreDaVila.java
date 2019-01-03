@@ -34,28 +34,33 @@ public class PadreDaVila extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
-        if (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 3) {
+        if (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) > 3) {
+            return false;
+        }
 
-            if (checkPieceBlockingMove(xO, yO, xD, yD)) {
+        if (!checkPieceBlockingMove(xO, yO, xD, yD)) {
+            return false;
 
-                for(int y = yD - 2; y <= yD + 2; y++){
+        }
 
-                    for(int x = xD - 2; x <= xD + 2; x++){
+        for(int y = yD - 2; y <= yD + 2; y++){
 
-                        if(x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length){
+            for(int x = xD - 2; x <= xD + 2; x++){
+
+                if(x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length){
 
                             if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getType().equals("Rainha") && Simulador.tabuleiro[y][x].getIdEquipa() != this.getIdEquipa() ){
 
-                                return true;
+                                return false;
                             }
                         }
                     }
                 }
-            }
-        }
 
 
-        return false;
+
+
+        return true;
     }
 
     @Override
