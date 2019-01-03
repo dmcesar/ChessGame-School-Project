@@ -36,7 +36,10 @@ public class TorreH extends CrazyPiece {
 
         if(abs(yD - yO) == 0){
 
-            return checkPieceBlockingMove(xO, yO, xD, yD);
+            boolean naoHouveBloqueio = this.checkPieceBlockingMove(xO, yO, xD, yD);
+            if (naoHouveBloqueio){
+                return true;
+            }
         }
 
         return false;
@@ -49,8 +52,8 @@ public class TorreH extends CrazyPiece {
 
         for(int x = 1; x < Simulador.tabuleiro.length; x++) {
 
-            validPlays.add((xO + x) + "," + yO);
-            validPlays.add((xO - x) + "," + yO);
+            validPlays.add((xO + x) + ", " + yO);
+            validPlays.add((xO - x) + ", " + yO);
         }
 
         return validPlays;
