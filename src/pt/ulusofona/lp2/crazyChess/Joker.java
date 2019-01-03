@@ -54,32 +54,32 @@ public class Joker extends CrazyPiece {
 
        switch (playNumber % 6){
            case 0:
-               this.mask = new Rainha(idPiece, idType, idTeam, nickname);
+               this.mask = new Rainha(idPiece,1 , idTeam, nickname);
                designacao = "Rainha";
                break;
 
            case 1:
-               this.mask = new PoneiMagico(idPiece, idType, idTeam, nickname);
+               this.mask = new PoneiMagico(idPiece, 2, idTeam, nickname);
                designacao = "Ponei Mágico";
                break;
 
            case 2:
-               this.mask = new PadreDaVila(idPiece, idType, idTeam, nickname);
+               this.mask = new PadreDaVila(idPiece, 3, idTeam, nickname);
                designacao = "Padre da Vila";
                break;
 
            case 3:
-               this.mask = new TorreH(idPiece, idType, idTeam, nickname);
+               this.mask = new TorreH(idPiece, 4, idTeam, nickname);
                designacao = "TorreH";
                break;
 
            case 4:
-               this.mask = new TorreV(idPiece, idType, idTeam, nickname);
+               this.mask = new TorreV(idPiece, 5, idTeam, nickname);
                designacao = "TorreV";
                break;
 
            default:
-               this.mask = new Lebre(idPiece, idType, idTeam, nickname);
+               this.mask = new Lebre(idPiece, 6, idTeam, nickname);
                designacao = "Lebre";
                break;
 

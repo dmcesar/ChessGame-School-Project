@@ -668,6 +668,7 @@ public class Simulador {
     }
 
     public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD){
+
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
 
             //Verifica se existe uma peça na posição inicial
