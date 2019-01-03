@@ -107,7 +107,7 @@ public class Simulador {
                                 crazyPiece.getTeam().crazyPieces.add(crazyPiece);
 
                                 //Se a peça for um joker troca o seu tipo
-                                if (crazyPiece.getType().equals("Joker")) {
+                                if (crazyPiece.getIdType() == 7) {
 
                                     //Adiciona o joker á lista de jokers da sua equipa
                                     crazyPiece.getTeam().jokers.add((Joker) crazyPiece);
@@ -160,19 +160,17 @@ public class Simulador {
 
     public boolean processaJogada(int xO, int yO, int xD, int yD) {
         //Verifica se a posição inicial é diferente da posição final
-        if (getIDEquipaAJogar() == 10) {
 
-            for (Joker joker : blackTeam.jokers) {
+        for (Joker joker : blackTeam.jokers) {
 
-                joker.switchJokerType();
-            }
-        } else {
-            for (Joker joker : whiteTeam.jokers) {
-
-                joker.switchJokerType();
-            }
-
+            joker.switchJokerType();
         }
+
+        for (Joker joker : whiteTeam.jokers) {
+
+            joker.switchJokerType();
+        }
+
         if (xO != xD || yO != yD) {
 
             //Valida posição inicial
@@ -386,12 +384,12 @@ public class Simulador {
         resultados.add("Equipa das Pretas");
         resultados.add(" Capturas: " + Integer.toString(blackTeam.cntCaptures));
         resultados.add(" Jogadas válidas: " + Integer.toString(blackTeam.cntValidPlays));
-        resultados.add(" Tentativas inválidas:" + Integer.toString(blackTeam.cntInvalidPlays));
+        resultados.add(" Tentativas inválidas: " + Integer.toString(blackTeam.cntInvalidPlays));
 
         resultados.add("Equipa das Brancas");
         resultados.add(" Capturas: " + Integer.toString(whiteTeam.cntCaptures));
         resultados.add(" Jogadas válidas: " + Integer.toString(whiteTeam.cntValidPlays));
-        resultados.add(" Tentativas inválidas:" + Integer.toString(whiteTeam.cntInvalidPlays));
+        resultados.add(" Tentativas inválidas: " + Integer.toString(whiteTeam.cntInvalidPlays));
 
         return resultados;
     }
@@ -706,19 +704,14 @@ public class Simulador {
     }
 
     public List<String> obterSugestoesJogada(int xO, int yO){
-        if (getIDEquipaAJogar() == 10) {
-
-            for (Joker joker : blackTeam.jokers) {
-
-                joker.switchJokerType();
-            }
-        } else {
-            for (Joker joker : whiteTeam.jokers) {
-
-                joker.switchJokerType();
-            }
-
+        for (Joker joker : blackTeam.jokers) {
+            joker.switchJokerType();
         }
+
+        for (Joker joker : whiteTeam.jokers) {
+            joker.switchJokerType();
+        }
+
 
         ArrayList<String> jogadasValidas = new ArrayList<>();
 

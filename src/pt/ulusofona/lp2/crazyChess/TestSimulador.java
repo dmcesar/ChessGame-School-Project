@@ -64,12 +64,12 @@ public class TestSimulador {
         resultados.add("Equipa das Pretas");
         resultados.add(" Capturas: 0");
         resultados.add(" Jogadas válidas: 0");
-        resultados.add(" Tentativas inválidas:0");
+        resultados.add(" Tentativas inválidas: 0");
 
         resultados.add("Equipa das Brancas");
         resultados.add(" Capturas: 0");
         resultados.add(" Jogadas válidas: 0");
-        resultados.add(" Tentativas inválidas:0");
+        resultados.add(" Tentativas inválidas: 0");
 
         assertEquals(resultados, resultadoReal);
 
@@ -105,12 +105,12 @@ public class TestSimulador {
         resultados.add("Equipa das Pretas");
         resultados.add(" Capturas: 0");
         resultados.add(" Jogadas válidas: 0");
-        resultados.add(" Tentativas inválidas:0");
+        resultados.add(" Tentativas inválidas: 0");
 
         resultados.add("Equipa das Brancas");
         resultados.add(" Capturas: 0");
         resultados.add(" Jogadas válidas: 0");
-        resultados.add(" Tentativas inválidas:0");
+        resultados.add(" Tentativas inválidas: 0");
 
         assertEquals(resultados, resultadoReal);
 

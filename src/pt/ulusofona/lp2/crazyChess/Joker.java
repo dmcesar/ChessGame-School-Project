@@ -50,6 +50,8 @@ public class Joker extends CrazyPiece {
 
         /*String[] pieceData = {Integer.toString(this.idPiece), Integer.toString(this.getTeam().cntValidPlays % 6), Integer.toString(this.idTeam), this.nickname};*/
         int playNumber = (Simulador.blackTeam.getCntValidPlays() + Simulador.whiteTeam.getCntValidPlays()) + 6;
+        System.out.println(playNumber);
+
 
        switch (playNumber % 6){
            case 0:
