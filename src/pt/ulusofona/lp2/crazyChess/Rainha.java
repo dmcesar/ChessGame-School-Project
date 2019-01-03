@@ -63,7 +63,6 @@ public class Rainha extends CrazyPiece {
         return false;
     }
 
-
     @Override
     public ArrayList<String> getValidPlays(int xO, int yO){
 
