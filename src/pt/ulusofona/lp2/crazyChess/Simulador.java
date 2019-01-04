@@ -314,7 +314,7 @@ public class Simulador {
             }
         }
         //Vitória das brancas por falta de reis da equipa preta em jogo
-        if (nrReisBlack == 0) {
+        if (nrReisBlack == 0 && nrReisWhite > 0) {
 
             result = "VENCERAM AS BRANCAS";
 
@@ -322,7 +322,7 @@ public class Simulador {
         }
 
         //Vitória das Pretas por falta de reis da equipa branca em jogo
-        if (nrReisWhite == 0) {
+        if (nrReisWhite == 0 && nrReisBlack > 0) {
 
             result = "VENCERAM AS PRETAS";
 
@@ -491,7 +491,7 @@ public class Simulador {
             writer.write(whiteTeam.getCntCaptures() + ":");
 
             //Escrita do nº de jogadas inválidas da equipa preta
-            writer.write(whiteTeam.getCntInvalidPlays());
+            writer.write(whiteTeam.getCntInvalidPlays() + "");
 
             //Fecho do escritor
             writer.close();
