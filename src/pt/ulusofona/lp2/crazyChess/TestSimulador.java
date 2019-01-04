@@ -375,9 +375,9 @@ public class TestSimulador {
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
 
-        boolean resultadoReal = simulador.processaJogada(5, 2, 6, 3);
+        boolean resultadoReal = simulador.processaJogada(6, 3, 5, 2);
 
-        //Deve retornar true pois o bispo não fica a menos de 2 unidades de distância da rainha adversária
+        //Deve retornar false pois o bispo fica a uma 1 casa de distância da rainha
         assertEquals(false, resultadoReal);
     }
 
@@ -390,7 +390,7 @@ public class TestSimulador {
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
 
-        boolean resultadoReal = simulador.processaJogada(5, 2, 3, 0);
+        boolean resultadoReal = simulador.processaJogada(6, 3, 3, 0);
 
         //Deve retornar false pois há bloqueio no seu caminho
         assertEquals(false, resultadoReal);
@@ -405,9 +405,9 @@ public class TestSimulador {
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
 
-        boolean resultadoReal = simulador.processaJogada(5, 2, 7, 4);
+        boolean resultadoReal = simulador.processaJogada(6, 3, 7, 4);
 
-        //Deve retornar false pois fica a mais de 2 unidades de distância da rainha adversária
+        //Deve retornar true
         assertEquals(true, resultadoReal);
     }
 
@@ -418,14 +418,16 @@ public class TestSimulador {
         simulador.iniciaJogo(ficheiro);
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
-        simulador.processaJogada(3, 4, 4, 5);
+        simulador.processaJogada(3, 4, 2, 3);
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(5,2);
+        List<String> resultadoReal = simulador.obterSugestoesJogada(6,3);
         List<String> resultadoEsperado = new ArrayList<>();
 
         resultadoEsperado.add("7, 4");
-        resultadoEsperado.add("3, 4");
-        resultadoEsperado.add("2, 5");
+        resultadoEsperado.add("7, 2");
+        resultadoEsperado.add("5, 4");
+        resultadoEsperado.add("4, 5");
+        resultadoEsperado.add("3, 6");
 
         assertEquals(resultadoEsperado, resultadoReal);
     }
