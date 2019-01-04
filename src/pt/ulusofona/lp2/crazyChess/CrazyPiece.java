@@ -99,13 +99,13 @@ abstract public class CrazyPiece {
                 yO--;
             }
 
-            if (Simulador.tabuleiro[xO][yO] != null) {
+            if ((xO != xD || yO != yD) && Simulador.tabuleiro[yO][xO] != null) {
 
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
 

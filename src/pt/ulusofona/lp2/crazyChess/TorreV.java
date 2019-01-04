@@ -34,10 +34,9 @@ public class TorreV extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
-        if(abs(xD - xO) == 0){
+        if(abs(xO - xD) == 0){
 
             return this.checkPieceBlockingMove(xO, yO, xD, yD);
-
         }
 
         return false;

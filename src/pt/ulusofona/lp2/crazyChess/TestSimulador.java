@@ -466,8 +466,7 @@ public class TestSimulador {
         Simulador simulador = new Simulador();
         simulador.iniciaJogo(ficheiro);
 
-        //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
-        simulador.processaJogada(3, 4, 4, 5);
+        simulador.setIdEquipaAJogar();
 
         boolean resultadoReal = simulador.processaJogada(6, 6, 6, 1);
 

@@ -684,7 +684,7 @@ public class Simulador {
 
         if (tabuleiro[yO][xO] == null) {
 
-            jogadasValidas.add("Pedido Inválido");
+            jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
 
@@ -695,16 +695,16 @@ public class Simulador {
 
         if (crazyPiece.getTeam().getId() != getIDEquipaAJogar()) {
 
-            jogadasValidas.add("Pedido Inválido");
+            jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
         }
 
         for (String jogada : crazyPiece.getValidPlays(xO, yO)) {
 
-            int xD = Integer.parseInt(jogada.split(",")[0]);
+            int xD = Integer.parseInt(jogada.split(", ")[0]);
 
-            int yD = Integer.parseInt(jogada.split(",")[1]);
+            int yD = Integer.parseInt(jogada.split(", ")[1]);
 
             if (verificaJogadaValida(xO, yO, xD, yD)) {
 
