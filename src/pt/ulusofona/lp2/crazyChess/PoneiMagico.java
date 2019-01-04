@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.crazyChess;
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.incrementExact;
 
 public class PoneiMagico extends CrazyPiece {
 
@@ -30,6 +31,8 @@ public class PoneiMagico extends CrazyPiece {
     public String getRelativeValue() {
         return "5";
     }
+
+
 
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
@@ -84,10 +87,10 @@ public class PoneiMagico extends CrazyPiece {
 
         ArrayList<String> validPlays = new ArrayList<>();
 
-        validPlays.add((xO + 2) + "," + (yO + 2));
-        validPlays.add((xO + 2) + "," + (yO - 2));
-        validPlays.add((xO - 2) + "," + (yO + 2));
-        validPlays.add((xO - 2) + "," + (yO - 2));
+        validPlays.add((xO + 2) + ", " + (yO + 2));
+        validPlays.add((xO + 2) + ", " + (yO - 2));
+        validPlays.add((xO - 2) + ", " + (yO + 2));
+        validPlays.add((xO - 2) + ", " + (yO - 2));
 
         return validPlays;
     }

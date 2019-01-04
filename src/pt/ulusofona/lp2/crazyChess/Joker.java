@@ -42,17 +42,8 @@ public class Joker extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
-        for(int y = 0; y < Simulador.tabuleiro.length; y++) {
+        return this.mask.checkValidMovement(xO, yO, xD, yD);
 
-            for (int x = 0; x < Simulador.tabuleiro.length; x++) {
-
-                if(Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getId() == this.idPiece){
-
-                    return Simulador.tabuleiro[y][x].checkValidMovement(xO, yO, xD, yD);
-                }
-            }
-        }
-        return false;
     }
 
     @Override

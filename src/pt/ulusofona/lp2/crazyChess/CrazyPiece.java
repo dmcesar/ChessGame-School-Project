@@ -108,3 +108,6 @@ abstract public class CrazyPiece {
         return false;
     }
 }
+
+
+

@@ -36,10 +36,7 @@ public class TorreH extends CrazyPiece {
 
         if(abs(yD - yO) == 0){
 
-            boolean naoHouveBloqueio = this.checkPieceBlockingMove(xO, yO, xD, yD);
-            if (naoHouveBloqueio){
-                return true;
-            }
+            return this.checkPieceBlockingMove(xO, yO, xD, yD);
         }
 
         return false;

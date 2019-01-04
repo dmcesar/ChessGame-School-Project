@@ -66,10 +66,10 @@ public class PadreDaVila extends CrazyPiece {
 
         for(int x = 1; x <= 3; x++) {
 
-            validPlays.add((xO + x) + "," + (yO + x));
-            validPlays.add((xO + x) + "," + (yO - x));
-            validPlays.add((xO - x) + "," + (yO + x));
-            validPlays.add((xO - x) + "," + (yO - x));
+            validPlays.add((xO + x) + ", " + (yO + x));
+            validPlays.add((xO + x) + ", " + (yO - x));
+            validPlays.add((xO - x) + ", " + (yO + x));
+            validPlays.add((xO - x) + ", " + (yO - x));
         }
 
         return validPlays;

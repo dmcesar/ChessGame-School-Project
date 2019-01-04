@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
+
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -33,21 +34,6 @@ public class Rainha extends CrazyPiece {
 
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
-
-        if(Simulador.tabuleiro[yD][xD] != null && Simulador.tabuleiro[yD][xD].getIdType() == 7) {
-            if (this.idTeam == 10) {
-                int playNumber = (Simulador.blackTeam.getCntValidPlays() + Simulador.whiteTeam.getCntValidPlays()) + 6;
-                if (playNumber % 6 == 0){
-                    return false;
-
-                }
-            } else {
-                int playNumber = (Simulador.blackTeam.getCntValidPlays() + Simulador.whiteTeam.getCntValidPlays()) + 6;
-                if (playNumber % 6 == 0){
-                    return false;
-                }
-            }
-        }
 
         //Verifica se o movimento é horizontal/vertical/obliquo
         if((abs(xD - xO) <= 5 && abs(yD - yO) == 0 || abs(xD - xO) == 0 && abs(yD - yO) <= 5) || (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 5)){

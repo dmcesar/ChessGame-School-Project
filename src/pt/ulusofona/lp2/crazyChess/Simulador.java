@@ -5,11 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-
-import static java.lang.Math.abs;
 
 public class Simulador {
 
@@ -35,7 +32,6 @@ public class Simulador {
 
     //Contém o resultado final do jogo
     private String result;
-
 
     public boolean iniciaJogo(File ficheiroInicial) {
 
@@ -108,7 +104,7 @@ public class Simulador {
                                 crazyPiece.getTeam().crazyPieces.add(crazyPiece);
 
                                 //Se a peça for um joker troca o seu tipo
-                                if (crazyPiece.getType().equals("Joker")) {
+                                if (crazyPiece.getIdType() == 7) {
 
                                     //"transforma" a mascara do joker numa rainha
                                     ((Joker) crazyPiece).mask = new Rainha(crazyPiece.idPiece, 1, crazyPiece.idTeam, crazyPiece.nickname);
@@ -150,14 +146,17 @@ public class Simulador {
             return false;
         }
 
+        jogoTerminado();
+
         return true;
+
     }
 
     public int getTamanhoTabuleiro() {
         return tabuleiro.length;
     }
 
-    public boolean processaJogada(int xO, int yO, int xD, int yD) {
+    public boolean processaJogada(int xO, int yO, int xD, int yD){
 
         //Verifica se a posição inicial é diferente da posição final
         if (xO != xD || yO != yD) {
@@ -176,8 +175,8 @@ public class Simulador {
 
                         //Valida posição final
                         if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
-                            //Verifica se a peça pode se movmentar
 
+                            //Verifica se a peça pode se movmentar
                             if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
                                 //Verifica se existe uma peça na posição final
@@ -222,6 +221,8 @@ public class Simulador {
 
                                             joker.switchJokerType();
                                         }
+
+                                        setIdEquipaAJogar();
 
                                         //Jogada realizada com sucesso
                                         return true;
@@ -299,24 +300,38 @@ public class Simulador {
 
     public boolean jogoTerminado() {
 
-        //Vitória das brancas por falta de peças pretas em jogo
-        if (blackTeam.inGameCrazyPieces.size() == 0) {
+        int nrReisBlack = 0;
+        int nrReisWhite = 0;
+
+        for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
+            if (piece.getIdType() == 0){
+                nrReisBlack++;
+            }
+        }
+
+        for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
+            if (piece.getIdType() == 0){
+                nrReisWhite++;
+            }
+        }
+        //Vitória das brancas por falta de reis da equipa preta em jogo
+        if (nrReisBlack == 0) {
 
             result = "VENCERAM AS BRANCAS";
 
             return true;
         }
 
-        //Vitória das Pretas por falta de peças brancas em jogo
-        if (whiteTeam.inGameCrazyPieces.size() == 0) {
+        //Vitória das Pretas por falta de reis da equipa branca em jogo
+        if (nrReisWhite == 0) {
 
             result = "VENCERAM AS PRETAS";
 
             return true;
         }
 
-        //Empate por número igual de peças em jogo (1 peça por equipa é considerado empate)
-        if (blackTeam.inGameCrazyPieces.size() == 1 && whiteTeam.inGameCrazyPieces.size() == 1) {
+        //Empate por número igual de reis em jogo (1 peça por equipa é considerado empate)
+        if (nrReisBlack == 1 && nrReisWhite == 1) {
 
             result = "EMPATE";
 
@@ -353,14 +368,14 @@ public class Simulador {
         resultados.add("---");
 
         resultados.add("Equipa das Pretas");
-        resultados.add(Integer.toString(blackTeam.cntCaptures));
-        resultados.add(Integer.toString(blackTeam.cntValidPlays));
-        resultados.add(Integer.toString(blackTeam.cntInvalidPlays));
+        resultados.add(" Capturas: " + blackTeam.cntCaptures);
+        resultados.add(" Jogadas válidas: " + blackTeam.cntValidPlays);
+        resultados.add(" Tentativas inválidas: " + blackTeam.cntInvalidPlays);
 
         resultados.add("Equipa das Brancas");
-        resultados.add(Integer.toString(whiteTeam.cntCaptures));
-        resultados.add(Integer.toString(whiteTeam.cntValidPlays));
-        resultados.add(Integer.toString(whiteTeam.cntInvalidPlays));
+        resultados.add(" Capturas: " + whiteTeam.cntCaptures);
+        resultados.add(" Jogadas válidas: " + whiteTeam.cntValidPlays);
+        resultados.add(" Tentativas inválidas: " + whiteTeam.cntInvalidPlays);
 
         return resultados;
     }
@@ -383,7 +398,7 @@ public class Simulador {
         return idEquipaAJogar;
     }
 
-    private void setIdEquipaAJogar() {
+    public void setIdEquipaAJogar() {
 
         if (getIDEquipaAJogar() == blackTeam.getId()) {
 
@@ -398,6 +413,7 @@ public class Simulador {
     public boolean gravarJogo(File ficheiroDestino) {
 
         try {
+
             FileWriter writer = new FileWriter(ficheiroDestino);
 
             //Escrita da primeira linha do ficheiro, que é o tamanho do tabuleiro
@@ -476,7 +492,7 @@ public class Simulador {
             writer.write(whiteTeam.getCntCaptures() + ":");
 
             //Escrita do nº de jogadas inválidas da equipa preta
-            writer.write(whiteTeam.getCntInvalidPlays() + "");
+            writer.write(whiteTeam.getCntInvalidPlays());
 
             //Fecho do escritor
             writer.close();
@@ -506,20 +522,29 @@ public class Simulador {
                         //Apaga a ultima posição para a qual ela se moveu
                         tabuleiro[y][x] = null;
 
+                        //Decrementa o número de jogadas válidas da equipa
+                        crazyPiece.getTeam().cntValidPlays--;
+
                         String[] pieceCoords = crazyPiece.previousCoords.split(";");
+
+                        for(Joker joker : blackTeam.jokers){
+
+                            joker.switchJokerType();
+                        }
+
+                        for (Joker joker : whiteTeam.jokers){
+
+                            joker.switchJokerType();
+                        }
 
                         for (Joker joker : crazyPiece.getTeam().jokers) {
 
                             //Verifica se a peça em questão é um joker
                             if (crazyPiece.getId() == joker.getId()) {
 
-                                //Retorna o joker ao seu tipo anterior
                                 crazyPiece = ((Joker) crazyPiece).mask;
                             }
                         }
-
-                        //Decrementa o número de jogadas válidas da equipa
-                        crazyPiece.getTeam().cntValidPlays--;
 
                         //Mete a peça na posição antiga
                         tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
@@ -546,6 +571,16 @@ public class Simulador {
                                 //Decrementa o número de jogadas válidas e de capturas da equipa
                                 crazyPiece.getTeam().cntValidPlays--;
                                 crazyPiece.getTeam().cntCaptures--;
+
+                                for(Joker joker : blackTeam.jokers){
+
+                                    joker.switchJokerType();
+                                }
+
+                                for (Joker joker : whiteTeam.jokers){
+
+                                    joker.switchJokerType();
+                                }
 
                                 for (Joker joker : crazyPiece.getTeam().jokers) {
 
@@ -581,9 +616,10 @@ public class Simulador {
 
         //Troca o id da equipa a jogar (repete a jogada anterior)
         setIdEquipaAJogar();
+
     }
 
-    private CrazyPiece getPeca(String[] lineData) {
+    public CrazyPiece getPeca(String[] lineData) {
 
         int idPiece = Integer.parseInt(lineData[0]);
         int idType = Integer.parseInt(lineData[1]);
@@ -618,42 +654,7 @@ public class Simulador {
         }
     }
 
-    public List<String> obterSugestoesJogada(int xO, int yO) {
-
-        ArrayList<String> jogadasValidas = new ArrayList<>();
-
-        CrazyPiece crazyPiece;
-
-        if (tabuleiro[yO][xO] == null) {
-
-            return jogadasValidas;
-
-        } else {
-
-            crazyPiece = tabuleiro[yO][xO];
-        }
-
-        if (crazyPiece.getTeam().getId() != getIDEquipaAJogar()) {
-
-            return jogadasValidas;
-        }
-
-        for (String jogada : crazyPiece.getValidPlays(xO, yO)) {
-
-            int xD = Integer.parseInt(jogada.split(",")[0]);
-
-            int yD = Integer.parseInt(jogada.split(",")[1]);
-
-            if (verificaJogadaValida(xO, yO, xD, yD)) {
-
-                jogadasValidas.add(jogada);
-            }
-        }
-
-        return jogadasValidas;
-    }
-
-    private boolean verificaJogadaValida(int xO, int yO, int xD, int yD) {
+    public boolean verificaJogadaValida (int xO, int yO, int xD, int yD){
 
         //Verifica se a posição inicial é válida
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
@@ -673,5 +674,44 @@ public class Simulador {
         }
 
         return false;
+    }
+
+    public List<String> obterSugestoesJogada(int xO, int yO){
+
+        ArrayList<String> jogadasValidas = new ArrayList<>();
+
+        CrazyPiece crazyPiece;
+
+        if (tabuleiro[yO][xO] == null) {
+
+            jogadasValidas.add("Pedido Inválido");
+
+            return jogadasValidas;
+
+        } else {
+
+            crazyPiece = tabuleiro[yO][xO];
+        }
+
+        if (crazyPiece.getTeam().getId() != getIDEquipaAJogar()) {
+
+            jogadasValidas.add("Pedido Inválido");
+
+            return jogadasValidas;
+        }
+
+        for (String jogada : crazyPiece.getValidPlays(xO, yO)) {
+
+            int xD = Integer.parseInt(jogada.split(",")[0]);
+
+            int yD = Integer.parseInt(jogada.split(",")[1]);
+
+            if (verificaJogadaValida(xO, yO, xD, yD)) {
+
+                jogadasValidas.add(jogada);
+            }
+        }
+
+        return jogadasValidas;
     }
 }

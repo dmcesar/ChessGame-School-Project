@@ -36,7 +36,7 @@ public class Lebre extends CrazyPiece {
 
         if(abs(xD - xO) == 1 && abs(yD - yO) == 1){
 
-            if((Simulador.blackTeam.cntValidPlays + Simulador.whiteTeam.cntValidPlays) % 2 == 0){
+            if((Simulador.blackTeam.getCntValidPlays() + Simulador.whiteTeam.cntValidPlays) % 2 == 0){
 
                 return Simulador.tabuleiro[yD][xD] == null || (Simulador.tabuleiro[yD][xD] != null && Simulador.tabuleiro[yD][xD].getIdEquipa() != this.getIdEquipa());
             }
@@ -50,10 +50,10 @@ public class Lebre extends CrazyPiece {
 
         ArrayList<String> validPlays = new ArrayList<>();
 
-        validPlays.add((xO + 1) + "," + (yO + 1));
-        validPlays.add((xO + 1) + "," + (yO - 1));
-        validPlays.add((xO - 1) + "," + (yO + 1));
-        validPlays.add((xO - 1) + "," + (yO - 1));
+        validPlays.add((xO + 1) + ", " + (yO + 1));
+        validPlays.add((xO + 1) + ", " + (yO - 1));
+        validPlays.add((xO - 1) + ", " + (yO + 1));
+        validPlays.add((xO - 1) + ", " + (yO - 1));
 
         return validPlays;
     }
