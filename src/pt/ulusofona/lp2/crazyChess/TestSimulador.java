@@ -231,7 +231,7 @@ public class TestSimulador {
         Simulador simulador = new Simulador();
         simulador.iniciaJogo(ficheiro);
 
-        boolean resultadoReal = simulador.processaJogada(4, 1, 6, 3);
+        boolean resultadoReal = simulador.processaJogada(4, 1, 7, 4);
         //Deve retornar false pois há bloqueio no caminho da rainha
         assertEquals(false, resultadoReal);
     }
@@ -277,6 +277,7 @@ public class TestSimulador {
         resultadoEsperado.add("3, 0");
         resultadoEsperado.add("2, 1");
         resultadoEsperado.add("4, 3");
+        resultadoEsperado.add("6, 3");
         resultadoEsperado.add("2, 3");
         resultadoEsperado.add("1, 1");
         resultadoEsperado.add("4, 4");
@@ -456,7 +457,7 @@ public class TestSimulador {
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
 
-        boolean resultadoReal = simulador.processaJogada(6, 6, 6, 3);
+        boolean resultadoReal = simulador.processaJogada(6, 6, 6, 4);
 
         //Deve retornar true
         assertEquals(true, resultadoReal);
@@ -470,10 +471,10 @@ public class TestSimulador {
 
         simulador.setIdEquipaAJogar();
 
-        boolean resultadoReal = simulador.processaJogada(6, 6, 6, 1);
+        boolean resultadoReal = simulador.processaJogada(6, 6, 6, 2);
 
         //Deve retornar true, apesar de existir uma captura
-        assertEquals(true, resultadoReal);
+        assertEquals(false, resultadoReal);
     }
 
     @Test
@@ -506,9 +507,6 @@ public class TestSimulador {
         resultadoEsperado.add("6, 7");
         resultadoEsperado.add("6, 5");
         resultadoEsperado.add("6, 4");
-        resultadoEsperado.add("6, 3");
-        resultadoEsperado.add("6, 2");
-        resultadoEsperado.add("6, 1");
 
         assertEquals(resultadoEsperado, resultadoReal);
     }
