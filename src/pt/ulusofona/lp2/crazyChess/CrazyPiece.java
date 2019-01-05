@@ -13,6 +13,7 @@ abstract public class CrazyPiece {
     protected int idTeam;
     protected String nickname;
     String previousCoords;
+    boolean captured;
 
     CrazyPiece(){}
 
@@ -23,6 +24,7 @@ abstract public class CrazyPiece {
         this.idTeam = idTeam;
         this.nickname = nickname;
         this.previousCoords = "";
+        this.captured  =false;
     }
 
     public int getId(){return this.idPiece;}
