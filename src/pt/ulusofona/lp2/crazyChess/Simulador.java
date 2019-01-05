@@ -518,7 +518,7 @@ public class Simulador {
     }
 
     public void anularJogadaAnterior() {
-        //Troca o id da equipa a jogar (repete a jogada anterior)
+
         setIdEquipaAJogar();
 
         for (CrazyPiece crazyPiece : lastPlayOutcome) {
