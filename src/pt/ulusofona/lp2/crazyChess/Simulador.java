@@ -542,17 +542,6 @@ public class Simulador {
                             String[] pieceCoords = crazyPiece.previousCoords.split(";");
                             //crazyPiece.getTeam().cntValidPlays--;
 
-                            for (Joker joker : crazyPiece.getTeam().jokers) {
-                                joker.switchJokerType();
-
-                                //Verifica se a peça em questão é um joker
-                                /*if (crazyPiece.getId() == joker.getId()) {
-
-                                    //Retorna o joker ao seu tipo anterior
-                                    joker.switchJokerType();
-                                }*/
-                            }
-
                             //Mete a peça na posição antiga
                             tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
                         }
@@ -589,16 +578,6 @@ public class Simulador {
                                     //Decrementa o número de jogadas válidas e de capturas da equipa
                                     idEquipaCapturada = crazyPiece.getIdEquipa();
 
-                                    for (Joker joker : crazyPiece.getTeam().jokers) {
-
-                                        //Verifica se a peça em questão é um joker
-                                        //if (crazyPiece.getId() == joker.getId()) {
-
-                                        //Retorna o joker ao seu tipo anterior
-                                        joker.switchJokerType();
-                                        //}
-                                    }
-
                                     //Insere-a na posição antiga
                                     tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
 
@@ -629,6 +608,14 @@ public class Simulador {
                 blackTeam.cntCaptures--;
             }
 
+        }
+
+        for (Joker joker : blackTeam.jokers){
+            joker.switchJokerType();;
+        }
+
+        for (Joker joker : whiteTeam.jokers){
+            joker.switchJokerType();
         }
 
     }
