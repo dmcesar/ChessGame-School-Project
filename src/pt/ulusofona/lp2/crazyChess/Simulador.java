@@ -345,8 +345,7 @@ public class Simulador {
         }
 
         //Empate por número igual de reis em jogo (1 peça por equipa é considerado empate)
-        if (nrReisBlack == 1 && nrReisWhite == 1) {
-
+        if (nrReisBlack == 1 && blackTeam.inGameCrazyPieces.size() == 1 && nrReisWhite == 1 && whiteTeam.inGameCrazyPieces.size() == 1) {
             result = "EMPATE";
 
             return true;
