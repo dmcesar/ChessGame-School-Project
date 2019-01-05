@@ -22,9 +22,6 @@ public class TorreV extends CrazyPiece {
     }
 
     @Override
-    public int getIdType(){return 5;}
-
-    @Override
     public String getType() {
         return "TorreV";
     }

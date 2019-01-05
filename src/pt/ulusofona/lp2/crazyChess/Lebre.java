@@ -22,9 +22,6 @@ public class Lebre extends CrazyPiece {
     }
 
     @Override
-    public int getIdType(){return 6;}
-
-    @Override
     public String getType() {
         return "Lebre";
     }

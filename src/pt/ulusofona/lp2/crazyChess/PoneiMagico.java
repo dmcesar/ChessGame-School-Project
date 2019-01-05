@@ -23,9 +23,6 @@ public class PoneiMagico extends CrazyPiece {
     }
 
     @Override
-    public int getIdType(){return 2;}
-
-    @Override
     public String getType() {
         return "Ponei Mágico";
     }

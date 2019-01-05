@@ -23,9 +23,6 @@ public class Rainha extends CrazyPiece {
     }
 
     @Override
-    public int getIdType(){return 1;}
-
-    @Override
     public String getType() {
         return "Rainha";
     }

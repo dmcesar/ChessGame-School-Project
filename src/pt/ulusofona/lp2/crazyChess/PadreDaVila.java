@@ -22,9 +22,6 @@ public class PadreDaVila extends CrazyPiece {
     }
 
     @Override
-    public int getIdType(){return 3;}
-
-    @Override
     public String getType() {
         return "Padre da Vila";
     }

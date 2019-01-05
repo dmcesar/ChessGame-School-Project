@@ -22,9 +22,6 @@ public class Rei extends CrazyPiece {
     }
 
     @Override
-    public int getIdType(){return 0;}
-
-    @Override
     public String getType() {
         return "Rei";
     }
