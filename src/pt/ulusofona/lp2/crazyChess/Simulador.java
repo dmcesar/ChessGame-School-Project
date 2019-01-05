@@ -258,6 +258,7 @@ public class Simulador {
 
                                     //Troca o id da equipa atual a jogar
 
+                                    //Troca o id da equipa atual a jogar
                                     setIdEquipaAJogar();
 
                                     //Jogada realizada com sucesso
@@ -295,7 +296,7 @@ public class Simulador {
 
         for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
 
-            if (piece.getIdType() == 0){
+            if (piece.getRelativeValue().equals("(infinito)")){
 
                 nrReisBlack++;
             }
@@ -303,7 +304,7 @@ public class Simulador {
 
         for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
 
-            if (piece.getIdType() == 0){
+            if (piece.getRelativeValue().equals("(infinito)")){
 
                 nrReisWhite++;
             }
@@ -520,6 +521,11 @@ public class Simulador {
                             pieceInGame = true;
 
                             tabuleiro[y][x] = null;
+
+                            if(!crazyPiece.getTeam().inGameCrazyPieces.contains(crazyPiece)){
+
+                                crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
+                            }
                         }
                     }
                 }
@@ -540,6 +546,11 @@ public class Simulador {
                 if (lastPlayOutcome.size() > 1) {
 
                     crazyPiece.getTeam().cntCaptures--;
+                }
+
+                if(!crazyPiece.getTeam().inGameCrazyPieces.contains(crazyPiece)){
+
+                    crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
                 }
             }
 
