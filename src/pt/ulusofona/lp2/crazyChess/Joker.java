@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Joker extends CrazyPiece {
 
-    CrazyPiece mask;
+    private CrazyPiece mask;
 
     Joker(int idPiece, int idType, int idTeam, String nickname){ super(idPiece, idType, idTeam, nickname);}
 
@@ -23,7 +23,9 @@ public class Joker extends CrazyPiece {
 
     @Override
     public String getType() {
+
         switchJokerType();
+
         return "Joker/" + this.mask.getType();
     }
 
