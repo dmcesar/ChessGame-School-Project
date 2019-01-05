@@ -303,6 +303,7 @@ public class Simulador {
             }
         }
 
+
         for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
 
             if (piece.getIdType() == 0){
@@ -310,6 +311,7 @@ public class Simulador {
                 nrReisWhite++;
             }
         }
+
 
         //Vitória das brancas por falta de reis da equipa preta em jogo
         if (nrReisBlack == 0) {
@@ -527,7 +529,7 @@ public class Simulador {
                             String[] pieceCoords = crazyPiece.previousCoords.split(";");
 
                             //Decrementa o número de jogadas válidas da equipa da peça para trocar o joker para a mascara correta depois
-                            crazyPiece.getTeam().cntValidPlays--;
+                            //crazyPiece.getTeam().cntValidPlays--;
 
                             for (Joker joker : crazyPiece.getTeam().jokers) {
 
@@ -540,10 +542,17 @@ public class Simulador {
                     }
                 }
             }
+
+            if (getIDEquipaAJogar() == 10) {
+                blackTeam.cntValidPlays--;
+            } else {
+                whiteTeam.cntValidPlays--;
+            }
         }
 
         //Ocorreu uma captura
         else {
+            int idEquipaCapturada = 0;
 
             for (CrazyPiece crazyPiece : lastPlayOutcome) {
 
@@ -559,10 +568,11 @@ public class Simulador {
                                 if (tabuleiro[y][x].getId() == crazyPiece.getId()) {
 
                                     String[] pieceCoords = crazyPiece.previousCoords.split(";");
+                                    idEquipaCapturada = crazyPiece.getIdEquipa();
 
                                     //Decrementa o número de jogadas válidas e de capturas da equipa
-                                    crazyPiece.getTeam().cntValidPlays--;
-                                    crazyPiece.getTeam().cntCaptures--;
+                                    //crazyPiece.getTeam().cntValidPlays--;
+                                    //crazyPiece.getTeam().cntCaptures--;
 
                                     //Troca os jokers da sua equipa
                                     for (Joker joker : crazyPiece.getTeam().jokers) {
@@ -601,6 +611,16 @@ public class Simulador {
                     }
                 }
             }
+
+
+            if (idEquipaCapturada == 10){
+                whiteTeam.cntValidPlays--;
+                whiteTeam.cntCaptures--;
+            } else {
+                blackTeam.cntValidPlays--;
+                blackTeam.cntCaptures--;
+            }
+
         }
     }
 
