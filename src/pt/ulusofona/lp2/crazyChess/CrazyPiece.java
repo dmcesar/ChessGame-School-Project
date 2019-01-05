@@ -11,7 +11,7 @@ abstract public class CrazyPiece {
     protected int idType;
     protected int idTeam;
     protected String nickname;
-    protected String previousCoords;
+    String previousCoords;
     boolean captured;
 
     CrazyPiece(){}
@@ -34,7 +34,7 @@ abstract public class CrazyPiece {
 
     public String getNickname(){return this.nickname;}
 
-    public Equipa getTeam(){
+    Equipa getTeam(){
 
         if(this.idTeam == 10){
 
@@ -77,7 +77,7 @@ abstract public class CrazyPiece {
 
     abstract public ArrayList<String> getValidPlays(int xO, int yO);
 
-    public boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
+    boolean checkPieceBlockingMove(int xO, int yO, int xD, int yD){
 
         while(xO != xD || yO != yD){
 
@@ -108,6 +108,3 @@ abstract public class CrazyPiece {
         return true;
     }
 }
-
-
-
