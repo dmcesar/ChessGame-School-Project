@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import jdk.nashorn.internal.scripts.JO;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -219,6 +221,8 @@ public class Simulador {
 
                                         //Troca o id da equipa atual a jogar
                                         setIdEquipaAJogar();
+
+                                        System.out.println(blackTeam.inGameCrazyPieces.size());
 
                                         //Jogada realizada com sucesso
                                         return true;
@@ -529,12 +533,7 @@ public class Simulador {
                             String[] pieceCoords = crazyPiece.previousCoords.split(";");
 
                             //Decrementa o número de jogadas válidas da equipa da peça para trocar o joker para a mascara correta depois
-                            //crazyPiece.getTeam().cntValidPlays--;
-
-                            for (Joker joker : crazyPiece.getTeam().jokers) {
-
-                                joker.switchJokerType();
-                            }
+                           // crazyPiece.getTeam().cntValidPlays--;
 
                             //Mete a peça na posição antiga
                             tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
@@ -548,6 +547,7 @@ public class Simulador {
             } else {
                 whiteTeam.cntValidPlays--;
             }
+
         }
 
         //Ocorreu uma captura
@@ -570,16 +570,6 @@ public class Simulador {
                                     String[] pieceCoords = crazyPiece.previousCoords.split(";");
                                     idEquipaCapturada = crazyPiece.getIdEquipa();
 
-                                    //Decrementa o número de jogadas válidas e de capturas da equipa
-                                    //crazyPiece.getTeam().cntValidPlays--;
-                                    //crazyPiece.getTeam().cntCaptures--;
-
-                                    //Troca os jokers da sua equipa
-                                    for (Joker joker : crazyPiece.getTeam().jokers) {
-
-                                        joker.switchJokerType();
-                                    }
-
                                     //Insere-a na posição antiga
                                     tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
 
@@ -587,12 +577,6 @@ public class Simulador {
 
                                         //Procura a pela que foi capturada
                                         if (crazyPieceCaptured.captured) {
-
-                                            //Troca os jokers da sua equipa
-                                            for (Joker joker : crazyPieceCaptured.getTeam().jokers){
-
-                                                joker.switchJokerType();
-                                            }
 
                                             crazyPieceCaptured.captured = false;
 
@@ -603,6 +587,7 @@ public class Simulador {
 
                                             //Volta a adicionar a peça á lista de peças em jogo da equipa
                                             crazyPieceCaptured.getTeam().inGameCrazyPieces.add(crazyPieceCaptured);
+                                            System.out.println(crazyPieceCaptured.getTeam().inGameCrazyPieces.size());
                                         }
                                     }
                                 }
@@ -612,7 +597,6 @@ public class Simulador {
                 }
             }
 
-
             if (idEquipaCapturada == 10){
                 whiteTeam.cntValidPlays--;
                 whiteTeam.cntCaptures--;
@@ -621,6 +605,15 @@ public class Simulador {
                 blackTeam.cntCaptures--;
             }
 
+        }
+        for (Joker joker : blackTeam.jokers) {
+
+            joker.switchJokerType();
+        }
+
+        for (Joker joker : whiteTeam.jokers) {
+
+            joker.switchJokerType();
         }
     }
 
