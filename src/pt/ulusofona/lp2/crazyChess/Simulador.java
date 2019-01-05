@@ -524,6 +524,7 @@ public class Simulador {
                     }
                 }
             }
+
             //Se for a peça que se moveu
             if (pieceInGame) {
 
@@ -541,6 +542,7 @@ public class Simulador {
                     crazyPiece.getTeam().cntCaptures--;
                 }
             }
+
             //Se for a peça capturada
             else {
 
@@ -553,6 +555,9 @@ public class Simulador {
                 crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
             }
         }
+
+        lastPlayOutcome = new ArrayList<>();
+
         //Troca os jokers das equipas
         for (Joker joker : blackTeam.jokers) {
 
