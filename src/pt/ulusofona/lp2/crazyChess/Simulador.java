@@ -118,9 +118,11 @@ public class Simulador {
             //Secçao 5
             if (fileReader.hasNextLine()) {
 
+                //Lê a linha do ficheiro que representa os dados do jogo carregado
                 line = fileReader.nextLine();
                 String[] lineData = line.split(":");
 
+                //Atualiza os dados do jogo com os dados do jogo carregado
                 idEquipaAJogar = Integer.parseInt(lineData[0]);
 
                 blackTeam.cntValidPlays = Integer.parseInt(lineData[1]);
@@ -137,7 +139,8 @@ public class Simulador {
             return false;
         }
 
-        //jogoTerminado();
+        //Verifica se concretizam as condições para o jogo ser terminado após a leitura
+        jogoTerminado();
 
         return true;
     }
@@ -294,7 +297,7 @@ public class Simulador {
 
         for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
 
-            if (piece.getIdType() == 0 || (piece.getIdType() == 7 && piece.getType().contains("Rei"))){
+            if (piece.getIdType() == 0){
 
                 nrReisBlack++;
             }
@@ -302,14 +305,14 @@ public class Simulador {
 
         for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
 
-            if (piece.getIdType() == 0 || (piece.getIdType() == 7 && piece.getType().contains("Rei"))){
+            if (piece.getIdType() == 0){
 
                 nrReisWhite++;
             }
         }
 
         //Vitória das brancas por falta de reis da equipa preta em jogo
-        if (nrReisBlack == 0 && nrReisWhite > 0) {
+        if (nrReisBlack == 0) {
 
             result = "VENCERAM AS BRANCAS";
 
@@ -317,7 +320,7 @@ public class Simulador {
         }
 
         //Vitória das Pretas por falta de reis da equipa branca em jogo
-        if (nrReisWhite == 0 && nrReisBlack > 0) {
+        if (nrReisWhite == 0) {
 
             result = "VENCERAM AS PRETAS";
 
@@ -544,13 +547,13 @@ public class Simulador {
 
             for (CrazyPiece crazyPiece : lastPlayOutcome) {
 
+                //Procura a peça que se moveu no tabuleiro
                 if (!crazyPiece.captured) {
 
                     for (int y = 0; y < tabuleiro.length; y++) {
 
                         for (int x = 0; x < tabuleiro.length; x++) {
 
-                            //Procura a peça que se moveu no tabuleiro
                             if (tabuleiro[y][x] != null) {
 
                                 if (tabuleiro[y][x].getId() == crazyPiece.getId()) {
@@ -561,6 +564,7 @@ public class Simulador {
                                     crazyPiece.getTeam().cntValidPlays--;
                                     crazyPiece.getTeam().cntCaptures--;
 
+                                    //Troca os jokers da sua equipa
                                     for (Joker joker : crazyPiece.getTeam().jokers) {
 
                                         joker.switchJokerType();
@@ -571,8 +575,10 @@ public class Simulador {
 
                                     for (CrazyPiece crazyPieceCaptured : lastPlayOutcome) {
 
+                                        //Procura a pela que foi capturada
                                         if (crazyPieceCaptured.captured) {
 
+                                            //Troca os jokers da sua equipa
                                             for (Joker joker : crazyPieceCaptured.getTeam().jokers){
 
                                                 joker.switchJokerType();
@@ -586,7 +592,7 @@ public class Simulador {
                                             tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPieceCaptured;
 
                                             //Volta a adicionar a peça á lista de peças em jogo da equipa
-                                            crazyPiece.getTeam().inGameCrazyPieces.add(crazyPieceCaptured);
+                                            crazyPieceCaptured.getTeam().inGameCrazyPieces.add(crazyPieceCaptured);
                                         }
                                     }
                                 }

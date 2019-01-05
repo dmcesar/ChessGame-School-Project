@@ -28,7 +28,7 @@ abstract public class CrazyPiece {
 
     public int getId(){return this.idPiece;}
 
-    public int getIdType(){return this.idType;}
+    abstract public int getIdType();
 
     public int getIdEquipa(){return this.idTeam;}
 

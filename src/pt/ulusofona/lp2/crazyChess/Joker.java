@@ -22,6 +22,9 @@ public class Joker extends CrazyPiece {
     }
 
     @Override
+    public int getIdType(){return 7;}
+
+    @Override
     public String getType() {
 
         switchJokerType();
