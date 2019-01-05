@@ -292,6 +292,7 @@ public class Simulador {
             }
         }
 
+
         //Como a jogada falhou, incrementa o número de jogadas inválidas da equipa em questão
         if (getIDEquipaAJogar() == blackTeam.getId()) {
 
