@@ -593,114 +593,6 @@ public class Simulador {
 
         //Repõe a lista de alterações da última jogada
         lastPlayOutcome = new ArrayList<>();
-
-
-
-
-
-
-
-
-
-        /*
-        //Troca o id da equipa a jogar (repete a jogada anterior)
-        setIdEquipaAJogar();
-
-        //Apenas se moveu uma peça
-        if (lastPlayOutcome.size() == 1) {
-
-            CrazyPiece crazyPiece = lastPlayOutcome.get(0);
-
-            for (int y = 0; y < tabuleiro.length; y++) {
-
-                for (int x = 0; x < tabuleiro.length; x++) {
-
-                    if (tabuleiro[y][x] != null) {
-
-                        //Procura a peça no tabuleiro
-                        if (tabuleiro[y][x].getId() == crazyPiece.getId()) {
-
-                            //Apaga a ultima posição para a qual ela se moveu
-                            tabuleiro[y][x] = null;
-
-                            String[] pieceCoords = crazyPiece.previousCoords.split(";");
-                            //crazyPiece.getTeam().cntValidPlays--;
-
-                            //Mete a peça na posição antiga
-                            tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
-                        }
-                    }
-                }
-            }
-
-            //Decrementa o número de jogadas válidas da equipa
-            if (getIDEquipaAJogar() == 10) {
-                blackTeam.cntValidPlays--;
-            } else {
-                whiteTeam.cntValidPlays--;
-            }
-        }
-        //Ocorreu uma captura
-        else {
-
-            int idEquipaCapturada = 0;
-            for (CrazyPiece crazyPiece : lastPlayOutcome) {
-
-                if (!crazyPiece.captured) {
-
-                    for (int y = 0; y < tabuleiro.length; y++) {
-
-                        for (int x = 0; x < tabuleiro.length; x++) {
-
-                            //Procura a peça que se moveu no tabuleiro
-                            if (tabuleiro[y][x] != null) {
-
-                                if (tabuleiro[y][x].getId() == crazyPiece.getId()) {
-
-                                    String[] pieceCoords = crazyPiece.previousCoords.split(";");
-
-                                    //Decrementa o número de jogadas válidas e de capturas da equipa
-                                    idEquipaCapturada = crazyPiece.getIdEquipa();
-
-                                    //Insere-a na posição antiga
-                                    tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
-
-                                    for (CrazyPiece crazyPieceCaptured : lastPlayOutcome) {
-
-                                        if (crazyPieceCaptured.captured) {
-
-                                            crazyPieceCaptured.captured = false;
-
-                                            pieceCoords = crazyPieceCaptured.previousCoords.split(";");
-
-                                            //Volta a inserir a peça capturada no jogo
-                                            tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPieceCaptured;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (idEquipaCapturada == 10){
-                whiteTeam.cntValidPlays--;
-                whiteTeam.cntCaptures--;
-            } else {
-                blackTeam.cntValidPlays--;
-                blackTeam.cntCaptures--;
-            }
-
-        }
-
-        for (Joker joker : blackTeam.jokers){
-            joker.switchJokerType();
-        }
-
-        for (Joker joker : whiteTeam.jokers){
-            joker.switchJokerType();
-        }
-        */
     }
 
     public CrazyPiece getPeca(String[] lineData) {
@@ -740,8 +632,6 @@ public class Simulador {
 
     public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD){
 
-        /*
-
         //Verifica se a posição inicial é válida
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
 
@@ -754,49 +644,12 @@ public class Simulador {
                 //Verifica se a peça pode se movmentar
                 if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
-                    return tabuleiro[yD][xD] == null ||
-                            (tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa());
+                    return tabuleiro[yD][xD] == null || (tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa());
                 }
             }
         }
 
         return false;
-        */
-
-        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
-
-            //Verifica se existe uma peça na posição inicial
-            if (tabuleiro[yO][xO] != null) {
-
-                //Retorna a peça que se pretende mover
-                CrazyPiece crazyPiece = tabuleiro[yO][xO];
-                //Valida posição final
-                if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
-                    //Verifica se a peça pode se movmentar
-
-                    if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
-
-
-                        if (tabuleiro[yD][xD] != null) {
-
-                            //Caso as peças sejam de equipas diferentes ocorre uma captura
-                            if (tabuleiro[yD][xD].getIdEquipa() != tabuleiro[yO][xO].getIdEquipa()) {
-                                return true;
-                            }
-
-                        } else {
-                            return true;
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-        return false;
-
     }
 
     public List<String> obterSugestoesJogada(int xO, int yO){
