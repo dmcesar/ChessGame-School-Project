@@ -599,7 +599,6 @@ public class Simulador {
                     }
                 }
             }
-
             if (idEquipaCapturada == 10){
                 whiteTeam.cntValidPlays--;
                 whiteTeam.cntCaptures--;
