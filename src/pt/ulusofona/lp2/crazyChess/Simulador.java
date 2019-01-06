@@ -662,7 +662,6 @@ public class Simulador {
             joker.switchJokerType();
         }
 
-
         ArrayList<String> jogadasValidas = new ArrayList<>();
 
         CrazyPiece crazyPiece;
