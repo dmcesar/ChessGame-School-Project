@@ -159,8 +159,8 @@ public class Simulador {
     }
 
     public boolean processaJogada(int xO, int yO, int xD, int yD) {
-        //Verifica se a posição inicial é diferente da posição final
 
+        //Troca as máscaras dos jokers de ambas as equipas
         for (Joker joker : blackTeam.jokers) {
 
             joker.switchJokerType();
@@ -171,6 +171,7 @@ public class Simulador {
             joker.switchJokerType();
         }
 
+        //Verifica se a posição inicial é diferente da posição final
         if (xO != xD || yO != yD) {
 
             //Valida posição inicial
@@ -205,7 +206,6 @@ public class Simulador {
 
                                         //Guarda a peça que foi caputurada
                                         tabuleiro[yD][xD].previousCoords = yD + ";" + xD;
-                                        tabuleiro[yD][xD].captured = true;
                                         lastPlayOutcome.add(tabuleiro[yD][xD]);
 
                                         //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
@@ -227,12 +227,6 @@ public class Simulador {
                                         crazyPiece.getTeam().cntCaptures++;
 
                                         //Troca o id da equipa atual a jogar
-                                        // setIdEquipaAJogar();
-                                        /*
-                                        for (Joker joker : crazyPiece.getTeam().jokers) {
-
-                                            joker.switchJokerType();
-                                        }*/
                                         setIdEquipaAJogar();
 
                                         //Jogada realizada com sucesso
@@ -272,14 +266,6 @@ public class Simulador {
                                         //O contador de jogadas sem captura é incrementado
                                         cntPlaysNoCaptures++;
                                     }
-
-                                    //Troca o id da equipa atual a jogar
-
-                                    /*
-                                    for (Joker joker : crazyPiece.getTeam().jokers) {
-
-                                        joker.switchJokerType();
-                                    }*/
 
                                     setIdEquipaAJogar();
 
@@ -533,10 +519,10 @@ public class Simulador {
 
                         if (tabuleiro[y][x].getId() == crazyPiece.getId()) {
 
-                            pieceInGame = true;
-
                             //Limpa a posição onde a peça foi encontrada
                             tabuleiro[y][x] = null;
+
+                            pieceInGame = true;
                         }
                     }
                 }
@@ -577,7 +563,7 @@ public class Simulador {
             }
         }
 
-        //Troca os jokers das equipas
+        //Troca os jokers das equipas para a sua máscara anterior
         for (Joker joker : blackTeam.jokers) {
 
             joker.switchJokerType();
@@ -597,6 +583,7 @@ public class Simulador {
 
     public CrazyPiece getPeca(String[] lineData) {
 
+        //Conforme a linha passada como parâmetro, devolve a peça do tipo pretendido
         int idPiece = Integer.parseInt(lineData[0]);
         int idType = Integer.parseInt(lineData[1]);
         int idTeam = Integer.parseInt(lineData[2]);
@@ -632,6 +619,8 @@ public class Simulador {
 
     public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD){
 
+        //Verifica se a jogada passada é válida (efetua as mesmas verificações que a função "processaJogada()", apenas sem as alterações ás peças e ás estatisticas das equipas
+
         //Verifica se a posição inicial é válida
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
 
@@ -644,6 +633,7 @@ public class Simulador {
                 //Verifica se a peça pode se movmentar
                 if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
+                    //Devolve TRUE se a peça se mover ou se capturar uma peça da equipa oposta
                     return tabuleiro[yD][xD] == null || (tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa());
                 }
             }
@@ -654,6 +644,7 @@ public class Simulador {
 
     public List<String> obterSugestoesJogada(int xO, int yO){
 
+        //Atualiza as máscaras dos jokers de ambas as equipas para o caso de não estarem atualizadas com o turno atual
         for (Joker joker : blackTeam.jokers) {
             joker.switchJokerType();
         }
@@ -666,7 +657,9 @@ public class Simulador {
 
         CrazyPiece crazyPiece;
 
+        //Verifica se existe uma peça na posição pretendida
         if(tabuleiro[yO][xO] == null){
+
             jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
@@ -676,24 +669,29 @@ public class Simulador {
             crazyPiece = tabuleiro[yO][xO];
         }
 
+        //Verifica se é a vez da equipa dessa peça jogar
         if(crazyPiece.getTeam().getId() != getIDEquipaAJogar()){
+
             jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
         }
 
+        //Itera todas as jogadas que essa peça está programada para fazer
         for(String jogada : crazyPiece.getValidPlays(xO, yO)){
 
             int xD = Integer.parseInt(jogada.split(", ")[0]);
 
             int yD = Integer.parseInt(jogada.split(", ")[1]);
 
+            //Verifica se essas jogadas são válidas para a situação em questão
             if(possibilidadesJogadasValidas(xO, yO, xD, yD)){
 
                 jogadasValidas.add(jogada);
             }
         }
 
+        //Devolve apenas as jogadas dessa peça que são válidas para a situação em questão
         return jogadasValidas;
     }
 }
