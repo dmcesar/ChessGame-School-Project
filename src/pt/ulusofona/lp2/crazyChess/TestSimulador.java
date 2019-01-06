@@ -428,6 +428,7 @@ public class TestSimulador {
         resultadoEsperado.add("7, 2");
         resultadoEsperado.add("5, 4");
         resultadoEsperado.add("4, 5");
+        resultadoEsperado.add("4, 1");
         resultadoEsperado.add("3, 6");
 
         assertEquals(resultadoEsperado, resultadoReal);
