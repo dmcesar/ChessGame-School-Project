@@ -36,7 +36,10 @@ public class Simulador {
     //Contém o resultado final do jogo
     private String result;
 
-    public boolean iniciaJogo(File ficheiroInicial) {
+    //TODO: Tratar exception "InvalidSimuladorInputException" - caso alguma linha das secções 1 a 4 tenha dados a mas ou a menos - lançar a exception
+    public void iniciaJogo(File ficheiroInicial) throws InvalidSimuladorInputException{
+
+        int cntFileLines = 0;
 
         try {
 
@@ -53,15 +56,19 @@ public class Simulador {
 
 
             //Secçao 1
+
             Scanner fileReader = new Scanner(ficheiroInicial);
 
             String line = fileReader.nextLine();
+            cntFileLines++;
 
             tabuleiro = new CrazyPiece[Integer.parseInt(line)][Integer.parseInt(line)];
 
 
             //Secçao 2
+
             line = fileReader.nextLine();
+            cntFileLines++;
 
             int numberOfPieces = Integer.parseInt(line);
 
@@ -69,10 +76,23 @@ public class Simulador {
 
 
             //Secçao 3
+
             for (int cntLine = 0; cntLine < numberOfPieces; cntLine++) {
 
                 line = fileReader.nextLine();
+                cntFileLines++;
                 String[] lineData = line.split(":");
+
+                if(lineData.length > 4){
+
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 4 ; Obtive: " + lineData.length + ")");
+                }
+
+                if(lineData.length < 4){
+
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 4 ; Obtive: " + lineData.length + ")");
+                }
+
 
                 //Cria a nova peça a ser adicionada
                 CrazyPiece crazyPiece = getPeca(lineData);
@@ -83,10 +103,22 @@ public class Simulador {
 
 
             //Secçao 4
+
             for (int y = 0; y < tabuleiro.length; y++) {
 
                 line = fileReader.nextLine();
+                cntFileLines++;
                 String[] lineData = line.split(":");
+
+                if(lineData.length > tabuleiro.length){
+
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: " + tabuleiro.length + " ; Obtive: " + lineData.length + ")");
+                }
+
+                if(lineData.length < tabuleiro.length){
+
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: " + tabuleiro.length + " ; Obtive: " + lineData.length + ")");
+                }
 
                 for (int x = 0; x < lineData.length; x++) {
 
@@ -113,8 +145,6 @@ public class Simulador {
                                     crazyPiece.getTeam().jokers.add((Joker) crazyPiece);
                                     tabuleiro[y][x] = crazyPiece;
 
-                                    //"transforma" a peça (o joker) na sua mascara
-                                    //crazyPiece = ((Joker) crazyPiece).mask;
                                 } else {
 
                                     //Insere a nova peça no tabuleiro
@@ -127,10 +157,22 @@ public class Simulador {
             }
 
             //Secçao 5
+
             if (fileReader.hasNextLine()) {
 
                 line = fileReader.nextLine();
+                cntFileLines++;
                 String[] lineData = line.split(":");
+
+                if(lineData.length > 7){
+
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 7 ; Obtive: " + lineData.length + ")");
+                }
+
+                if(lineData.length < 7){
+
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 7 ; Obtive: " + lineData.length + ")");
+                }
 
                 idEquipaAJogar = Integer.parseInt(lineData[0]);
 
@@ -143,14 +185,23 @@ public class Simulador {
                 whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException notFoundException) {
 
-            return false;
+            //O visualizador trata disto?
+        }
+
+        //Erro de conversão String -> Integer. O que devolver para além da linha do erro?
+        catch (NumberFormatException convertionException){
+
+            throw new InvalidSimuladorInputException();
+        }
+
+        catch (InvalidSimuladorInputException invalidInputException){
+
+            //O visualizador trata disto também?
         }
 
         jogoTerminado();
-
-        return true;
 
     }
 
@@ -642,7 +693,7 @@ public class Simulador {
         return false;
     }
 
-    public List<String> obterSugestoesJogada(int xO, int yO){
+    public List<String > obterSugestoesJogada(int xO, int yO){
 
         //Atualiza as máscaras dos jokers de ambas as equipas para o caso de não estarem atualizadas com o turno atual
         for (Joker joker : blackTeam.jokers) {
