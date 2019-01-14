@@ -764,6 +764,6 @@ public class Simulador {
 
         Map<String, List<String>> estatisticas = new HashMap<>();
 
-        estatisticas.put("top5Capturas", crazyPieces.stream().)
+        return estatisticas;
     }
 }
