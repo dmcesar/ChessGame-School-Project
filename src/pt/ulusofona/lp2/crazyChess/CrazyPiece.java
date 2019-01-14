@@ -12,7 +12,9 @@ abstract public class CrazyPiece {
     protected int idType;
     protected int idTeam;
     protected String nickname;
-    String previousCoords;
+    PieceCoords previousCoords;
+    PieceCoords presentCoords;
+    PieceStatistics statistics;
 
     CrazyPiece(){}
 
@@ -22,7 +24,9 @@ abstract public class CrazyPiece {
         this.idType = idType;
         this.idTeam = idTeam;
         this.nickname = nickname;
-        this.previousCoords = "";
+        this.previousCoords = new PieceCoords();
+        this.presentCoords = new PieceCoords();
+        this.statistics = new PieceStatistics(0, 0, 0, 0);
     }
 
     public int getId(){return this.idPiece;}
@@ -32,6 +36,16 @@ abstract public class CrazyPiece {
     public int getIdEquipa(){return this.idTeam;}
 
     public String getNickname(){return this.nickname;}
+
+    public void setPreviousCoords(PieceCoords pieceCoords){
+
+        this.previousCoords = pieceCoords;
+    }
+
+    public void setPresentCoords(PieceCoords pieceCoords){
+
+        this.presentCoords = pieceCoords;
+    }
 
     Equipa getTeam(){
 

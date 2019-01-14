@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -37,6 +34,8 @@ public class Simulador {
     private String result;
 
     //TODO: Tratar exception "InvalidSimuladorInputException" - caso alguma linha das secções 1 a 4 tenha dados a mas ou a menos - lançar a exception
+    //TODO: ALTERAÇÃO DA SECCÃO 5: Passa a receber a variavel cntPlaysNoCaptures para validar o empate por exaustão á leitura
+    //TODO: A partir de agora cada peça guarda o seu numero de capturas, o seu numero total de pontos, nr jogadas validas e invalidas
     public void iniciaJogo(File ficheiroInicial) throws InvalidSimuladorInputException{
 
         int cntFileLines = 0;
@@ -110,12 +109,12 @@ public class Simulador {
                 cntFileLines++;
                 String[] lineData = line.split(":");
 
-                if(lineData.length > tabuleiro.length){
+                if (lineData.length > tabuleiro.length) {
 
                     throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: " + tabuleiro.length + " ; Obtive: " + lineData.length + ")");
                 }
 
-                if(lineData.length < tabuleiro.length){
+                if (lineData.length < tabuleiro.length) {
 
                     throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: " + tabuleiro.length + " ; Obtive: " + lineData.length + ")");
                 }
@@ -143,19 +142,19 @@ public class Simulador {
 
                                     //Adiciona o joker á lista de jokers da sua equipa
                                     crazyPiece.getTeam().jokers.add((Joker) crazyPiece);
-                                    tabuleiro[y][x] = crazyPiece;
-
-                                } else {
-
-                                    //Insere a nova peça no tabuleiro
-                                    tabuleiro[y][x] = crazyPiece;
                                 }
+
+                                //Insere a nova peça no tabuleiro
+                                tabuleiro[y][x] = crazyPiece;
+
+                                crazyPiece.presentCoords = new PieceCoords(y, x);
                             }
                         }
                     }
                 }
             }
 
+            //TODO: Ler com estatisticas da peça guardadas
             //Secçao 5
 
             if (fileReader.hasNextLine()) {
@@ -164,14 +163,14 @@ public class Simulador {
                 cntFileLines++;
                 String[] lineData = line.split(":");
 
-                if(lineData.length > 7){
+                if(lineData.length > 8){
 
-                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 7 ; Obtive: " + lineData.length + ")");
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
                 }
 
-                if(lineData.length < 7){
+                if(lineData.length < 8){
 
-                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 7 ; Obtive: " + lineData.length + ")");
+                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
                 }
 
                 idEquipaAJogar = Integer.parseInt(lineData[0]);
@@ -183,17 +182,15 @@ public class Simulador {
                 whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
                 whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
                 whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
+
+                //BUG FIX - Empate por exaustão á leitura.
+                cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
             }
 
+            //TODO: Meter algo dentro dos catches
         } catch (FileNotFoundException notFoundException) {
 
             //O visualizador trata disto?
-        }
-
-        //Erro de conversão String -> Integer. O que devolver para além da linha do erro?
-        catch (NumberFormatException convertionException){
-
-            throw new InvalidSimuladorInputException();
         }
 
         catch (InvalidSimuladorInputException invalidInputException){
@@ -252,30 +249,44 @@ public class Simulador {
                                         lastPlayOutcome = new ArrayList<>();
 
                                         //Guarda a peça antes de ser movida
-                                        crazyPiece.previousCoords = yO + ";" + xO;
+                                        crazyPiece.previousCoords = crazyPiece.presentCoords;
                                         lastPlayOutcome.add(crazyPiece);
 
                                         //Guarda a peça que foi caputurada
-                                        tabuleiro[yD][xD].previousCoords = yD + ";" + xD;
+                                        tabuleiro[yD][xD].previousCoords = tabuleiro[yD][xD].presentCoords;
+                                        tabuleiro[yD][xD].presentCoords = new PieceCoords(-1, -1);
                                         lastPlayOutcome.add(tabuleiro[yD][xD]);
+
+                                        //São atualizadas as estatisticas da equuipa da peça
+                                        crazyPiece.getTeam().cntCaptures++;
+                                        crazyPiece.getTeam().cntValidPlays++;
+
+                                        //São atualizadas as estatisticas da peça
+                                        crazyPiece.statistics.cntValidPlays++;
+                                        crazyPiece.statistics.cntCaptures++;
+
+                                        //Atualiza o número de pontos da peça de acordo com o valor relativo da peça que ela capturou
+                                        if (tabuleiro[yD][xD].getRelativeValue().equals("(infinito)")) {
+
+                                            crazyPiece.statistics.cntPoints += 1000;
+
+                                        } else {
+
+                                            crazyPiece.statistics.cntPoints = crazyPiece.statistics.cntPoints + Integer.parseInt(tabuleiro[yD][xD].getRelativeValue());
+                                        }
 
                                         //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
                                         tabuleiro[yD][xD].getTeam().inGameCrazyPieces.remove(tabuleiro[yD][xD]);
 
                                         //Mexe a peça
                                         tabuleiro[yD][xD] = crazyPiece;
+                                        crazyPiece.presentCoords = new PieceCoords(yD, xD);
 
                                         //Limpa a posição anterior
                                         tabuleiro[yO][xO] = null;
 
-                                        //É incrementado o contador de jogadas válidas da equipa
-                                        crazyPiece.getTeam().cntValidPlays++;
-
                                         //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
                                         cntPlaysNoCaptures = 0;
-
-                                        //É incrementado o número de capturas da equipa
-                                        crazyPiece.getTeam().cntCaptures++;
 
                                         //Troca o id da equipa atual a jogar
                                         setIdEquipaAJogar();
@@ -289,6 +300,8 @@ public class Simulador {
                                         //É incrementado o contador de jogadas inválidas da equipa
                                         crazyPiece.getTeam().cntInvalidPlays++;
 
+                                        crazyPiece.statistics.cntInvalidPlays++;
+
                                         //Jogada falhada
                                         return false;
                                     }
@@ -299,11 +312,15 @@ public class Simulador {
                                     lastPlayOutcome = new ArrayList<>();
 
                                     //Guarda a peça antes de ser movida
-                                    crazyPiece.previousCoords = yO + ";" + xO;
+                                    crazyPiece.previousCoords = crazyPiece.presentCoords;
                                     lastPlayOutcome.add(crazyPiece);
+
+                                    //São atualizadas as estatisticas da peça
+                                    crazyPiece.statistics.cntValidPlays++;
 
                                     //Move a peça
                                     tabuleiro[yD][xD] = crazyPiece;
+                                    crazyPiece.presentCoords = new PieceCoords(yD, xD);
 
                                     //Apaga a posição anterior
                                     tabuleiro[yO][xO] = null;
@@ -345,9 +362,7 @@ public class Simulador {
         return false;
     }
 
-    public List<CrazyPiece> getPecasMalucas() {
-        return crazyPieces;
-    }
+    public List<CrazyPiece> getPecasMalucas() { return crazyPieces; }
 
     public boolean jogoTerminado() {
 
@@ -559,58 +574,53 @@ public class Simulador {
 
         for (CrazyPiece crazyPiece : lastPlayOutcome) {
 
-            boolean pieceInGame = false;
+            boolean pieceInGame = checkPieceInGame(crazyPiece);
 
-            //Procura se a peça existe no tabuleiro
-            for (int y = 0; y < tabuleiro.length; y++) {
+            //Se for a peça que se moveu
+            if (pieceInGame) {
 
-                for (int x = 0; x < tabuleiro.length; x++) {
+                //Insere-a na posição antiga
+                tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
 
-                    if (tabuleiro[y][x] != null) {
+                crazyPiece.presentCoords = crazyPiece.previousCoords;
 
-                        if (tabuleiro[y][x].getId() == crazyPiece.getId()) {
+                //Decrementa o número de jogadas válidas e de capturas da equipa
+                crazyPiece.getTeam().cntValidPlays--;
+                crazyPiece.statistics.cntValidPlays--;
 
-                            //Limpa a posição onde a peça foi encontrada
-                            tabuleiro[y][x] = null;
+                //Ocorreu uma captura
+                if(lastPlayOutcome.size() > 1){
 
-                            pieceInGame = true;
+                    crazyPiece.getTeam().cntCaptures--;
+                    crazyPiece.statistics.cntCaptures--;
+
+                    for(CrazyPiece captured : lastPlayOutcome){
+
+                        if(!checkPieceInGame(captured)){
+
+                            if(captured.getRelativeValue().equals("(infinito)")){
+
+                                crazyPiece.statistics.cntPoints -= 1000;
+
+                            } else {
+
+                                crazyPiece.statistics.cntPoints -= captured.statistics.cntPoints;
+                            }
                         }
                     }
                 }
             }
 
-            //Se for a peça que se moveu
-            if (pieceInGame) {
-
-                String[] pieceCoords = crazyPiece.previousCoords.split(";");
-
-                //Insere-a na posição antiga
-                tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
-
-                //Decrementa o número de jogadas válidas e de capturas da equipa
-                crazyPiece.getTeam().cntValidPlays--;
-            }
-
             //Se for a peça capturada
             else {
 
-                String[] pieceCoords = crazyPiece.previousCoords.split(";");
-
                 //Volta a inserir a peça capturada no jogo
-                tabuleiro[Integer.parseInt(pieceCoords[0])][Integer.parseInt(pieceCoords[1])] = crazyPiece;
+                tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
+
+                crazyPiece.presentCoords = crazyPiece.previousCoords;
 
                 //Volta a adicionar a peça á lista de peças em jogo da equipa
                 crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
-
-                //Diminui o número de capturas da equipa oposta
-                if(crazyPiece.getIdEquipa() == 10){
-
-                    whiteTeam.cntCaptures--;
-
-                }else {
-
-                    blackTeam.cntCaptures--;
-                }
             }
         }
 
@@ -668,32 +678,28 @@ public class Simulador {
         }
     }
 
-    public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD){
+    public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD) {
 
         //Verifica se a jogada passada é válida (efetua as mesmas verificações que a função "processaJogada()", apenas sem as alterações ás peças e ás estatisticas das equipas
 
-        //Verifica se a posição inicial é válida
-        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
+        //Retorna a peça que se pretende mover
+        CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
-            //Retorna a peça que se pretende mover
-            CrazyPiece crazyPiece = tabuleiro[yO][xO];
+        //Verifica se a posição final é válida
+        if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
 
-            //Verifica se a posição final é válida
-            if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
+            //Verifica se a peça pode se movmentar
+            if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
 
-                //Verifica se a peça pode se movmentar
-                if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
-
-                    //Devolve TRUE se a peça se mover ou se capturar uma peça da equipa oposta
-                    return tabuleiro[yD][xD] == null || (tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa());
-                }
+                //Devolve TRUE se a peça se mover ou se capturar uma peça da equipa oposta
+                return tabuleiro[yD][xD] == null || (tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa());
             }
         }
 
         return false;
     }
 
-    public List<String > obterSugestoesJogada(int xO, int yO){
+    public List<Comparable> obterSugestoesJogada(int xO, int yO){
 
         //Atualiza as máscaras dos jokers de ambas as equipas para o caso de não estarem atualizadas com o turno atual
         for (Joker joker : blackTeam.jokers) {
@@ -704,14 +710,18 @@ public class Simulador {
             joker.switchJokerType();
         }
 
-        ArrayList<String> jogadasValidas = new ArrayList<>();
+        ArrayList<Comparable> jogadasValidas = new ArrayList<>();
 
         CrazyPiece crazyPiece;
 
+        //Verifica se a posição inicial é válida
+        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
+
+            return jogadasValidas;
+        }
+
         //Verifica se existe uma peça na posição pretendida
         if(tabuleiro[yO][xO] == null){
-
-            jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
 
@@ -722,8 +732,6 @@ public class Simulador {
 
         //Verifica se é a vez da equipa dessa peça jogar
         if(crazyPiece.getTeam().getId() != getIDEquipaAJogar()){
-
-            jogadasValidas.add("Pedido inválido");
 
             return jogadasValidas;
         }
@@ -744,5 +752,18 @@ public class Simulador {
 
         //Devolve apenas as jogadas dessa peça que são válidas para a situação em questão
         return jogadasValidas;
+    }
+
+    public boolean checkPieceInGame(CrazyPiece crazyPiece){
+
+        return crazyPiece.presentCoords.x != -1 && crazyPiece.presentCoords.y != -1;
+
+    }
+
+    public Map<String, List<String>> getEstatisticas(){
+
+        Map<String, List<String>> estatisticas = new HashMap<>();
+
+        estatisticas.put("top5Capturas", crazyPieces.stream().)
     }
 }
