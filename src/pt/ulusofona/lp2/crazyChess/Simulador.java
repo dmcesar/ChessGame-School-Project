@@ -160,63 +160,63 @@ public class Simulador {
             //TODO: Ler com estatisticas da peça guardadas
             //Secçao 5
 
-            if (fileReader.hasNextLine()) {
-
-                line = fileReader.nextLine();
-                cntFileLines++;
-                String[] lineData = line.split(":");
-
-                if(lineData.length > 8){
-
-                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
-                }
-
-                if(lineData.length < 8){
-
-                    throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
-                }
-
-                idEquipaAJogar = Integer.parseInt(lineData[0]);
-
-                blackTeam.cntValidPlays = Integer.parseInt(lineData[1]);
-                blackTeam.cntCaptures = Integer.parseInt(lineData[2]);
-                blackTeam.cntInvalidPlays = Integer.parseInt(lineData[3]);
-
-                whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
-                whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
-                whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
-
-                //BUG FIX - Empate por exaustão á leitura.
-                cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
-
-                for(int i = 0; i < numberOfPieces; i++) {
+                if (fileReader.hasNextLine()) {
 
                     line = fileReader.nextLine();
                     cntFileLines++;
-                    lineData = line.split(":");
+                    String[] lineData = line.split(":");
 
-                    if (lineData.length > 5) {
+                    if (lineData.length > 8) {
 
                         throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
                     }
 
-                    if (lineData.length < 5) {
+                    if (lineData.length < 8) {
 
                         throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
                     }
 
-                    for(CrazyPiece crazyPiece : crazyPieces){
+                    idEquipaAJogar = Integer.parseInt(lineData[0]);
 
-                        if(crazyPiece.getId() == Integer.parseInt(lineData[0])){
+                    blackTeam.cntValidPlays = Integer.parseInt(lineData[1]);
+                    blackTeam.cntCaptures = Integer.parseInt(lineData[2]);
+                    blackTeam.cntInvalidPlays = Integer.parseInt(lineData[3]);
 
-                            crazyPiece.statistics.cntCaptures = Integer.parseInt(lineData[1]);
-                            crazyPiece.statistics.cntPoints = Integer.parseInt(lineData[2]);
-                            crazyPiece.statistics.cntValidPlays = Integer.parseInt(lineData[3]);
-                            crazyPiece.statistics.cntInvalidPlays = Integer.parseInt(lineData[4]);
+                    whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
+                    whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
+                    whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
+
+                    //BUG FIX - Empate por exaustão á leitura.
+                    cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
+
+                    for (int i = 0; i < numberOfPieces; i++) {
+
+                        line = fileReader.nextLine();
+                        cntFileLines++;
+                        lineData = line.split(":");
+
+                        if (lineData.length > 5) {
+
+                            throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
+                        }
+
+                        if (lineData.length < 5) {
+
+                            throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
+                        }
+
+                        for (CrazyPiece crazyPiece : crazyPieces) {
+
+                            if (crazyPiece.getId() == Integer.parseInt(lineData[0])) {
+
+                                crazyPiece.statistics.cntCaptures = Integer.parseInt(lineData[1]);
+                                crazyPiece.statistics.cntPoints = Integer.parseInt(lineData[2]);
+                                crazyPiece.statistics.cntValidPlays = Integer.parseInt(lineData[3]);
+                                crazyPiece.statistics.cntInvalidPlays = Integer.parseInt(lineData[4]);
+                            }
                         }
                     }
                 }
-            }
 
             //TODO: Meter algo dentro dos catches
         } catch (FileNotFoundException notFoundException) {
@@ -807,6 +807,8 @@ public class Simulador {
         estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
 
         estatisticas.put("3pecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
+
+        estatisticas.put("tiposPecaCapturados", null);
 
 
 
