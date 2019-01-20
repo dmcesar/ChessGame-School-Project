@@ -788,11 +788,11 @@ public class Simulador {
 
                 if(tabuleiro[yD][xD].getIdType() == 0){
 
-                    jogadasValidas.add(new JogadaValida(xD, yD, "1000"));
+                    jogadasValidas.add(new JogadaValida(xD, yD, 1000));
 
                 } else {
 
-                    jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getRelativeValue()));
+                    jogadasValidas.add(new JogadaValida(xD, yD, Integer.parseInt(tabuleiro[yD][xD].getRelativeValue())));
                 }
             }
         }
