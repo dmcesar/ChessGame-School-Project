@@ -219,10 +219,15 @@ public class Simulador {
                 }
 
 
-        } catch (IOException notFoundException) {
+        }catch (NumberFormatException numberFormatException){
+
+            throw numberFormatException;
+
+        }catch (IOException notFoundException) {
 
             throw notFoundException;
         }
+
 
 
 
@@ -804,19 +809,26 @@ public class Simulador {
 
     public Map<String, List<String>> getEstatisticas(){
 
+
+
         Map<String, List<String>> estatisticas = new HashMap<>();
 
-        estatisticas.put("top5capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+        try {
 
-        estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+            estatisticas.put("top5capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
 
-        estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
+            estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
 
-        estatisticas.put("3pecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
+            estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
 
-        estatisticas.put("tiposPecaCapturados", null);
+            estatisticas.put("3pecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
 
+            estatisticas.put("tiposPecaCapturados", null);
 
+        }catch (ArithmeticException arithmeticException){
+
+            throw arithmeticException;
+        }
 
         return estatisticas;
     }
