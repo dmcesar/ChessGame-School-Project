@@ -39,7 +39,7 @@ public class Simulador {
     //TODO: Tratar exception "InvalidSimulatorInputException" - caso alguma linha das secções 1 a 4 tenha dados a mas ou a menos - lançar a exception
     //TODO: ALTERAÇÃO DA SECCÃO 5: Passa a receber a variavel cntPlaysNoCaptures para validar o empate por exaustão á leitura
     //TODO: A partir de agora cada peça guarda o seu numero de capturas, o seu numero total de pontos, nr jogadas validas e invalidas
-    public void iniciaJogo(File ficheiroInicial) throws IOException, InvalidSimulatorInputException{
+    public void iniciaJogo(File ficheiroInicial) throws IOException, NumberFormatException{
 
         int cntFileLines = 0;
 
@@ -227,10 +227,6 @@ public class Simulador {
 
             throw notFoundException;
         }
-
-
-
-
         jogoTerminado();
     }
 
