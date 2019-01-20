@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static java.lang.Math.abs;
+import static java.util.stream.Collectors.toList;
 
 public class Simulador {
 
@@ -18,6 +19,8 @@ public class Simulador {
     private static ArrayList<CrazyPiece> crazyPieces;
 
     private static ArrayList<CrazyPiece> lastPlayOutcome;
+
+    private static HashMap<String, Integer> typesAndCaptures;
 
     //Tipos complexos que contêm a informação respetivamente a cada uma das equipas
     static Equipa blackTeam;
@@ -36,7 +39,7 @@ public class Simulador {
     //TODO: Tratar exception "InvalidSimuladorInputException" - caso alguma linha das secções 1 a 4 tenha dados a mas ou a menos - lançar a exception
     //TODO: ALTERAÇÃO DA SECCÃO 5: Passa a receber a variavel cntPlaysNoCaptures para validar o empate por exaustão á leitura
     //TODO: A partir de agora cada peça guarda o seu numero de capturas, o seu numero total de pontos, nr jogadas validas e invalidas
-    public void iniciaJogo(File ficheiroInicial) throws InvalidSimuladorInputException{
+    public void iniciaJogo(File ficheiroInicial){
 
         int cntFileLines = 0;
 
@@ -82,12 +85,12 @@ public class Simulador {
                 cntFileLines++;
                 String[] lineData = line.split(":");
 
-                if(lineData.length > 4){
+                if(lineData.length > 8){
 
                     throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
 
-                if(lineData.length < 4){
+                if(lineData.length < 8){
 
                     throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
@@ -185,21 +188,46 @@ public class Simulador {
 
                 //BUG FIX - Empate por exaustão á leitura.
                 cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
+
+                for(int i = 0; i < numberOfPieces; i++) {
+
+                    line = fileReader.nextLine();
+                    cntFileLines++;
+                    lineData = line.split(":");
+
+                    if (lineData.length > 5) {
+
+                        throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
+                    }
+
+                    if (lineData.length < 5) {
+
+                        throw new InvalidSimuladorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
+                    }
+
+                    for(CrazyPiece crazyPiece : crazyPieces){
+
+                        if(crazyPiece.getId() == Integer.parseInt(lineData[0])){
+
+                            crazyPiece.statistics.cntCaptures = Integer.parseInt(lineData[1]);
+                            crazyPiece.statistics.cntPoints = Integer.parseInt(lineData[2]);
+                            crazyPiece.statistics.cntValidPlays = Integer.parseInt(lineData[3]);
+                            crazyPiece.statistics.cntInvalidPlays = Integer.parseInt(lineData[4]);
+                        }
+                    }
+                }
             }
 
             //TODO: Meter algo dentro dos catches
         } catch (FileNotFoundException notFoundException) {
 
-            //O visualizador trata disto?
         }
 
         catch (InvalidSimuladorInputException invalidInputException){
 
-            //O visualizador trata disto também?
         }
 
         jogoTerminado();
-
     }
 
     public int getTamanhoTabuleiro() {
@@ -557,7 +585,15 @@ public class Simulador {
             writer.write(whiteTeam.getCntCaptures() + ":");
 
             //Escrita do nº de jogadas inválidas da equipa preta
-            writer.write(whiteTeam.getCntInvalidPlays() + "");
+            writer.write(whiteTeam.getCntInvalidPlays() + ":");
+
+            writer.write(cntPlaysNoCaptures + "\n");
+
+            //NOVA IMPLEMENTAÇÃO: GUARDA ESTATISTICAS DE CADA PEÇA NA SECÇÃO 5
+            for(CrazyPiece crazyPiece : crazyPieces) {
+
+                writer.write(crazyPiece.idPiece + ":" + crazyPiece.statistics.cntCaptures + ":" + crazyPiece.statistics.cntPoints + ":" + crazyPiece.statistics.cntValidPlays + ":" + crazyPiece.statistics.cntInvalidPlays + "\n");
+            }
 
             //Fecho do escritor
             writer.close();
@@ -763,6 +799,16 @@ public class Simulador {
     public Map<String, List<String>> getEstatisticas(){
 
         Map<String, List<String>> estatisticas = new HashMap<>();
+
+        estatisticas.put("top5capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+
+        estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+
+        estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
+
+        estatisticas.put("3pecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
+
+
 
         return estatisticas;
     }

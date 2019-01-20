@@ -6,7 +6,7 @@ import java.util.List;
 
 import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
-abstract public class CrazyPiece {
+abstract public class CrazyPiece implements Comparable<CrazyPiece>{
 
     protected int idPiece;
     protected int idType;
@@ -119,5 +119,55 @@ abstract public class CrazyPiece {
         }
 
         return true;
+    }
+
+    public int compareByPoints(CrazyPiece crazyPiece){
+
+        if(this.statistics.cntPoints > crazyPiece.statistics.cntPoints){
+
+            return 1;
+        }
+
+        if(this.statistics.cntPoints < crazyPiece.statistics.cntPoints){
+
+            return -1;
+        }
+
+        return this.compareTo(crazyPiece);
+    }
+
+    public int compareByCaptures(CrazyPiece crazyPiece){
+
+        if(this.statistics.cntCaptures > crazyPiece.statistics.cntCaptures){
+
+            return 1;
+        }
+
+        if(this.statistics.cntCaptures < crazyPiece.statistics.cntCaptures){
+
+            return -1;
+        }
+
+        return this.compareTo(crazyPiece);
+    }
+
+    public int compareByRacio(CrazyPiece crazyPiece){
+
+        if(this.statistics.getInvalidValidPlaysRacio() > crazyPiece.statistics.getInvalidValidPlaysRacio()){
+
+            return 1;
+        }
+
+        if(this.statistics.getInvalidValidPlaysRacio() < crazyPiece.statistics.getInvalidValidPlaysRacio()){
+
+            return -1;
+        }
+
+        return this.compareTo(crazyPiece);
+    }
+
+    public int compareTo(CrazyPiece crazyPiece){
+
+        return this.nickname.compareTo(crazyPiece.nickname);
     }
 }

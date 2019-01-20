@@ -15,6 +15,7 @@ public class JogadaValida implements Comparable<JogadaValida>{
         this.nrPontos = nrPontos;
     }
 
+    @Override
     public int compareTo(JogadaValida jogadaValida){
 
         /*Caso o número de pontos das jogadas sejam iguais retorna 0. */

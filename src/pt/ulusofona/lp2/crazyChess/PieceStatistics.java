@@ -16,4 +16,14 @@ public class PieceStatistics {
         this.cntValidPlays = cntValidPlays;
         this.cntInvalidPlays = cntInvalidPlays;
     }
+
+    public int getCntCaptures(){return this.cntCaptures;}
+
+    public int getCntPoints(){return this.cntPoints;}
+
+    public int getCntValidPlays(){return this.cntValidPlays;}
+
+    public int getCntInvalidPlays(){return this.cntInvalidPlays;}
+
+    public float getInvalidValidPlaysRacio(){ return (float)(this.cntInvalidPlays / (this.cntValidPlays + this.cntInvalidPlays));}
 }
