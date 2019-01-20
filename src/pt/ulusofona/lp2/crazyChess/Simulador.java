@@ -39,7 +39,7 @@ public class Simulador {
     //TODO: Tratar exception "InvalidSimulatorInputException" - caso alguma linha das secções 1 a 4 tenha dados a mas ou a menos - lançar a exception
     //TODO: ALTERAÇÃO DA SECCÃO 5: Passa a receber a variavel cntPlaysNoCaptures para validar o empate por exaustão á leitura
     //TODO: A partir de agora cada peça guarda o seu numero de capturas, o seu numero total de pontos, nr jogadas validas e invalidas
-    public void iniciaJogo(File ficheiroInicial){
+    public void iniciaJogo(File ficheiroInicial) throws IOException, InvalidSimulatorInputException{
 
         int cntFileLines = 0;
 
@@ -85,12 +85,12 @@ public class Simulador {
                 cntFileLines++;
                 String[] lineData = line.split(":");
 
-                if(lineData.length > 8){
+                if(lineData.length > 4){
 
                     throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MAIS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
 
-                if(lineData.length < 8){
+                if(lineData.length < 4){
 
                     throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MENOS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
@@ -218,14 +218,13 @@ public class Simulador {
                     }
                 }
 
-            //TODO: Meter algo dentro dos catches
-        } catch (FileNotFoundException notFoundException) {
 
+        } catch (IOException notFoundException) {
+
+            throw notFoundException;
         }
 
-        catch (InvalidSimulatorInputException invalidInputException){
 
-        }
 
         jogoTerminado();
     }
@@ -782,7 +781,14 @@ public class Simulador {
             //Verifica se essas jogadas são válidas para a situação em questão
             if(possibilidadesJogadasValidas(xO, yO, xD, yD)){
 
-                jogadasValidas.add(jogada);
+                if(tabuleiro[yD][xD].getIdType() == 0){
+
+                    jogadasValidas.add(new JogadaValida(xD, yD, "1000"));
+
+                } else {
+
+                    jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getRelativeValue()));
+                }
             }
         }
 

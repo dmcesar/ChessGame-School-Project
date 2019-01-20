@@ -2,13 +2,13 @@ package pt.ulusofona.lp2.crazyChess;
 
 public class JogadaValida implements Comparable<JogadaValida>{
 
-    int x;
-    int y;
-    String nrPontos;
+    private int x;
+    private int y;
+    private String nrPontos;
 
-    public JogadaValida(){}
+    JogadaValida(){}
 
-    public JogadaValida(int x, int y, String nrPontos){
+    JogadaValida(int x, int y, String nrPontos){
 
         this.x = x;
         this.y = y;
