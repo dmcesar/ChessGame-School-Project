@@ -25,5 +25,13 @@ public class PieceStatistics {
 
     public int getCntInvalidPlays(){return this.cntInvalidPlays;}
 
-    public float getInvalidValidPlaysRacio(){ return (float)(this.cntInvalidPlays / (this.cntValidPlays + this.cntInvalidPlays));}
+    public float getInvalidValidPlaysRacio(){
+
+        if(this.getCntInvalidPlays() == 0){
+
+            return 0;
+        }
+
+        return (float)(this.cntInvalidPlays / (this.cntValidPlays + this.cntInvalidPlays));
+    }
 }

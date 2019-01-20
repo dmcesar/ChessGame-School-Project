@@ -651,7 +651,7 @@ public class Simulador {
                 }
             }
 
-            //Se for a peça capturada
+            //Se for a peça capturada-
             else {
 
                 //Volta a inserir a peça capturada no jogo
@@ -808,8 +808,6 @@ public class Simulador {
     }
 
     public Map<String, List<String>> getEstatisticas(){
-
-
 
         Map<String, List<String>> estatisticas = new HashMap<>();
 
