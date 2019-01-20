@@ -2,14 +2,14 @@ package pt.ulusofona.lp2.crazyChess;
 
 import java.io.IOException;
 
-public class InvalidSimuladorInputException extends IOException {
+public class InvalidSimulatorInputException extends IOException {
 
     private int linhaErro;
     private String descricao;
 
-    public InvalidSimuladorInputException(){}
+    public InvalidSimulatorInputException(){}
 
-    public InvalidSimuladorInputException(int linhaErro, String descricao){
+    public InvalidSimulatorInputException(int linhaErro, String descricao){
 
         this.linhaErro = linhaErro;
         this.descricao = descricao;
