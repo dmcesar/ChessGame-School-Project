@@ -610,6 +610,9 @@ public class Simulador {
                 //Insere-a na posição antiga
                 tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
 
+                //Limpa a ultima posição
+                tabuleiro[crazyPiece.presentCoords.y][crazyPiece.presentCoords.x] = null;
+
                 crazyPiece.presentCoords = crazyPiece.previousCoords;
 
                 //Decrementa o número de jogadas válidas e de capturas da equipa
@@ -769,14 +772,28 @@ public class Simulador {
 
         Map<String, List<String>> estatisticas = new HashMap<>();
 
-        estatisticas.put("top5Capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+        estatisticas.put("top5Capturas", crazyPieces.stream()
+                .sorted((p1, p2) -> p2.compareByCaptures(p1))
+                .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures())
+                .limit(5).collect(toList()));
 
-        estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+        estatisticas.put("top5Pontos", crazyPieces.stream()
+                .sorted((p1, p2) -> p2.compareByPoints(p1))
+                .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures())
+                .limit(5).collect(toList()));
 
-        estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
+        estatisticas.put("pecasMais5Capturas", crazyPieces.stream()
+                .filter((p) -> p.statistics.cntCaptures > 5)
+                .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures())
+                .collect(toList()));
 
-        estatisticas.put("3PecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
+        estatisticas.put("3PecasMaisBaralhadas", crazyPieces.stream()
+                .sorted((p1, p2) -> p2.compareByRacio(p1))
+                .limit(3)
+                .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays())
+                .collect(toList()));
 
+        //Cria o mapa <idType,
         HashMap<Integer, Integer> typeCaptures = new HashMap<>();
 
         for(int i = 0; i <= 7; i++){
@@ -789,7 +806,10 @@ public class Simulador {
             typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.cntPoints));
         }
 
-        estatisticas.put("tiposPecaCapturados", typeCaptures.entrySet().stream().sorted((s1, s2) -> s2.getValue() - s1.getValue()).map((s) -> s.getValue() + ":" + typeCaptures.get(s.getKey())).collect(toList()));
+        estatisticas.put("tiposPecaCapturados", typeCaptures.entrySet().stream()
+                .sorted((s1, s2) -> s2.getValue() - s1.getValue())
+                .map((s) -> s.getValue() + ":" + typeCaptures.get(s.getKey()))
+                .collect(toList()));
 
         return estatisticas;
     }
