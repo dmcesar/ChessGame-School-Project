@@ -215,7 +215,12 @@ public class Simulador {
                 }
             }
 
-        } catch (IOException | NumberFormatException e) {
+        } catch (InvalidSimulatorInputException e) {
+
+            throw e;
+        }
+
+        catch (IOException | NumberFormatException e) {
 
             throw new IOException();
         }
