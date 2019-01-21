@@ -629,14 +629,7 @@ public class Simulador {
 
                         if(!checkPieceInGame(captured)){
 
-                            if(captured.getRelativeValue().equals("(infinito)")){
-
-                                crazyPiece.statistics.cntPoints -= 1000;
-
-                            } else {
-
-                                crazyPiece.statistics.cntPoints -= captured.statistics.cntPoints;
-                            }
+                            crazyPiece.statistics.cntPoints -= captured.getPointsOnCapture();
                         }
                     }
                 }
@@ -818,7 +811,7 @@ public class Simulador {
 
             estatisticas.put("3PecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
 
-            estatisticas.put("tiposPecaCapturados", null);
+            estatisticas.put("tiposPecaCapturados", new ArrayList<>());
 
         }catch (ArithmeticException arithmeticException){
 
