@@ -139,10 +139,6 @@ public class Simulador {
                                 sb.append(c);
 
                                 found = true;
-
-                            } else if(found){
-
-                                break;
                             }
                         }
 
