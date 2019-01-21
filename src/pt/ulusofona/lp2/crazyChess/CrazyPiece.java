@@ -28,10 +28,6 @@ abstract public class CrazyPiece implements Comparable<CrazyPiece>{
         this.statistics = new PieceStatistics(0, 0, 0, 0);
     }
 
-    public PieceStatistics getStatistics() {
-        return statistics;
-    }
-
     public int getId(){return this.idPiece;}
 
     public int getIdType(){return this.idType;}
