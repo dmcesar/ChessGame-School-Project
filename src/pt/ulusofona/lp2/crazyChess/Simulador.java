@@ -132,6 +132,7 @@ public class Simulador {
                         boolean found = false;
 
                         for(char c : str.toCharArray()){
+
                             if(Character.isDigit(c)){
                                 sb.append(c);
                                 found = true;
@@ -139,6 +140,11 @@ public class Simulador {
                                 // If we already found a digit before and this char is not a digit, stop looping
                                 break;
                             }
+                        }
+                        
+                        if(!found){
+
+                            positionID = 0;
                         }
 
                         positionID = Integer.parseInt(sb.toString());
