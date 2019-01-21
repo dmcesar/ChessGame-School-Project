@@ -141,13 +141,15 @@ public class Simulador {
                                 break;
                             }
                         }
-                        
+
                         if(!found){
 
                             positionID = 0;
-                        }
 
-                        positionID = Integer.parseInt(sb.toString());
+                        } else {
+
+                            positionID = Integer.parseInt(sb.toString());
+                        }
                     }
 
                     //Se esse valor for diferente de 0 significa que se encontra lá uma peça
