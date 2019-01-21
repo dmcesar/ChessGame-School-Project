@@ -229,9 +229,7 @@ public class Simulador {
         }
     }
 
-    public int getTamanhoTabuleiro() {
-        return tabuleiro.length;
-    }
+    public int getTamanhoTabuleiro() { return tabuleiro.length; }
 
     public boolean processaJogada(int xO, int yO, int xD, int yD) {
 
