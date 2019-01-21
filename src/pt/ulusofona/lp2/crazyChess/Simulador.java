@@ -348,7 +348,7 @@ public class Simulador {
                                     crazyPiece.getTeam().cntValidPlays++;
 
                                     //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura (número de capturas de uma equipa = diferença entre número de peças da outra e o seu número de peças em jogo)
-                                    if (crazyPiece.getTeam().cntCaptures != 0) {
+                                    if (blackTeam.cntCaptures + whiteTeam.cntCaptures != 0) {
 
                                         //O contador de jogadas sem captura é incrementado
                                         cntPlaysNoCaptures++;
@@ -713,7 +713,7 @@ public class Simulador {
         ArrayList<Comparable> jogadasValidas = new ArrayList<>();
 
         //Verifica se a posição inicial é válida
-        if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
+        if (!((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length))) {
 
             return jogadasValidas;
         }
