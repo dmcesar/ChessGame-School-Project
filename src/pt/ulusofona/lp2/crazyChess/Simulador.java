@@ -36,6 +36,8 @@ public class Simulador {
     private String result;
 
 
+    //Se fazemos "catch" de uma exceção não precisamos de fazer "throws", a não ser que a relancemos no catch.
+    // Neste caso, podem ser lançadas tanto IOException, como InvalidSimulatorInputExcption. Como a segunda é subclasse da primeira, apenas temos que lançar a primeira
     public void iniciaJogo(File ficheiroInicial) throws IOException{
 
         int cntFileLines = 0;
