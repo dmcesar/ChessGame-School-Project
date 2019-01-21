@@ -37,11 +37,12 @@ public class Simulador {
     private String result;
 
 
-    public void iniciaJogo(File ficheiroInicial) throws IOException, NumberFormatException{
+    public void iniciaJogo(File ficheiroInicial) throws IOException, NumberFormatException {
 
         int cntFileLines = 0;
 
         try {
+
 
             //Inicializa equipas e variáveis do jogo.
 
@@ -83,12 +84,12 @@ public class Simulador {
                 cntFileLines++;
                 String[] lineData = line.split(":");
 
-                if(lineData.length > 4){
+                if (lineData.length > 4) {
 
                     throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MAIS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
 
-                if(lineData.length < 4){
+                if (lineData.length < 4) {
 
                     throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MENOS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
@@ -121,7 +122,7 @@ public class Simulador {
 
                 for (int x = 0; x < lineData.length; x++) {
 
-                    //Devolve o valor de id contido nessa posição da matriz
+                    //Devolve o valor de id contido nessa posição da matrix
                     int positionID = Integer.parseInt(lineData[x]);
 
                     //Se esse valor for diferente de 0 significa que se encontra lá uma peça
@@ -157,72 +158,69 @@ public class Simulador {
 
             //Secçao 5
 
-                if (fileReader.hasNextLine()) {
+            if (fileReader.hasNextLine()) {
+
+                line = fileReader.nextLine();
+                cntFileLines++;
+                String[] lineData = line.split(":");
+
+                if (lineData.length > 8) {
+
+                    throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
+                }
+
+                if (lineData.length < 8) {
+
+                    throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
+                }
+
+                idEquipaAJogar = Integer.parseInt(lineData[0]);
+
+                blackTeam.cntValidPlays = Integer.parseInt(lineData[1]);
+                blackTeam.cntCaptures = Integer.parseInt(lineData[2]);
+                blackTeam.cntInvalidPlays = Integer.parseInt(lineData[3]);
+
+                whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
+                whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
+                whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
+
+                //BUG FIX - Empate por exaustão á leitura.
+                cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
+
+                for (int i = 0; i < numberOfPieces; i++) {
 
                     line = fileReader.nextLine();
                     cntFileLines++;
-                    String[] lineData = line.split(":");
+                    lineData = line.split(":");
 
-                    if (lineData.length > 8) {
+                    if (lineData.length > 5) {
 
                         throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
                     }
 
-                    if (lineData.length < 8) {
+                    if (lineData.length < 5) {
 
                         throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
                     }
 
-                    idEquipaAJogar = Integer.parseInt(lineData[0]);
+                    for (CrazyPiece crazyPiece : crazyPieces) {
 
-                    blackTeam.cntValidPlays = Integer.parseInt(lineData[1]);
-                    blackTeam.cntCaptures = Integer.parseInt(lineData[2]);
-                    blackTeam.cntInvalidPlays = Integer.parseInt(lineData[3]);
+                        if (crazyPiece.getId() == Integer.parseInt(lineData[0])) {
 
-                    whiteTeam.cntValidPlays = Integer.parseInt(lineData[4]);
-                    whiteTeam.cntCaptures = Integer.parseInt(lineData[5]);
-                    whiteTeam.cntInvalidPlays = Integer.parseInt(lineData[6]);
-
-                    //BUG FIX - Empate por exaustão á leitura.
-                    cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
-
-                    for (int i = 0; i < numberOfPieces; i++) {
-
-                        line = fileReader.nextLine();
-                        cntFileLines++;
-                        lineData = line.split(":");
-
-                        if (lineData.length > 5) {
-
-                            throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MAIS (Esperava: 8 ; Obtive: " + lineData.length + ")");
-                        }
-
-                        if (lineData.length < 5) {
-
-                            throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MENOS (Esperava: 8 ; Obtive: " + lineData.length + ")");
-                        }
-
-                        for (CrazyPiece crazyPiece : crazyPieces) {
-
-                            if (crazyPiece.getId() == Integer.parseInt(lineData[0])) {
-
-                                crazyPiece.statistics.cntCaptures = Integer.parseInt(lineData[1]);
-                                crazyPiece.statistics.cntPoints = Integer.parseInt(lineData[2]);
-                                crazyPiece.statistics.cntValidPlays = Integer.parseInt(lineData[3]);
-                                crazyPiece.statistics.cntInvalidPlays = Integer.parseInt(lineData[4]);
-                            }
+                            crazyPiece.statistics.cntCaptures = Integer.parseInt(lineData[1]);
+                            crazyPiece.statistics.cntPoints = Integer.parseInt(lineData[2]);
+                            crazyPiece.statistics.cntValidPlays = Integer.parseInt(lineData[3]);
+                            crazyPiece.statistics.cntInvalidPlays = Integer.parseInt(lineData[4]);
                         }
                     }
                 }
+            }
 
-        }catch (NumberFormatException numberFormatException){
+        } catch (Exception e) {
 
-            throw numberFormatException;
-
-        }catch (IOException notFoundException) {
-
-            throw notFoundException;
+            throw new IOException();
         }
+
         jogoTerminado();
     }
 
