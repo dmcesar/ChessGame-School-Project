@@ -35,7 +35,7 @@ public class Joker extends CrazyPiece {
     }
 
     @Override
-    public int getPointsOnCapture(){return this.mask.getPointsOnCapture();}
+    public int getPointsOnCapture(){return 4;}
 
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
