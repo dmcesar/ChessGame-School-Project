@@ -187,7 +187,7 @@ public class Simulador {
 
                 //BUG FIX - Empate por exaustão á leitura.
                 cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
-                //cntPlaysNoCaptures--;
+                cntPlaysNoCaptures--;
 
                 for (int i = 0; i < numberOfPieces; i++) {
 
