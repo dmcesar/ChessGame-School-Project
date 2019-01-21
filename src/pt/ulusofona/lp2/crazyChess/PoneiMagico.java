@@ -32,6 +32,9 @@ public class PoneiMagico extends CrazyPiece {
         return "5";
     }
 
+    @Override
+    public int getPointsOnCapture(){return 5;}
+
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
         //Verifica se as coordenadas de destino são válidas

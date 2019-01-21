@@ -86,6 +86,8 @@ abstract public class CrazyPiece implements Comparable<CrazyPiece>{
 
     abstract public String getRelativeValue();
 
+    abstract public int getPointsOnCapture();
+
     abstract public boolean checkValidMovement(int xO, int yO, int xD, int yD);
 
     abstract public ArrayList<String> getValidPlays(int xO, int yO);
@@ -168,6 +170,6 @@ abstract public class CrazyPiece implements Comparable<CrazyPiece>{
 
     public int compareTo(CrazyPiece crazyPiece){
 
-        return this.nickname.compareTo(crazyPiece.nickname);
+        return crazyPiece.nickname.compareTo(this.nickname);
     }
 }

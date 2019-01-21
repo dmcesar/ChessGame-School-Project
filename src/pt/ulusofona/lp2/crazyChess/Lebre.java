@@ -32,6 +32,9 @@ public class Lebre extends CrazyPiece {
     }
 
     @Override
+    public int getPointsOnCapture(){return 2;}
+
+    @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
         if(abs(xD - xO) == 1 && abs(yD - yO) == 1){

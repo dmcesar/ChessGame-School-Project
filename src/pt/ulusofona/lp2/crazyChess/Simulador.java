@@ -531,6 +531,8 @@ public class Simulador {
                 writer.write(piece.getNickname() + "\n");
             }
 
+
+
             //Percorre-se o tabuleiro
             for (int y = 0; y < tabuleiro.length; y++) {
 
@@ -748,8 +750,6 @@ public class Simulador {
 
         ArrayList<Comparable> jogadasValidas = new ArrayList<>();
 
-        CrazyPiece crazyPiece;
-
         //Verifica se a posição inicial é válida
         if ((0 <= xO && xO < tabuleiro.length) && (0 <= yO && yO < tabuleiro.length)) {
 
@@ -760,11 +760,9 @@ public class Simulador {
         if(tabuleiro[yO][xO] == null){
 
             return jogadasValidas;
-
-        } else {
-
-            crazyPiece = tabuleiro[yO][xO];
         }
+
+        CrazyPiece crazyPiece = tabuleiro[yO][xO];
 
         //Verifica se é a vez da equipa dessa peça jogar
         if(crazyPiece.getTeam().getId() != getIDEquipaAJogar()){
@@ -780,16 +778,9 @@ public class Simulador {
             int yD = Integer.parseInt(jogada.split(", ")[1]);
 
             //Verifica se essas jogadas são válidas para a situação em questão
-            if(possibilidadesJogadasValidas(xO, yO, xD, yD)){
+            if(possibilidadesJogadasValidas(xO, yO, xD, yD)) {
 
-                if(tabuleiro[yD][xD].getIdType() == 0){
-
-                    jogadasValidas.add(new JogadaValida(xD, yD, 1000));
-
-                } else {
-
-                    jogadasValidas.add(new JogadaValida(xD, yD, Integer.parseInt(tabuleiro[yD][xD].getRelativeValue())));
-                }
+                jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getPointsOnCapture()));
             }
         }
 

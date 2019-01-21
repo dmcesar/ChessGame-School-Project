@@ -33,6 +33,9 @@ public class Rainha extends CrazyPiece {
     }
 
     @Override
+    public int getPointsOnCapture(){return 8;}
+
+    @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
         //Verifica se o movimento é horizontal/vertical/obliquo

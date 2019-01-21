@@ -32,6 +32,9 @@ public class TorreV extends CrazyPiece {
     }
 
     @Override
+    public int getPointsOnCapture(){return 3;}
+
+    @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD){
 
         if(abs(xO - xD) == 0){

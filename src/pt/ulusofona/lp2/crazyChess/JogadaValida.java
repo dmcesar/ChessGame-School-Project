@@ -33,7 +33,6 @@ public class JogadaValida implements Comparable<JogadaValida>{
 
             return -1;
         }
-
     }
 
     public String toString(){return this.x + ", " + this.y + ", " + this.nrPontos;}
