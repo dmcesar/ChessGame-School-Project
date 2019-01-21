@@ -13,19 +13,19 @@ public class Simulador {
     static CrazyPiece[][] tabuleiro;
 
     //Contém todas as peças em jogo
-    private static ArrayList<CrazyPiece> crazyPieces;
+    private ArrayList<CrazyPiece> crazyPieces;
 
-    private static ArrayList<CrazyPiece> lastPlayOutcome;
+    private ArrayList<CrazyPiece> lastPlayOutcome;
 
     //Tipos complexos que contêm a informação respetivamente a cada uma das equipas
     static Equipa blackTeam;
     static Equipa whiteTeam;
 
-    private static int idEquipaAJogar;
+    private int idEquipaAJogar;
 
 
     //Contém o número de jogadas sem capturas
-    private static int cntPlaysNoCaptures;
+    private int cntPlaysNoCaptures;
 
 
     //Contém o resultado final do jogo
@@ -187,6 +187,7 @@ public class Simulador {
 
                 //BUG FIX - Empate por exaustão á leitura.
                 cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
+                //cntPlaysNoCaptures--;
 
                 for (int i = 0; i < numberOfPieces; i++) {
 
