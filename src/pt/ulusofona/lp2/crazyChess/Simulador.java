@@ -190,6 +190,8 @@ public class Simulador {
                 //BUG FIX - Empate por exaustão á leitura.
                 cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
 
+                previousValue = Integer.parseInt(lineData[8]);
+
                 for (int i = 0; i < numberOfPieces; i++) {
 
                     line = fileReader.nextLine();
@@ -582,7 +584,9 @@ public class Simulador {
             //Escrita do nº de jogadas inválidas da equipa preta
             writer.write(whiteTeam.getCntInvalidPlays() + ":");
 
-            writer.write(cntPlaysNoCaptures + "\n");
+            writer.write(cntPlaysNoCaptures + ":");
+
+            writer.write(previousValue + "\n");
 
             //NOVA IMPLEMENTAÇÃO: GUARDA ESTATISTICAS DE CADA PEÇA NA SECÇÃO 5
             for(CrazyPiece crazyPiece : crazyPieces) {
