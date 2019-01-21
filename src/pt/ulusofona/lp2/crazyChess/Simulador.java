@@ -121,7 +121,6 @@ public class Simulador {
                     int positionID;
 
                     try {
-
                         positionID = Integer.parseInt(lineData[x]);
 
                     }catch (NumberFormatException e){
