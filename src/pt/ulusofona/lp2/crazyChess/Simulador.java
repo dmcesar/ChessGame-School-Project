@@ -57,6 +57,7 @@ public class Simulador {
             result = "";
 
 
+
             //Secçao 1
 
             Scanner fileReader = new Scanner(ficheiroInicial);
@@ -218,7 +219,6 @@ public class Simulador {
                     }
                 }
 
-
         }catch (NumberFormatException numberFormatException){
 
             throw numberFormatException;
@@ -292,16 +292,7 @@ public class Simulador {
                                         //São atualizadas as estatisticas da peça
                                         crazyPiece.statistics.cntValidPlays++;
                                         crazyPiece.statistics.cntCaptures++;
-
-                                        //Atualiza o número de pontos da peça de acordo com o valor relativo da peça que ela capturou
-                                        if (tabuleiro[yD][xD].getRelativeValue().equals("(infinito)")) {
-
-                                            crazyPiece.statistics.cntPoints += 1000;
-
-                                        } else {
-
-                                            crazyPiece.statistics.cntPoints = crazyPiece.statistics.cntPoints + Integer.parseInt(tabuleiro[yD][xD].getRelativeValue());
-                                        }
+                                        crazyPiece.statistics.cntPoints += tabuleiro[yD][xD].getPointsOnCapture();
 
                                         //Remove a peça da equipa oposta da lista de peças em jogo dessa equipa
                                         tabuleiro[yD][xD].getTeam().inGameCrazyPieces.remove(tabuleiro[yD][xD]);
@@ -505,6 +496,8 @@ public class Simulador {
     }
 
     public boolean gravarJogo(File ficheiroDestino) {
+
+        jogoTerminado();
 
         try {
             FileWriter writer = new FileWriter(ficheiroDestino);
@@ -777,11 +770,28 @@ public class Simulador {
 
             int yD = Integer.parseInt(jogada.split(", ")[1]);
 
+            if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
+
+                if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
+
+                    if(tabuleiro[yD][xD] == null){
+
+                        jogadasValidas.add(new JogadaValida(xD, yD, 0));
+
+                    } else if(tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa()){
+
+                        jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getPointsOnCapture()));
+                    }
+                }
+            }
+            /*
+
             //Verifica se essas jogadas são válidas para a situação em questão
             if(possibilidadesJogadasValidas(xO, yO, xD, yD)) {
 
                 jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getPointsOnCapture()));
             }
+            */
         }
 
         //Devolve apenas as jogadas dessa peça que são válidas para a situação em questão
