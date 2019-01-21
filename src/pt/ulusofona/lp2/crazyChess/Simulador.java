@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import javax.print.attribute.standard.NumberUp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -35,7 +36,7 @@ public class Simulador {
     private String result;
 
 
-    public void iniciaJogo(File ficheiroInicial) throws IOException, NumberFormatException {
+    public void iniciaJogo(File ficheiroInicial) throws IOException{
 
         int cntFileLines = 0;
 
@@ -214,7 +215,7 @@ public class Simulador {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (IOException | NumberFormatException e) {
 
             throw new IOException();
         }
@@ -487,8 +488,6 @@ public class Simulador {
     }
 
     public boolean gravarJogo(File ficheiroDestino) {
-
-        jogoTerminado();
 
         try {
             FileWriter writer = new FileWriter(ficheiroDestino);
