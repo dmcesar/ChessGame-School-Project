@@ -139,8 +139,13 @@ public class Simulador {
                                 sb.append(c);
 
                                 found = true;
+                                
+                                break; //tirar
+
+
                             }
                         }
+
 
                         if(!found){
 
