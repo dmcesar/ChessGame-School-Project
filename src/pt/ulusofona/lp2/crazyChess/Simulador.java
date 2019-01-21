@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import javax.naming.directory.InvalidAttributeIdentifierException;
 import javax.print.attribute.standard.NumberUp;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,8 +44,7 @@ public class Simulador {
         int cntFileLines = 0;
 
         try {
-
-
+            
             //Inicializa equipas e variáveis do jogo.
 
             blackTeam = new Equipa(10);
@@ -65,7 +65,6 @@ public class Simulador {
             cntFileLines++;
 
             tabuleiro = new CrazyPiece[Integer.parseInt(line)][Integer.parseInt(line)];
-
 
             //Secçao 2
 
@@ -124,7 +123,15 @@ public class Simulador {
                 for (int x = 0; x < lineData.length; x++) {
 
                     //Devolve o valor de id contido nessa posição da matrix
-                    int positionID = Integer.parseInt(lineData[x]);
+                    int positionID = 0;
+
+                    try {
+                        positionID = Integer.parseInt(lineData[x]);
+
+                    }catch (NumberFormatException e){
+
+                        continue;
+                    }
 
                     //Se esse valor for diferente de 0 significa que se encontra lá uma peça
                     if (positionID != 0) {
@@ -222,7 +229,7 @@ public class Simulador {
             throw e;
         }
 
-        catch (IOException | NumberFormatException e) {
+        catch (IOException e) {
 
             throw new IOException();
         }
