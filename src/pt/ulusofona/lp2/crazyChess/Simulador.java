@@ -26,6 +26,7 @@ public class Simulador {
 
     //Contém o número de jogadas sem capturas
     private int cntPlaysNoCaptures;
+    private int previousValue;
 
 
     //Contém o resultado final do jogo
@@ -48,6 +49,7 @@ public class Simulador {
             idEquipaAJogar = blackTeam.getId();
 
             cntPlaysNoCaptures = 0;
+            previousValue = cntPlaysNoCaptures;
 
             result = "";
 
@@ -118,38 +120,12 @@ public class Simulador {
                 for (int x = 0; x < lineData.length; x++) {
 
                     //Devolve o valor de id contido nessa posição da matrix
-                    int positionID;
+                    int positionID = 0;
 
                     try {
                         positionID = Integer.parseInt(lineData[x]);
 
-                    }catch (NumberFormatException e){
-
-                        StringBuilder sb = new StringBuilder();
-
-                        String str = lineData[x];
-
-                        boolean found = false;
-
-                        for(char c : str.toCharArray()){
-
-                            if(Character.isDigit(c)){
-
-                                sb.append(c);
-
-                                found = true;
-                            }
-                        }
-
-                        if(!found){
-
-                            positionID = 0;
-
-                        } else {
-
-                            positionID = Integer.parseInt(sb.toString());
-                        }
-                    }
+                    }catch (NumberFormatException ignored){}
 
                     //Se esse valor for diferente de 0 significa que se encontra lá uma peça
                     if (positionID != 0) {
@@ -327,6 +303,8 @@ public class Simulador {
                                         //Limpa a posição anterior
                                         tabuleiro[yO][xO] = null;
 
+                                        previousValue = cntPlaysNoCaptures;
+
                                         //Como foi efetuada uma captura, o número de jogadas sem capturas foi reposto
                                         cntPlaysNoCaptures = 0;
 
@@ -372,6 +350,8 @@ public class Simulador {
 
                                     //Se já tiver ocorrido uma captura préviamente e se for efuetuada uma jogada sem captura (número de capturas de uma equipa = diferença entre número de peças da outra e o seu número de peças em jogo)
                                     if (blackTeam.cntCaptures + whiteTeam.cntCaptures != 0) {
+
+                                        previousValue = cntPlaysNoCaptures;
 
                                         //O contador de jogadas sem captura é incrementado
                                         cntPlaysNoCaptures++;
@@ -687,6 +667,8 @@ public class Simulador {
 
         //Repõe a lista de alterações da última jogada
         lastPlayOutcome = new ArrayList<>();
+
+        cntPlaysNoCaptures = previousValue;
     }
 
     public CrazyPiece getPeca(String[] lineData) {
