@@ -127,6 +127,7 @@ public class Simulador {
                     }catch (NumberFormatException e){
 
                         StringBuilder sb = new StringBuilder();
+
                         String str = lineData[x];
 
                         boolean found = false;
@@ -134,10 +135,13 @@ public class Simulador {
                         for(char c : str.toCharArray()){
 
                             if(Character.isDigit(c)){
+
                                 sb.append(c);
+
                                 found = true;
+
                             } else if(found){
-                                // If we already found a digit before and this char is not a digit, stop looping
+
                                 break;
                             }
                         }
