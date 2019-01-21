@@ -702,7 +702,7 @@ public class Simulador {
         }
     }
 
-    List<Comparable> obterSugestoesJogada(int xO, int yO){
+    public List<Comparable> obterSugestoesJogada(int xO, int yO){
 
         //Atualiza as máscaras dos jokers de ambas as equipas para o caso de não estarem atualizadas com o turno atual
         for (Joker joker : blackTeam.jokers) {
