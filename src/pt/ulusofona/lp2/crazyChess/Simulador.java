@@ -748,11 +748,11 @@ public class Simulador {
 
                     if(tabuleiro[yD][xD] == null){
 
-                        jogadasValidas.add(new JogadaValida(xD, yD, 0));
+                        jogadasValidas.add(new JogadaValida(xD, yD, "0"));
 
                     } else if(tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa()){
 
-                        jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getPointsOnCapture()));
+                        jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getRelativeValue()));
                     }
                 }
             }
