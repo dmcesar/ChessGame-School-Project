@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
