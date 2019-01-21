@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -124,10 +125,7 @@ public class Simulador {
                     try {
                         positionID = Integer.parseInt(lineData[x]);
 
-                    }catch (NumberFormatException e){
-
-                        continue;
-                    }
+                    }catch (NumberFormatException ignored){}
 
                     //Se esse valor for diferente de 0 significa que se encontra lá uma peça
                     if (positionID != 0) {
@@ -768,26 +766,31 @@ public class Simulador {
         return crazyPiece.presentCoords.x == -1 && crazyPiece.presentCoords.y == -1;
     }
 
-    public Map<String, List<String>> getEstatisticas(){
+    public Map<String, List<String>> getEstatisticas() throws ArithmeticException{
 
         Map<String, List<String>> estatisticas = new HashMap<>();
 
-        try {
+        estatisticas.put("top5Capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
 
-            estatisticas.put("top5Capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+        estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
 
-            estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+        estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
 
-            estatisticas.put("pecasMais5Capturas", crazyPieces.stream().filter((p) -> p.statistics.cntCaptures > 5).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).collect(toList()));
+        estatisticas.put("3PecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
 
-            estatisticas.put("3PecasMaisBaralhadas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByRacio(p1)).limit(3).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays()).collect(toList()));
+        HashMap<Integer, Integer> typeCaptures = new HashMap<>();
 
-            estatisticas.put("tiposPecaCapturados", new ArrayList<>());
+        for(int i = 0; i <= 7; i++){
 
-        }catch (ArithmeticException arithmeticException){
-
-            throw arithmeticException;
+            typeCaptures.put(i, 0);
         }
+
+        for(CrazyPiece crazyPiece : crazyPieces){
+
+            typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.cntPoints));
+        }
+
+        estatisticas.put("tiposPecaCapturados", typeCaptures.entrySet().stream().sorted((s1, s2) -> s2.getValue() - s1.getValue()).map((s) -> s.getValue() + ":" + typeCaptures.get(s.getKey())).collect(toList()));
 
         return estatisticas;
     }
