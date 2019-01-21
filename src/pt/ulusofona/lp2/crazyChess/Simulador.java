@@ -36,9 +36,7 @@ public class Simulador {
     //Contém o resultado final do jogo
     private String result;
 
-    //TODO: Tratar exception "InvalidSimulatorInputException" - caso alguma linha das secções 1 a 4 tenha dados a mas ou a menos - lançar a exception
-    //TODO: ALTERAÇÃO DA SECCÃO 5: Passa a receber a variavel cntPlaysNoCaptures para validar o empate por exaustão á leitura
-    //TODO: A partir de agora cada peça guarda o seu numero de capturas, o seu numero total de pontos, nr jogadas validas e invalidas
+
     public void iniciaJogo(File ficheiroInicial) throws IOException, NumberFormatException{
 
         int cntFileLines = 0;
@@ -55,7 +53,6 @@ public class Simulador {
             cntPlaysNoCaptures = 0;
 
             result = "";
-
 
 
             //Secçao 1
@@ -95,7 +92,6 @@ public class Simulador {
 
                     throw new InvalidSimulatorInputException(cntFileLines, "DADOS A MENOS (Esperava: 4 ; Obtive: " + lineData.length + ")");
                 }
-
 
                 //Cria a nova peça a ser adicionada
                 CrazyPiece crazyPiece = getPeca(lineData);
@@ -158,7 +154,7 @@ public class Simulador {
                 }
             }
 
-            //TODO: Ler com estatisticas da peça guardadas
+
             //Secçao 5
 
                 if (fileReader.hasNextLine()) {
@@ -394,7 +390,6 @@ public class Simulador {
             }
         }
 
-
         for (CrazyPiece piece : whiteTeam.inGameCrazyPieces){
             if (piece.getIdType() == 0){
                 nrReisWhite++;
@@ -453,14 +448,14 @@ public class Simulador {
         resultados.add("---");
 
         resultados.add("Equipa das Pretas");
-        resultados.add(" Capturas: " + Integer.toString(blackTeam.cntCaptures));
-        resultados.add(" Jogadas válidas: " + Integer.toString(blackTeam.cntValidPlays));
-        resultados.add(" Tentativas inválidas: " + Integer.toString(blackTeam.cntInvalidPlays));
+        resultados.add(" Capturas: " + blackTeam.cntCaptures);
+        resultados.add(" Jogadas válidas: " + blackTeam.cntValidPlays);
+        resultados.add(" Tentativas inválidas: " + blackTeam.cntInvalidPlays);
 
         resultados.add("Equipa das Brancas");
-        resultados.add(" Capturas: " + Integer.toString(whiteTeam.cntCaptures));
-        resultados.add(" Jogadas válidas: " + Integer.toString(whiteTeam.cntValidPlays));
-        resultados.add(" Tentativas inválidas: " + Integer.toString(whiteTeam.cntInvalidPlays));
+        resultados.add(" Capturas: " + whiteTeam.cntCaptures);
+        resultados.add(" Jogadas válidas: " + whiteTeam.cntValidPlays);
+        resultados.add(" Tentativas inválidas: " + whiteTeam.cntInvalidPlays);
 
         return resultados;
     }
@@ -635,7 +630,7 @@ public class Simulador {
                 }
             }
 
-            //Se for a peça capturada-
+            //Se for a peça capturada
             else {
 
                 //Volta a inserir a peça capturada no jogo
@@ -702,28 +697,7 @@ public class Simulador {
         }
     }
 
-    public boolean possibilidadesJogadasValidas (int xO, int yO, int xD, int yD) {
-
-        //Verifica se a jogada passada é válida (efetua as mesmas verificações que a função "processaJogada()", apenas sem as alterações ás peças e ás estatisticas das equipas
-
-        //Retorna a peça que se pretende mover
-        CrazyPiece crazyPiece = tabuleiro[yO][xO];
-
-        //Verifica se a posição final é válida
-        if ((0 <= xD && xD < tabuleiro.length) && (0 <= yD && yD < tabuleiro.length)) {
-
-            //Verifica se a peça pode se movmentar
-            if (crazyPiece.checkValidMovement(xO, yO, xD, yD)) {
-
-                //Devolve TRUE se a peça se mover ou se capturar uma peça da equipa oposta
-                return tabuleiro[yD][xD] == null || (tabuleiro[yD][xD] != null && crazyPiece.getIdEquipa() != tabuleiro[yD][xD].getIdEquipa());
-            }
-        }
-
-        return false;
-    }
-
-    public List<Comparable> obterSugestoesJogada(int xO, int yO){
+    List<Comparable> obterSugestoesJogada(int xO, int yO){
 
         //Atualiza as máscaras dos jokers de ambas as equipas para o caso de não estarem atualizadas com o turno atual
         for (Joker joker : blackTeam.jokers) {
@@ -777,14 +751,6 @@ public class Simulador {
                     }
                 }
             }
-            /*
-
-            //Verifica se essas jogadas são válidas para a situação em questão
-            if(possibilidadesJogadasValidas(xO, yO, xD, yD)) {
-
-                jogadasValidas.add(new JogadaValida(xD, yD, tabuleiro[yD][xD].getPointsOnCapture()));
-            }
-            */
         }
 
         //Devolve apenas as jogadas dessa peça que são válidas para a situação em questão
