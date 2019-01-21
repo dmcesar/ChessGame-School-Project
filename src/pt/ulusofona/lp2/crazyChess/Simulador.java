@@ -14,7 +14,7 @@ public class Simulador {
 
 
     //Contém todas as peças em jogo
-    private static ArrayList<CrazyPiece> crazyPieces = new ArrayList<>();
+    private static ArrayList<CrazyPiece> crazyPieces;
 
     private static ArrayList<CrazyPiece> lastPlayOutcome;
 
@@ -501,7 +501,7 @@ public class Simulador {
             writer.write(getTamanhoTabuleiro() + "\n");
 
             //Escrita do número de peças existentes no jogo
-            writer.write((blackTeam.crazyPieces.size() + whiteTeam.crazyPieces.size()) + "\n");
+            writer.write(crazyPieces.size() + "\n");
 
             //Percorre-se a lista onde estão todas as CrazyPieces
             for (CrazyPiece piece : crazyPieces) {
