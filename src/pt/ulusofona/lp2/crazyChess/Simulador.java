@@ -12,7 +12,6 @@ public class Simulador {
     //Informações sobre o tabuleiro
     static CrazyPiece[][] tabuleiro;
 
-
     //Contém todas as peças em jogo
     private static ArrayList<CrazyPiece> crazyPieces;
 
