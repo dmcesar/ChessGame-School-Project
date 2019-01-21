@@ -1,14 +1,10 @@
 package pt.ulusofona.lp2.crazyChess;
 
-import javax.naming.directory.InvalidAttributeIdentifierException;
-import javax.print.attribute.standard.NumberUp;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 
 public class Simulador {
@@ -157,6 +153,7 @@ public class Simulador {
                                 tabuleiro[y][x] = crazyPiece;
 
                                 crazyPiece.presentCoords = new PieceCoords(y, x);
+                                crazyPiece.previousCoords = new PieceCoords(-1, -1);
                             }
                         }
                     }
@@ -284,7 +281,7 @@ public class Simulador {
                                         lastPlayOutcome = new ArrayList<>();
 
                                         //Guarda a peça antes de ser movida
-                                        crazyPiece.previousCoords = crazyPiece.presentCoords;
+
                                         lastPlayOutcome.add(crazyPiece);
 
                                         //Guarda a peça que foi caputurada
@@ -306,6 +303,7 @@ public class Simulador {
 
                                         //Mexe a peça
                                         tabuleiro[yD][xD] = crazyPiece;
+                                        crazyPiece.previousCoords = crazyPiece.presentCoords;
                                         crazyPiece.presentCoords = new PieceCoords(yD, xD);
 
                                         //Limpa a posição anterior
@@ -612,7 +610,7 @@ public class Simulador {
             boolean pieceInGame = checkPieceInGame(crazyPiece);
 
             //Se for a peça que se moveu
-            if (pieceInGame) {
+            if (!pieceInGame) {
 
                 //Insere-a na posição antiga
                 tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
@@ -631,7 +629,7 @@ public class Simulador {
 
                     for(CrazyPiece captured : lastPlayOutcome){
 
-                        if(!checkPieceInGame(captured)){
+                        if(checkPieceInGame(captured)){
 
                             crazyPiece.statistics.cntPoints -= captured.getPointsOnCapture();
                         }
@@ -768,8 +766,8 @@ public class Simulador {
 
     public boolean checkPieceInGame(CrazyPiece crazyPiece){
 
-        return crazyPiece.presentCoords.x != -1 && crazyPiece.presentCoords.y != -1;
-
+        //Retorna true se não tiver em jogo
+        return crazyPiece.presentCoords.x == -1 && crazyPiece.presentCoords.y == -1;
     }
 
     public Map<String, List<String>> getEstatisticas(){
