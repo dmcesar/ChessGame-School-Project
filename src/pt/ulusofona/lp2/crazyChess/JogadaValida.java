@@ -31,7 +31,7 @@ public class JogadaValida implements Comparable<JogadaValida>{
 
         if(jogadaValida.nrPontos.equals("(infinito)")){
 
-            return -1;
+            return 1;
         }
 
         /*Caso contrário compara o valor numérico de cada jogada. */
