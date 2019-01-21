@@ -44,7 +44,7 @@ public class Simulador {
         int cntFileLines = 0;
 
         try {
-            
+
             //Inicializa equipas e variáveis do jogo.
 
             blackTeam = new Equipa(10);
@@ -778,7 +778,7 @@ public class Simulador {
 
         try {
 
-            estatisticas.put("top5capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
+            estatisticas.put("top5Capturas", crazyPieces.stream().sorted((p1, p2) -> p2.compareByCaptures(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
 
             estatisticas.put("top5Pontos", crazyPieces.stream().sorted((p1, p2) -> p2.compareByPoints(p1)).map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntPoints() + ":" + p.statistics.getCntCaptures()).limit(5).collect(toList()));
 
