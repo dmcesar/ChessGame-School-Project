@@ -16,11 +16,9 @@ public class Simulador {
 
 
     //Contém todas as peças em jogo
-    private static ArrayList<CrazyPiece> crazyPieces;
+    private static ArrayList<CrazyPiece> crazyPieces = new ArrayList<>();
 
     private static ArrayList<CrazyPiece> lastPlayOutcome;
-
-    private static HashMap<String, Integer> typesAndCaptures;
 
     //Tipos complexos que contêm a informação respetivamente a cada uma das equipas
     static Equipa blackTeam;
