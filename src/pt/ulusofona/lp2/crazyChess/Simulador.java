@@ -118,12 +118,31 @@ public class Simulador {
                 for (int x = 0; x < lineData.length; x++) {
 
                     //Devolve o valor de id contido nessa posição da matrix
-                    int positionID = 0;
+                    int positionID;
 
                     try {
+
                         positionID = Integer.parseInt(lineData[x]);
 
-                    }catch (NumberFormatException ignored){}
+                    }catch (NumberFormatException e){
+
+                        StringBuilder sb = new StringBuilder();
+                        String str = lineData[x];
+
+                        boolean found = false;
+
+                        for(char c : str.toCharArray()){
+                            if(Character.isDigit(c)){
+                                sb.append(c);
+                                found = true;
+                            } else if(found){
+                                // If we already found a digit before and this char is not a digit, stop looping
+                                break;
+                            }
+                        }
+
+                        positionID = Integer.parseInt(sb.toString());
+                    }
 
                     //Se esse valor for diferente de 0 significa que se encontra lá uma peça
                     if (positionID != 0) {
@@ -187,7 +206,6 @@ public class Simulador {
 
                 //BUG FIX - Empate por exaustão á leitura.
                 cntPlaysNoCaptures = Integer.parseInt(lineData[7]);
-                cntPlaysNoCaptures--;
 
                 for (int i = 0; i < numberOfPieces; i++) {
 
