@@ -726,6 +726,8 @@ public class Simulador {
         //Verifica se existe uma peça na posição pretendida
         if(tabuleiro[yO][xO] == null){
 
+            jogadasValidas.add(new JogadaValida(0, 0, 0));
+
             return jogadasValidas;
         }
 
