@@ -43,9 +43,9 @@ public class PadreDaVila extends CrazyPiece {
 
             if (checkPieceBlockingMove(xO, yO, xD, yD)) {
 
-                for (int y = yD - 2; y < yD + 2; y++) {
+                for (int y = yD - 1; y <= yD + 1; y++) {
 
-                    for (int x = xD - 2; x < xD + 2; x++) {
+                    for (int x = xD - 1; x <= xD + 1; x++) {
 
                         if (x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length) {
 
@@ -56,7 +56,8 @@ public class PadreDaVila extends CrazyPiece {
                         }
                     }
                 }
-                return true;
+
+                return (Simulador.tabuleiro[yD][xD] == null || (Simulador.tabuleiro[yD][xD] != null && Simulador.tabuleiro[yD][xD].getIdEquipa() != this.getIdEquipa()));
             }
         }
         return false;
