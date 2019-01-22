@@ -803,7 +803,6 @@ public class Simulador {
                 .limit(3)
                 .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays())
                 .collect(toList()));
-
         
         //Cria o mapa <idType, cntCaptures> -> idType : cntCaptures
         HashMap<Integer, Integer> typeCaptures = new HashMap<>();
