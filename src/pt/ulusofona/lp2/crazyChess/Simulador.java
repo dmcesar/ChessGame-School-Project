@@ -556,11 +556,11 @@ public class Simulador {
                         //Esta condição é necessária para o escritor não escrever um ":" a mais em cada linha
                         if (x == tabuleiro.length - 1) {
 
-                            writer.write(tabuleiro[y][x].getId());
+                            writer.write(Integer.toString(tabuleiro[y][x].getId()));
 
                         } else {
 
-                            writer.write(tabuleiro[y][x].getId() + ":");
+                            writer.write(Integer.toString(tabuleiro[y][x].getId()) + ":");
                         }
 
                     } else {
@@ -581,7 +581,7 @@ public class Simulador {
             }
 
             String bugFix = Integer.toString(cntPlaysNoCaptures);
-            
+
             //Escrita do id da equipa a jogar
             writer.write(getIDEquipaAJogar() + ":");
 
