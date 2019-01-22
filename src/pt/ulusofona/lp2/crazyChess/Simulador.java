@@ -352,7 +352,7 @@ public class Simulador {
                         }
                     }
 
-                    crazyPiece.statistics.cntInvalidPlays--;
+                    crazyPiece.statistics.cntInvalidPlays++;
                 }
             }
         }
