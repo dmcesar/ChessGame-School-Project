@@ -391,7 +391,7 @@ public class Simulador {
 
         int nrReisBlack = 0;
         int nrReisWhite = 0;
-
+/*
         for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
             if (piece.getIdType() == 0){
                 nrReisBlack++;
@@ -403,6 +403,22 @@ public class Simulador {
                 nrReisWhite++;
             }
         }
+        */
+
+    for(CrazyPiece crazyPiece : crazyPieces){
+
+        if (crazyPiece.getIdType() == 0){
+
+            if(crazyPiece.getIdEquipa() == 10){
+
+                nrReisBlack++;
+
+            } else if(crazyPiece.getIdEquipa() == 20){
+
+                nrReisWhite++;
+            }
+        }
+    }
         //Vitória das brancas por falta de reis da equipa preta em jogo
         if (nrReisBlack == 0) {
 
