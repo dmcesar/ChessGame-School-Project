@@ -799,11 +799,11 @@ public class Simulador {
                 .collect(toList()));
 
         estatisticas.put("3PecasMaisBaralhadas", crazyPieces.stream()
-                .sorted((p1, p2) -> p2.compareByRacio(p1))
+                .sorted((p1, p2) -> p1.compareByRacio(p2))
                 .limit(3)
                 .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays())
                 .collect(toList()));
-        
+
         //Cria o mapa <idType, cntCaptures> -> idType : cntCaptures
         HashMap<Integer, Integer> typeCaptures = new HashMap<>();
 
