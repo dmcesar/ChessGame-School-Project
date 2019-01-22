@@ -49,9 +49,12 @@ public class PadreDaVila extends CrazyPiece {
 
                         if (x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length) {
 
-                            if (Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getIdEquipa() != this.getIdEquipa() && Simulador.tabuleiro[y][x].getIdType() == 1) {
+                            if(x != xD && y != yD) {
 
-                                return false;
+                                if (Simulador.tabuleiro[y][x] != null && Simulador.tabuleiro[y][x].getIdType() == 1 && Simulador.tabuleiro[y][x].getIdEquipa() != this.getIdEquipa()) {
+
+                                    return false;
+                                }
                             }
                         }
                     }
