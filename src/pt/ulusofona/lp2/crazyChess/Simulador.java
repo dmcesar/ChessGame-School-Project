@@ -313,20 +313,7 @@ public class Simulador {
                                         //Jogada realizada com sucesso
                                         return true;
                                     }
-                                    //Caso contrário a jogada é inválida
-                                    else {
-
-                                        //É incrementado o contador de jogadas inválidas da equipa
-                                        crazyPiece.getTeam().cntInvalidPlays++;
-
-                                        crazyPiece.statistics.cntInvalidPlays++;
-
-                                        //Jogada falhada
-                                        return false;
-                                    }
-                                }
-                                //Caso contrário não existe uma captura e a mudança de posição é direta.
-                                else {
+                                } else {
 
                                     lastPlayOutcome = new ArrayList<>();
 
@@ -361,18 +348,11 @@ public class Simulador {
                                     //Jogada realizada com sucesso
                                     return true;
                                 }
-                            }else{
-
-                                //É incrementado o contador de jogadas inválidas da equipa
-                                crazyPiece.getTeam().cntInvalidPlays++;
-
-                                crazyPiece.statistics.cntInvalidPlays++;
-
-                                //Jogada falhada
-                                return false;
                             }
                         }
                     }
+
+                    crazyPiece.statistics.cntInvalidPlays--;
                 }
             }
         }
