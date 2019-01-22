@@ -38,8 +38,6 @@ public class PadreDaVila extends CrazyPiece {
     @Override
     public boolean checkValidMovement(int xO, int yO, int xD, int yD) {
 
-        boolean valid = false;
-
         if (abs(xD - xO) == abs(yD - yO) && abs(xD - xO) <= 3) {
 
             if (checkPieceBlockingMove(xO, yO, xD, yD)) {
@@ -50,18 +48,20 @@ public class PadreDaVila extends CrazyPiece {
 
                         if(x >= 0 && x < Simulador.tabuleiro.length && y >= 0 && y < Simulador.tabuleiro.length){
 
+                            /*
                             if(Simulador.tabuleiro[y][x] != null &&(Simulador.tabuleiro[y][x].getType().equals("Rainha") && Simulador.tabuleiro[y][x].getIdEquipa() != this.getIdEquipa())){
 
                                 return false;
                             }
+                            */
 
-                            /*
+
                             if(Simulador.tabuleiro[y][x] != null && (Simulador.tabuleiro[y][x].getType().equals("Rainha") && Simulador.tabuleiro[y][x].getIdEquipa() != this.getIdEquipa())){
 
                                 return x == xD && y == yD;
 
                             }
-                            */
+
                         }
                     }
                 }
