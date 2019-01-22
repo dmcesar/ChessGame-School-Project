@@ -814,7 +814,7 @@ public class Simulador {
 
         for(CrazyPiece crazyPiece : crazyPieces){
 
-            typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.cntPoints));
+            typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.getCntCaptures()));
         }
 
         estatisticas.put("tiposPecaCapturados", typeCaptures.entrySet().stream()
