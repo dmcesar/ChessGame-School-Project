@@ -531,13 +531,13 @@ public class Simulador {
             for (CrazyPiece piece : crazyPieces) {
 
                 //Escrita do id da peça no ficheiro
-                writer.write(piece.getId() + ":");
+                writer.write(Integer.toString(piece.getId()) + ":");
 
                 //Escrita do tipo da peça no ficheiro
-                writer.write(piece.getIdType() + ":");
+                writer.write(Integer.toString(piece.getIdType()) + ":");
 
                 //Escrita do id da equipa da peça no ficheiro
-                writer.write(piece.getIdEquipa() + ":");
+                writer.write(Integer.toString(piece.getIdEquipa()) + ":");
 
                 //Escrita da alcunha da peça no ficheiro
                 writer.write(piece.getNickname() + "\n");
@@ -583,32 +583,32 @@ public class Simulador {
             String bugFix = Integer.toString(cntPlaysNoCaptures);
 
             //Escrita do id da equipa a jogar
-            writer.write(getIDEquipaAJogar() + ":");
+            writer.write(Integer.toString(getIDEquipaAJogar()) + ":");
 
             //Escrita do nº de jogadas válidas da equipa preta
-            writer.write(blackTeam.getCntValidPlays() + ":");
+            writer.write(Integer.toString(blackTeam.getCntValidPlays()) + ":");
 
             //Escrita do nr capturas da equipa preta
-            writer.write(blackTeam.getCntCaptures() + ":");
+            writer.write(Integer.toString(blackTeam.getCntCaptures()) + ":");
 
             //Escrita do nº de jogadas inválidas da equipa preta
-            writer.write(blackTeam.getCntInvalidPlays() + ":");
+            writer.write(Integer.toString(blackTeam.getCntInvalidPlays()) + ":");
 
             //Escrita do nº de jogadas válidas da equipa branca
-            writer.write(whiteTeam.getCntValidPlays() + ":");
+            writer.write(Integer.toString(whiteTeam.getCntValidPlays()) + ":");
 
             //Escrita do nr capturas da equipa branca
-            writer.write(whiteTeam.getCntCaptures() + ":");
+            writer.write(Integer.toString(whiteTeam.getCntCaptures()) + ":");
 
             //Escrita do nº de jogadas inválidas da equipa preta
-            writer.write(whiteTeam.getCntInvalidPlays() + ":");
+            writer.write(Integer.toString(whiteTeam.getCntInvalidPlays()) + ":");
 
             writer.write(bugFix + "\n");
 
             //NOVA IMPLEMENTAÇÃO: GUARDA ESTATISTICAS DE CADA PEÇA NA SECÇÃO 5
             for(CrazyPiece crazyPiece : crazyPieces) {
 
-                writer.write(crazyPiece.idPiece + ":" + crazyPiece.statistics.cntCaptures + ":" + crazyPiece.statistics.cntPoints + ":" + crazyPiece.statistics.cntValidPlays + ":" + crazyPiece.statistics.cntInvalidPlays + "\n");
+                writer.write(Integer.toString(crazyPiece.idPiece) + ":" + Integer.toString(crazyPiece.statistics.cntCaptures) + ":" + Integer.toString(crazyPiece.statistics.cntPoints) + ":" + Integer.toString(crazyPiece.statistics.cntValidPlays) + ":" + Integer.toString(crazyPiece.statistics.cntInvalidPlays) + "\n");
             }
 
             //Fecho do escritor
