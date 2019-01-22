@@ -361,6 +361,15 @@ public class Simulador {
                                     //Jogada realizada com sucesso
                                     return true;
                                 }
+                            }else{
+
+                                //É incrementado o contador de jogadas inválidas da equipa
+                                crazyPiece.getTeam().cntInvalidPlays++;
+
+                                crazyPiece.statistics.cntInvalidPlays++;
+
+                                //Jogada falhada
+                                return false;
                             }
                         }
                     }
