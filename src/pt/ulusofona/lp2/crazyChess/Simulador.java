@@ -33,8 +33,6 @@ public class Simulador {
     private String result;
 
 
-    //Se fazemos "catch" de uma exceção não precisamos de fazer "throws", a não ser que a relancemos no catch.
-    // Neste caso, podem ser lançadas tanto IOException, como InvalidSimulatorInputExcption. Como a segunda é subclasse da primeira, apenas temos que lançar a primeira
     public void iniciaJogo(File ficheiroInicial) throws IOException{
 
         int cntFileLines = 0;
@@ -522,10 +520,10 @@ public class Simulador {
             FileWriter writer = new FileWriter(ficheiroDestino);
 
             //Escrita da primeira linha do ficheiro, que é o tamanho do tabuleiro
-            writer.write(getTamanhoTabuleiro() + "\n");
+            writer.write(Integer.toString(getTamanhoTabuleiro()) + "\n");
 
             //Escrita do número de peças existentes no jogo
-            writer.write(crazyPieces.size() + "\n");
+            writer.write(Integer.toString(crazyPieces.size()) + "\n");
 
             //Percorre-se a lista onde estão todas as CrazyPieces
             for (CrazyPiece piece : crazyPieces) {
@@ -819,7 +817,7 @@ public class Simulador {
                 .map((p) -> p.getIdEquipa() + ":" + p.getNickname() + ":" + p.statistics.getCntInvalidPlays() + ":" + p.statistics.getCntValidPlays())
                 .collect(toList()));
 
-        //Cria o mapa <idType,
+        //Cria o mapa <idType, cntCaptures> -> idType : cntCaptures
         HashMap<Integer, Integer> typeCaptures = new HashMap<>();
 
         for(int i = 0; i <= 7; i++){
@@ -834,7 +832,7 @@ public class Simulador {
 
         estatisticas.put("tiposPecaCapturados", typeCaptures.entrySet().stream()
                 .sorted((s1, s2) -> s2.getValue() - s1.getValue())
-                .map((s) -> s.getValue() + ":" + typeCaptures.get(s.getKey()))
+                .map((s) -> s.getKey() + ":" + s.getValue())
                 .collect(toList()));
 
         return estatisticas;
