@@ -391,7 +391,7 @@ public class Simulador {
 
         int nrReisBlack = 0;
         int nrReisWhite = 0;
-/*
+
         for (CrazyPiece piece : blackTeam.inGameCrazyPieces){
             if (piece.getIdType() == 0){
                 nrReisBlack++;
@@ -403,8 +403,9 @@ public class Simulador {
                 nrReisWhite++;
             }
         }
-        */
 
+
+/*
     for(CrazyPiece crazyPiece : crazyPieces){
 
         if (crazyPiece.getIdType() == 0){
@@ -419,6 +420,7 @@ public class Simulador {
             }
         }
     }
+    */
         //Vitória das brancas por falta de reis da equipa preta em jogo
         if (nrReisBlack == 0) {
 
@@ -578,6 +580,8 @@ public class Simulador {
                 writer.write("\n");
             }
 
+            String bugFix = Integer.toString(cntPlaysNoCaptures);
+            
             //Escrita do id da equipa a jogar
             writer.write(getIDEquipaAJogar() + ":");
 
@@ -599,7 +603,7 @@ public class Simulador {
             //Escrita do nº de jogadas inválidas da equipa preta
             writer.write(whiteTeam.getCntInvalidPlays() + ":");
 
-            writer.write(cntPlaysNoCaptures + "\n");
+            writer.write(bugFix + "\n");
 
             //NOVA IMPLEMENTAÇÃO: GUARDA ESTATISTICAS DE CADA PEÇA NA SECÇÃO 5
             for(CrazyPiece crazyPiece : crazyPieces) {
