@@ -27,11 +27,13 @@ public class PieceStatistics {
 
     public float getInvalidValidPlaysRacio(){
 
-        if(this.getCntInvalidPlays() == 0){
+        try {
+
+            return (float) (this.cntInvalidPlays / (this.cntValidPlays + this.cntInvalidPlays));
+
+        }catch (ArithmeticException e){
 
             return 0;
         }
-
-        return (float)(this.cntInvalidPlays / (this.cntValidPlays + this.cntInvalidPlays));
     }
 }
