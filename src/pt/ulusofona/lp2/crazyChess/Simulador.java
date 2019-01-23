@@ -510,8 +510,6 @@ public class Simulador {
                 writer.write(piece.getNickname() + "\n");
             }
 
-
-
             //Percorre-se o tabuleiro
             for (int y = 0; y < tabuleiro.length; y++) {
 
@@ -764,7 +762,7 @@ public class Simulador {
         return crazyPiece.presentCoords.x == -1 && crazyPiece.presentCoords.y == -1;
     }
 
-    public Map<String, List<String>> getEstatisticas() throws ArithmeticException{
+    public Map<String, List<String>> getEstatisticas(){
 
         Map<String, List<String>> estatisticas = new HashMap<>();
 
