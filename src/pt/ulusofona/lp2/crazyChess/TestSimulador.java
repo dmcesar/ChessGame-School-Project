@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.crazyChess;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,27 +12,81 @@ import static junit.framework.TestCase.assertEquals;
 import static pt.ulusofona.lp2.crazyChess.Simulador.*;
 
 public class TestSimulador {
-    /*
-
     @Test
     public void testIniciaJogo01(){
-        File ficheiro = new File("test-files/FicheiroComVitoria.txt");
+        File ficheiro = new File("test-files/FicheiroDadosAMais.txt");
         Simulador simulador = new Simulador();
+        String resultadoReal = "";
 
-        boolean resultadoReal = simulador.iniciaJogo(ficheiro);
-        //Como o ficheiro existe, o resultado esperado é true
-        assertEquals(true, resultadoReal);
+        try {
+            try {
+                simulador.iniciaJogo(ficheiro);
+            } catch (InvalidSimulatorInputException e) {
+                resultadoReal = e.getDescricaoProblema();
+            }
+        } catch (IOException e){}
+
+        //Como o ficheiro não existe, o resultado esperado é false
+        assertEquals("DADOS A MAIS (Esperava: 4 ; Obtive: 5)", resultadoReal);
     }
-
 
     @Test
     public void testIniciaJogo02(){
-        File ficheiro = new File("test-files/file.txt");
+        File ficheiro = new File("test-files/FicheiroDadosAMais.txt");
         Simulador simulador = new Simulador();
+        int resultadoReal = 0;
 
-        boolean resultadoReal = simulador.iniciaJogo(ficheiro);
+        try {
+
+
+            try {
+                simulador.iniciaJogo(ficheiro);
+            } catch (InvalidSimulatorInputException e) {
+                resultadoReal = e.getLinhaErro();
+            }
+        } catch (IOException e){}
+
         //Como o ficheiro não existe, o resultado esperado é false
-        assertEquals(false, resultadoReal);
+        assertEquals(12, resultadoReal);
+    }
+
+    @Test
+    public void testIniciaJogo03(){
+        File ficheiro = new File("test-files/FicheiroDadosAMenos.txt");
+        Simulador simulador = new Simulador();
+        String resultadoReal = "";
+
+        try {
+            try {
+                simulador.iniciaJogo(ficheiro);
+            } catch (InvalidSimulatorInputException e) {
+                resultadoReal = e.getDescricaoProblema();
+            }
+        } catch (IOException e){}
+
+        //Como o ficheiro não existe, o resultado esperado é false
+        assertEquals("DADOS A MENOS (Esperava: 4 ; Obtive: 3)", resultadoReal);
+
+    }
+
+    @Test
+    public void testIniciaJogo04(){
+        File ficheiro = new File("test-files/FicheiroDadosAMenos.txt");
+        Simulador simulador = new Simulador();
+        int resultadoReal = 0;
+
+        try {
+
+
+            try {
+                simulador.iniciaJogo(ficheiro);
+            } catch (InvalidSimulatorInputException e) {
+                resultadoReal = e.getLinhaErro();
+            }
+        } catch (IOException e){}
+
+        //Como o ficheiro não existe, o resultado esperado é false
+        assertEquals(3, resultadoReal);
     }
 
 
@@ -39,7 +94,9 @@ public class TestSimulador {
     public void testJaVemVitoria(){
         File ficheiro = new File("test-files/FicheiroComVitoria.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.jogoTerminado();
         //Deve retornar true pois há condições de paragem do jogo
@@ -47,11 +104,15 @@ public class TestSimulador {
 
     }
 
+
     @Test
     public void testJaVemVitoria02(){
         File ficheiro = new File("test-files/FicheiroComVitoria.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         simulador.jogoTerminado();
 
@@ -76,11 +137,14 @@ public class TestSimulador {
 
     }
 
+
     @Test
     public void testJaVemEmpate(){
         File ficheiro = new File("test-files/FicheiroComEmpate.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.jogoTerminado();
         //Deve retornar true pois há condições de paragem do jogo
@@ -88,11 +152,15 @@ public class TestSimulador {
 
     }
 
+
     @Test
     public void testJaVemEmpate02(){
         File ficheiro = new File("test-files/FicheiroComEmpate.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         simulador.jogoTerminado();
 
@@ -121,18 +189,23 @@ public class TestSimulador {
     public void testJogadaInvalida01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(0, 0, 1, 1);
         //Deve retornar false pois não existe nenhuma peça naquela posição
         assertEquals(false, resultadoReal);
     }
 
+
     @Test
     public void testJogadaInvalida02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(1, 0, 1, 0);
         //Deve retornar false pois as coordenadas de origem e destino são iguais
@@ -143,7 +216,9 @@ public class TestSimulador {
     public void testJogadaInvalida03(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(1, 0, 1, -1);
         //Deve retornar false pois as coordenadas de destino são fora do tabuleiro
@@ -154,7 +229,9 @@ public class TestSimulador {
     public void testJogadaInvalida04(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(1, 0, 0, 1);
         //Deve retornar false pois nas coordenadas de destino está lá uma peça da mesma equipa
@@ -165,20 +242,24 @@ public class TestSimulador {
     public void testJogadaInvalida05(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(0, 5, 0, 4);
         //Deve retornar false pois não é esta equipa a jogar
         assertEquals(false, resultadoReal);
     }
 
-    /*Fim dos testes das peças da equipa preta no ficheiro "input2"*/
-    /*
+    //Fim dos testes das peças da equipa preta no ficheiro "input2"
+
     @Test
     public void testProcessaJogadaRei01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(1, 0, 3, 2);
         //Deve retornar false pois não é compatível com o seu movimento
@@ -189,7 +270,9 @@ public class TestSimulador {
     public void testProcessaJogadaRei02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(1, 0, 2, 1);
         //Deve retornar true pois é compatível com o seu movimento
@@ -200,7 +283,9 @@ public class TestSimulador {
     public void testProcessaJogadaReiCaptura01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(6, 1, 5, 2);
         //Deve retornar true pois a captura é de uma peça da equipa contrária
@@ -212,26 +297,37 @@ public class TestSimulador {
     public void testSugereJogadaRei(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(1, 0);
+        List<Comparable> resultados = simulador.obterSugestoesJogada(1, 0);
+        List<String> resultadosReais = new ArrayList<>();
 
-        List<String> resultadoEsperado = new ArrayList<>();
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
 
-        resultadoEsperado.add("2, 0");
-        resultadoEsperado.add("0, 0");
-        resultadoEsperado.add("1, 1");
-        resultadoEsperado.add("2, 1");
+        List<Comparable> resultadoEsperado = new ArrayList<>();
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        resultadoEsperado.add("2, 0, 0");
+        resultadoEsperado.add("0, 0, 0");
+        resultadoEsperado.add("1, 1, 0");
+        resultadoEsperado.add("2, 1, 0");
+
+        assertEquals(resultadoEsperado, resultadosReais);
 
     }
+
 
     @Test
     public void testProcessaJogadaRainha01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
+
 
         boolean resultadoReal = simulador.processaJogada(4, 1, 7, 4);
         //Deve retornar false pois há bloqueio no caminho da rainha
@@ -242,7 +338,10 @@ public class TestSimulador {
     public void testProcessaJogadaRainha02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
+
 
         boolean resultadoReal = simulador.processaJogada(4, 1, 4, 6);
         //Deve retornar true pois o movimento é compatível com o da rainha
@@ -253,7 +352,10 @@ public class TestSimulador {
     public void testProcessaJogadaRainha03(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
+
 
         boolean resultadoReal = simulador.processaJogada(4, 1, 4, 7);
         //Deve retornar false pois a distância é maior que 5
@@ -264,37 +366,49 @@ public class TestSimulador {
     public void testSugereJogadasRainha(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(4,1);
+
+        List<Comparable> resultados = simulador.obterSugestoesJogada(4,1);
+        List<String> resultadosReais = new ArrayList<>();
+
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
+
         List<String> resultadoEsperado = new ArrayList<>();
 
-        resultadoEsperado.add("5, 1");
-        resultadoEsperado.add("3, 1");
-        resultadoEsperado.add("4, 2");
-        resultadoEsperado.add("4, 0");
-        resultadoEsperado.add("5, 2");
-        resultadoEsperado.add("5, 0");
-        resultadoEsperado.add("3, 2");
-        resultadoEsperado.add("3, 0");
-        resultadoEsperado.add("2, 1");
-        resultadoEsperado.add("4, 3");
-        resultadoEsperado.add("6, 3");
-        resultadoEsperado.add("2, 3");
-        resultadoEsperado.add("1, 1");
-        resultadoEsperado.add("4, 4");
-        resultadoEsperado.add("1, 4");
-        resultadoEsperado.add("4, 5");
-        resultadoEsperado.add("4, 6");
+        resultadoEsperado.add("5, 1, 0");
+        resultadoEsperado.add("3, 1, 0");
+        resultadoEsperado.add("4, 2, 0");
+        resultadoEsperado.add("4, 0, 0");
+        resultadoEsperado.add("5, 2, 0");
+        resultadoEsperado.add("5, 0, 0");
+        resultadoEsperado.add("3, 2, 0");
+        resultadoEsperado.add("3, 0, 0");
+        resultadoEsperado.add("2, 1, 0");
+        resultadoEsperado.add("4, 3, 0");
+        resultadoEsperado.add("6, 3, 3");
+        resultadoEsperado.add("2, 3, 0");
+        resultadoEsperado.add("1, 1, 0");
+        resultadoEsperado.add("4, 4, 0");
+        resultadoEsperado.add("1, 4, 0");
+        resultadoEsperado.add("4, 5, 0");
+        resultadoEsperado.add("4, 6, 0");
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        assertEquals(resultadoEsperado, resultadosReais);
     }
+
 
     @Test
     public void testJogadaPonei01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(0, 1, 2, 3);
         //Deve retornar true
@@ -305,7 +419,9 @@ public class TestSimulador {
     public void testJogadaPonei02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(0, 1, 3, 2);
         //Deve retornar false pois o movimento faz com que o ponei mova 3 casa na horizontal
@@ -316,14 +432,23 @@ public class TestSimulador {
     public void testSugestoesJogadasPonei(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(0,1);
+        List<Comparable> resultados = simulador.obterSugestoesJogada(0,1);
+
+        List<String> resultadosReais = new ArrayList<>();
+
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
+
         List<String> resultadoEsperado = new ArrayList<>();
 
-        resultadoEsperado.add("2, 3");
+        resultadoEsperado.add("2, 3, 0");
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        assertEquals(resultadoEsperado, resultadosReais);
 
     }
 
@@ -331,7 +456,9 @@ public class TestSimulador {
     public void testProcessaJogadaLebre01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(3, 4, 4, 5);
         //Deve retornar true pois apenas anda uma casa na diagonal
@@ -342,39 +469,52 @@ public class TestSimulador {
     public void testProcessaJogadaLebre02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         boolean resultadoReal = simulador.processaJogada(3, 4, 5, 6);
         //Deve retornar false pois anda 2 casas na diagonal
         assertEquals(false, resultadoReal);
     }
 
+
     @Test
     public void testSugereJogadasLebre(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(3,4);
+        List<Comparable> resultados = simulador.obterSugestoesJogada(3,4);
+        List<String> resultadosReais = new ArrayList<>();
+
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
         List<String> resultadoEsperado = new ArrayList<>();
 
-        resultadoEsperado.add("4, 5");
-        resultadoEsperado.add("4, 3");
-        resultadoEsperado.add("2, 5");
-        resultadoEsperado.add("2, 3");
+        resultadoEsperado.add("4, 5, 0");
+        resultadoEsperado.add("4, 3, 0");
+        resultadoEsperado.add("2, 5, 0");
+        resultadoEsperado.add("2, 3, 0");
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        assertEquals(resultadoEsperado, resultadosReais);
     }
 
-    /*Fim dos testes das peças da equipa preta no ficheiro "input2"*/
+    //Fim dos testes das peças da equipa preta no ficheiro "input2"
 
-    /*Início dos testes das peças da equipa branca no ficheiro "input2"*/
-    /*
+    //Início dos testes das peças da equipa branca no ficheiro "input2"
+
+
     @Test
     public void testProcessaJogadaPadre01() {
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -389,7 +529,9 @@ public class TestSimulador {
     public void testProcessaJogadaPadre02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -404,7 +546,9 @@ public class TestSimulador {
     public void testProcessaJogadaPadre03(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -415,33 +559,45 @@ public class TestSimulador {
         assertEquals(true, resultadoReal);
     }
 
+
     @Test
     public void testSugereJogadasPadre(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 2, 3);
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(6,3);
+        List<Comparable> resultados = simulador.obterSugestoesJogada(6,3);
+        List<String> resultadosReais = new ArrayList<>();
+
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
+
         List<String> resultadoEsperado = new ArrayList<>();
 
-        resultadoEsperado.add("7, 4");
-        resultadoEsperado.add("7, 2");
-        resultadoEsperado.add("5, 4");
-        resultadoEsperado.add("4, 5");
-        resultadoEsperado.add("4, 1");
-        resultadoEsperado.add("3, 6");
+        resultadoEsperado.add("7, 4, 0");
+        resultadoEsperado.add("7, 2, 0");
+        resultadoEsperado.add("5, 4, 0");
+        resultadoEsperado.add("4, 5, 0");
+        resultadoEsperado.add("4, 1, 8");
+        resultadoEsperado.add("3, 6, 0");
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        assertEquals(resultadoEsperado, resultadosReais);
     }
+
 
     @Test
     public void testProcessaJogadaTorreV01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -456,7 +612,9 @@ public class TestSimulador {
     public void testProcessaJogadaTorreV02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -471,7 +629,9 @@ public class TestSimulador {
     public void testProcessaJogadaTorreV03(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         simulador.setIdEquipaAJogar();
 
@@ -485,7 +645,9 @@ public class TestSimulador {
     public void testProcessaJogadaTorreV04(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -500,26 +662,36 @@ public class TestSimulador {
     public void testSugereJogadasTorreV(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(6, 6);
+        List<Comparable> resultados = simulador.obterSugestoesJogada(6, 6);
+
+        List<String> resultadosReais = new ArrayList<>();
+
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
 
         List<String> resultadoEsperado = new ArrayList<>();
-        resultadoEsperado.add("6, 7");
-        resultadoEsperado.add("6, 5");
-        resultadoEsperado.add("6, 4");
+        resultadoEsperado.add("6, 7, 0");
+        resultadoEsperado.add("6, 5, 0");
+        resultadoEsperado.add("6, 4, 0");
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        assertEquals(resultadoEsperado, resultadosReais);
     }
 
     @Test
     public void testProcessaJogadaTorreH01(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -534,7 +706,9 @@ public class TestSimulador {
     public void testProcessaJogadaTorreH02(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -549,7 +723,9 @@ public class TestSimulador {
     public void testProcessaJogadaTorreH03(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
@@ -564,67 +740,33 @@ public class TestSimulador {
     public void testSugereJogadasTorreH(){
         File ficheiro = new File("test-files/input2.txt");
         Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
+        try {
+            simulador.iniciaJogo(ficheiro);
+        } catch (IOException e){}
 
         //De forma a que haja uma jogada da equipa preta, para de seguida ser a equipa branca a jogar
         simulador.processaJogada(3, 4, 4, 5);
 
-        List<String> resultadoReal = simulador.obterSugestoesJogada(4, 7);
+        List<Comparable> resultados = simulador.obterSugestoesJogada(4, 7);
+
+        List<String> resultadosReais = new ArrayList<>();
+
+        for (Comparable resultado: resultados){
+            resultadosReais.add(resultado.toString());
+        }
+
 
         List<String> resultadoEsperado = new ArrayList<>();
-        resultadoEsperado.add("5, 7");
-        resultadoEsperado.add("3, 7");
-        resultadoEsperado.add("6, 7");
-        resultadoEsperado.add("2, 7");
-        resultadoEsperado.add("7, 7");
-        resultadoEsperado.add("1, 7");
-        resultadoEsperado.add("0, 7");
 
-        assertEquals(resultadoEsperado, resultadoReal);
+        resultadoEsperado.add("5, 7, 0");
+        resultadoEsperado.add("3, 7, 0");
+        resultadoEsperado.add("6, 7, 0");
+        resultadoEsperado.add("2, 7, 0");
+        resultadoEsperado.add("7, 7, 0");
+        resultadoEsperado.add("1, 7, 0");
+        resultadoEsperado.add("0, 7, 0");
+
+        assertEquals(resultadoEsperado, resultadosReais);
     }
-
-    @Test
-    public void testSugereJogadasSemPeca(){
-        File ficheiro = new File("test-files/input2.txt");
-        Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
-
-        List<String> resultadoReal = simulador.obterSugestoesJogada(0, 0);
-
-        //Como não existe nenhuma peça naquela posição, alista deve conter apenas "Pedido inválido"
-        List<String> resultadoEsperado = new ArrayList<>();
-        resultadoEsperado.add("Pedido inválido");
-
-        assertEquals(resultadoEsperado, resultadoReal);
-    }
-
-    @Test
-    public void testSugereJogadasPecaAdversaria(){
-        File ficheiro = new File("test-files/input2.txt");
-        Simulador simulador = new Simulador();
-        simulador.iniciaJogo(ficheiro);
-
-        List<String> resultadoReal = simulador.obterSugestoesJogada(0, 5);
-
-        //Como a peça naquela posição é da equipa contrária, alista deve conter apenas "Pedido inválido"
-        List<String> resultadoEsperado = new ArrayList<>();
-        resultadoEsperado.add("Pedido inválido");
-
-        assertEquals(resultadoEsperado, resultadoReal);
-
-
-    }
-
-    */
-
-
-
-
-
-
-
-
-
-
 
 }
