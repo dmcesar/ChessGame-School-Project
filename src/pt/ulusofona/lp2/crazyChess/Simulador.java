@@ -92,6 +92,7 @@ public class Simulador {
 
                 //Adiciona a peça ao conjunto de peças do jogo
                 crazyPieces.add(crazyPiece);
+                crazyPiece.getTeam().crazyPieces.add(crazyPiece);
             }
 
 
@@ -134,7 +135,7 @@ public class Simulador {
 
                                 //Insere a peça no conjunto de peças em jogo da equipa
                                 crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
-                                crazyPiece.getTeam().crazyPieces.add(crazyPiece);
+                                //crazyPiece.getTeam().crazyPieces.add(crazyPiece);
 
                                 //Se a peça for um joker troca o seu tipo
                                 if (crazyPiece.getIdType() == 7) {
@@ -590,72 +591,75 @@ public class Simulador {
 
     public void anularJogadaAnterior() {
 
-        for (CrazyPiece crazyPiece : lastPlayOutcome) {
+        if(lastPlayOutcome.size() != 0) {
 
-            boolean pieceInGame = checkPieceInGame(crazyPiece);
+            for (CrazyPiece crazyPiece : lastPlayOutcome) {
 
-            //Se for a peça que se moveu
-            if (!pieceInGame) {
+                boolean pieceInGame = checkPieceInGame(crazyPiece);
 
-                //Insere-a na posição antiga
-                tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
+                //Se for a peça que se moveu
+                if (!pieceInGame) {
 
-                //Limpa a ultima posição
-                tabuleiro[crazyPiece.presentCoords.y][crazyPiece.presentCoords.x] = null;
+                    //Insere-a na posição antiga
+                    tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
 
-                crazyPiece.presentCoords = crazyPiece.previousCoords;
+                    //Limpa a ultima posição
+                    tabuleiro[crazyPiece.presentCoords.y][crazyPiece.presentCoords.x] = null;
 
-                //Decrementa o número de jogadas válidas e de capturas da equipa
-                crazyPiece.getTeam().cntValidPlays--;
-                crazyPiece.statistics.cntValidPlays--;
+                    crazyPiece.presentCoords = crazyPiece.previousCoords;
 
-                //Ocorreu uma captura
-                if(lastPlayOutcome.size() > 1){
+                    //Decrementa o número de jogadas válidas e de capturas da equipa
+                    crazyPiece.getTeam().cntValidPlays--;
+                    crazyPiece.statistics.cntValidPlays--;
 
-                    crazyPiece.getTeam().cntCaptures--;
-                    crazyPiece.statistics.cntCaptures--;
+                    //Ocorreu uma captura
+                    if (lastPlayOutcome.size() > 1) {
 
-                    for(CrazyPiece captured : lastPlayOutcome){
+                        crazyPiece.getTeam().cntCaptures--;
+                        crazyPiece.statistics.cntCaptures--;
 
-                        if(checkPieceInGame(captured)){
+                        for (CrazyPiece captured : lastPlayOutcome) {
 
-                            crazyPiece.statistics.cntPoints -= captured.getPointsOnCapture();
+                            if (checkPieceInGame(captured)) {
+
+                                crazyPiece.statistics.cntPoints -= captured.getPointsOnCapture();
+                            }
                         }
                     }
                 }
+
+                //Se for a peça capturada
+                else {
+
+                    //Volta a inserir a peça capturada no jogo
+                    tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
+
+                    crazyPiece.presentCoords = crazyPiece.previousCoords;
+
+                    //Volta a adicionar a peça á lista de peças em jogo da equipa
+                    crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
+                }
             }
 
-            //Se for a peça capturada
-            else {
+            //Troca os jokers das equipas para a sua máscara anterior
+            for (Joker joker : blackTeam.jokers) {
 
-                //Volta a inserir a peça capturada no jogo
-                tabuleiro[crazyPiece.previousCoords.y][crazyPiece.previousCoords.x] = crazyPiece;
-
-                crazyPiece.presentCoords = crazyPiece.previousCoords;
-
-                //Volta a adicionar a peça á lista de peças em jogo da equipa
-                crazyPiece.getTeam().inGameCrazyPieces.add(crazyPiece);
+                joker.switchJokerType();
             }
+
+            for (Joker joker : whiteTeam.jokers) {
+
+                joker.switchJokerType();
+            }
+
+            //Troca o id da equipa a jogar (repete a jogada anterior)
+            setIdEquipaAJogar();
+
+            //Repõe a lista de alterações da última jogada
+            lastPlayOutcome.clear();
+
+            cntPlaysNoCaptures = previousValue;
         }
-
-        //Troca os jokers das equipas para a sua máscara anterior
-        for (Joker joker : blackTeam.jokers) {
-
-            joker.switchJokerType();
-        }
-
-        for (Joker joker : whiteTeam.jokers) {
-
-            joker.switchJokerType();
-        }
-
-        //Troca o id da equipa a jogar (repete a jogada anterior)
-        setIdEquipaAJogar();
-
-        //Repõe a lista de alterações da última jogada
-        lastPlayOutcome = new ArrayList<>();
-
-        cntPlaysNoCaptures = previousValue;
     }
 
     public CrazyPiece getPeca(String[] lineData) {
