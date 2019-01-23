@@ -795,8 +795,6 @@ public class Simulador {
             typeCaptures.put(i, 0);
         }
 
-        //typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.getCntCaptures()));
-
         for(CrazyPiece crazyPiece : blackTeam.crazyPieces){
 
             if(!blackTeam.inGameCrazyPieces.contains(crazyPiece)){
