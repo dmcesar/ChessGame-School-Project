@@ -799,8 +799,6 @@ public class Simulador {
 
                 typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + 1));
             }
-
-            //typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.getCntCaptures()));
         }
 
         for(CrazyPiece crazyPiece : whiteTeam.crazyPieces){
