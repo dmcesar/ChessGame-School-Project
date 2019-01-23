@@ -23,11 +23,9 @@ public class Simulador {
 
     private int idEquipaAJogar;
 
-
     //Contém o número de jogadas sem capturas
     private int cntPlaysNoCaptures;
     private int previousValue;
-
 
     //Contém o resultado final do jogo
     private String result;

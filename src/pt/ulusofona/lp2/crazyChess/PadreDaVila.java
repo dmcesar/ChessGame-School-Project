@@ -1,7 +1,5 @@
 package pt.ulusofona.lp2.crazyChess;
 
-import javax.net.ssl.SSLContext;
-import java.net.ServerSocket;
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
