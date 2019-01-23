@@ -793,9 +793,24 @@ public class Simulador {
             typeCaptures.put(i, 0);
         }
 
-        for(CrazyPiece crazyPiece : crazyPieces){
+        for(CrazyPiece crazyPiece : blackTeam.crazyPieces){
 
-            typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.getCntCaptures()));
+            if(!blackTeam.inGameCrazyPieces.contains(crazyPiece)){
+
+                typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + 1));
+            }
+
+            //typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.getCntCaptures()));
+        }
+
+        for(CrazyPiece crazyPiece : whiteTeam.crazyPieces){
+
+            if(!whiteTeam.inGameCrazyPieces.contains(crazyPiece)){
+
+                typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + 1));
+            }
+
+            //typeCaptures.put(crazyPiece.idType, (typeCaptures.get(crazyPiece.idType) + crazyPiece.statistics.getCntCaptures()));
         }
 
         estatisticas.put("tiposPecaCapturados", typeCaptures.entrySet().stream()
