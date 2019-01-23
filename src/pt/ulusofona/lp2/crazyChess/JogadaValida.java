@@ -6,9 +6,6 @@ public class JogadaValida implements Comparable<JogadaValida>{
     private int y;
     private String nrPontos;
 
-
-    JogadaValida(){}
-
     JogadaValida(int x, int y, String nrPontos){
 
         this.x = x;
